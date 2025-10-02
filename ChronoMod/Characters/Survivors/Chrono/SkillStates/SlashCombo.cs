@@ -1,16 +1,16 @@
 ﻿using ChronoMod.Modules.BaseStates;
+using ChronoMod.Modules.DamageTypes;
+using R2API;
 using RoR2;
 using UnityEngine;
 
-namespace ChronoMod.Survivors.Chrono.SkillStates
-{
-    public class SlashCombo : BaseMeleeAttack
-    {
-        public override void OnEnter()
-        {
+namespace ChronoMod.Survivors.Chrono.SkillStates {
+    public class SlashCombo : BaseMeleeAttack {
+        public override void OnEnter() {
             hitboxGroupName = "SwordGroup";
 
             damageType = DamageTypeCombo.GenericPrimary;
+            damageType.AddModdedDamageType(TemporalRiftType.damageType);
             damageCoefficient = ChronoStaticValues.swordDamageCoefficient;
             procCoefficient = 1f;
             pushForce = 300f;
@@ -41,23 +41,19 @@ namespace ChronoMod.Survivors.Chrono.SkillStates
             base.OnEnter();
         }
 
-        protected override void PlayAttackAnimation()
-        {
+        protected override void PlayAttackAnimation() {
             PlayCrossfade("Gesture, Override", "Slash" + (1 + swingIndex), playbackRateParam, duration, 0.1f * duration);
         }
 
-        protected override void PlaySwingEffect()
-        {
+        protected override void PlaySwingEffect() {
             base.PlaySwingEffect();
         }
 
-        protected override void OnHitEnemyAuthority()
-        {
+        protected override void OnHitEnemyAuthority() {
             base.OnHitEnemyAuthority();
         }
 
-        public override void OnExit()
-        {
+        public override void OnExit() {
             base.OnExit();
         }
     }

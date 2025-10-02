@@ -1,8 +1,6 @@
-﻿using ChronoMod.Modules;
+﻿using System.Collections.Generic;
 using ChronoMod.Modules.Characters;
 using RoR2;
-using System.Collections.Generic;
-using UnityEngine;
 
 /* for custom copy format in keb's helper
 {childName},
@@ -11,12 +9,10 @@ using UnityEngine;
                     {localScale})
 */
 
-namespace ChronoMod.Survivors.Chrono
-{
-    public class ChronoItemDisplays : ItemDisplaysBase
-    {
-        protected override void SetItemDisplayRules(List<ItemDisplayRuleSet.KeyAssetRuleGroup> itemDisplayRules)
-        {
+namespace ChronoMod.Survivors.Chrono {
+    public class ChronoItemDisplays : ItemDisplaysBase {
+        protected override void SetItemDisplayRules(List<ItemDisplayRuleSet.KeyAssetRuleGroup> itemDisplayRules) {
+            /*
             itemDisplayRules.Add(ItemDisplays.CreateDisplayRuleGroupWithRules(ItemDisplays.KeyAssets["AlienHead"],
                 ItemDisplays.CreateDisplayRule(ItemDisplays.LoadDisplay("DisplayAlienHead"),
                     "Chest",
@@ -1464,6 +1460,7 @@ namespace ChronoMod.Survivors.Chrono
                     new Vector3(1, 1, 1)
                     )
                 ));
+            */
         }
     }
 }

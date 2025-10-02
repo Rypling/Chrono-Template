@@ -46,15 +46,15 @@ namespace ChronoMod.Survivors.Chrono {
             Language.Add(prefix + "PRIMARY_EDGE_DESCRIPTION", $"{Tokens.agilePrefix} Swing in front for for <style=cIsDamage>{100f * ChronoStaticValues.swordDamageCoefficient}% damage</style>. Gain a stack of <style=cIsDamage>Temporal Rift</style> for each enemy hit.");
 
             Language.Add(prefix + "PRIMARY_THROW_NAME", "Split-Second Throw");
-            Language.Add(prefix + "PRIMARY_THROW_DESCRIPTION", $"{Tokens.agilePrefix} Throw a spear for <style=cIsDamage>{100f * ChronoStaticValues.swordDamageCoefficient}% damage</style>. Gain a stack of <style=cIsDamage>Temporal Rift</style> for each enemy hit.");
+            Language.Add(prefix + "PRIMARY_THROW_DESCRIPTION", $"{Tokens.agilePrefix} Throw a spear for <style=cIsDamage>{100f * ChronoStaticValues.throwDamageCoefficient}% damage</style>. Gain a stack of <style=cIsDamage>Temporal Rift</style> for each enemy hit.");
             #endregion
 
             #region Secondary
             Language.Add(prefix + "SECONDARY_PIERCER_NAME", "Time Piercer");
-            Language.Add(prefix + "SECONDARY_PIERCER_DESCRIPTION", Tokens.agilePrefix + $"Rapidly fire for <style=cIsDamage>8x{100f * ChronoStaticValues.gunDamageCoefficient}% damage</style>, <style=cIsUtility>slowing</style> enemies, or <style=cIsDamage>freezing</style> them if you have at least X stacks of <style=cIsDamage>Temporal Rift</style>.");
+            Language.Add(prefix + "SECONDARY_PIERCER_DESCRIPTION", $"{Tokens.agilePrefix} Rapidly fire for <style=cIsDamage>{100f * ChronoStaticValues.piercerDamageCoefficient}% damage</style>, <style=cIsUtility>slowing</style> enemies, additionally <style=cIsDamage>freezing</style> them if you have at least <style=cIsUtility>{(int)(ChronoStaticValues.temporalMaxBuffs * ChronoStaticValues.piercerFreezeFrac)}</style> stacks of <style=cIsDamage>Temporal Rift</style>.");
 
             Language.Add(prefix + "SECONDARY_HORIZON_NAME", "Event Horizon");
-            Language.Add(prefix + "SECONDARY_HORIZON_DESCRIPTION", Tokens.agilePrefix + $"Throw a piece of time itself for <style=cIsDamage>{100f * ChronoStaticValues.gunDamageCoefficient}% damage</style>, <style=cIsUtility>slowing</style> enemies for a duration proportional to your <style=cIsDamage>Temporal Rift</style> stacks, or <style=cIsDamage>freezing</style> them on a critical hit.");
+            Language.Add(prefix + "SECONDARY_HORIZON_DESCRIPTION", $"{Tokens.agilePrefix} Throw a piece of time itself for <style=cIsDamage>{100f * ChronoStaticValues.horizonDamageCoefficient}% damage</style>, <style=cIsUtility>slowing</style> enemies for a duration proportional to your <style=cIsDamage>Temporal Rift</style> stacks, and <style=cIsDamage>freezing</style> them on a critical hit.");
             #endregion
 
             #region Utility
@@ -67,7 +67,7 @@ namespace ChronoMod.Survivors.Chrono {
 
             #region Special
             Language.Add(prefix + "SPECIAL_COLLAPSE_NAME", "Time Collapse");
-            Language.Add(prefix + "SPECIAL_COLLAPSE_DESCRIPTION", $"Critically strike a target proportional to the total damage you have dealt in the last 10 seconds, as well as your current <style=cIsDamage>Temporal Rift</style> stacks. Consumes all stacks.");
+            Language.Add(prefix + "SPECIAL_COLLAPSE_DESCRIPTION", $"<style=cIsDamage>Critically strike</style> a target for <style=cIsDamage>all the damage you have dealt in the last 10 seconds</style>. Damage scales with your current <style=cIsDamage>Temporal Rift</style> stacks. Consumes all stacks.");
             #endregion
 
             #region Achievements

@@ -96,8 +96,8 @@ namespace ChronoMod.Survivors.Chrono {
             ChronoStates.Init();
             ChronoTokens.Init();
 
-            ChronoAssets.Init(assetBundle);
             ChronoBuffs.Init(assetBundle);
+            ChronoAssets.Init(assetBundle);
 
             InitializeEntityStateMachines();
             InitializeSkills();
@@ -105,13 +105,11 @@ namespace ChronoMod.Survivors.Chrono {
             InitializeCharacterMaster();
 
             AdditionalBodySetup();
-
-            AddHooks();
         }
 
         private void AdditionalBodySetup() {
             AddHitboxes();
-            bodyPrefab.AddComponent<ChronoWeaponComponent>();
+            bodyPrefab.AddComponent<ChronoController>();
             //bodyPrefab.AddComponent<HuntressTrackerComopnent>();
             //anything else here
         }
@@ -143,7 +141,7 @@ namespace ChronoMod.Survivors.Chrono {
             AddPassiveSkill();
             AddPrimarySkills();
             AddSecondarySkills();
-            AddUtiitySkills();
+            AddUtilitySkills();
             AddSpecialSkills();
         }
 
@@ -159,6 +157,7 @@ namespace ChronoMod.Survivors.Chrono {
                 icon = assetBundle.LoadAsset<Sprite>("texPassiveIcon"),
             };
 
+            /*
             //option 2. a new SkillFamily for a passive, used if you want multiple selectable passives
             GenericSkill passiveGenericSkill = Skills.CreateGenericSkillWithSkillFamily(bodyPrefab, "PassiveSkill");
             SkillDef passiveSkillDef1 = Skills.CreateSkillDef(new SkillDefInfo {
@@ -194,7 +193,9 @@ namespace ChronoMod.Survivors.Chrono {
                 //forceSprintDuringState = false,
 
             });
+            
             Skills.AddSkillsToFamily(passiveGenericSkill.skillFamily, passiveSkillDef1);
+            */
         }
 
         //if this is your first look at skilldef creation, take a look at Secondary first
@@ -217,13 +218,33 @@ namespace ChronoMod.Survivors.Chrono {
             primarySkillDef1.stepCount = 2;
             primarySkillDef1.stepGraceDuration = 0.5f;
 
-            Skills.AddPrimarySkills(bodyPrefab, primarySkillDef1);
+            SkillDef primarySkillDef2 = Skills.CreateSkillDef(new SkillDefInfo {
+                skillName = "ChronoThrow",
+                skillNameToken = CHRONO_PREFIX + "PRIMARY_THROW_NAME",
+                skillDescriptionToken = CHRONO_PREFIX + "PRIMARY_THROW_DESCRIPTION",
+                keywordTokens = new string[] { "KEYWORD_AGILE" },
+                skillIcon = assetBundle.LoadAsset<Sprite>("texPrimaryIcon"),
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(SplitSecondThrow)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                dontAllowPastMaxStocks = true,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+            });
+
+            Skills.AddPrimarySkills(bodyPrefab, primarySkillDef1, primarySkillDef2);
         }
 
         private void AddSecondarySkills() {
             Skills.CreateGenericSkillWithSkillFamily(bodyPrefab, SkillSlot.Secondary);
 
-            //here is a basic skill def with all fields accounted for
             SkillDef secondarySkillDef1 = Skills.CreateSkillDef(new SkillDefInfo {
                 skillName = "ChronoPiercer",
                 skillNameToken = CHRONO_PREFIX + "SECONDARY_PIERCER_NAME",
@@ -231,11 +252,42 @@ namespace ChronoMod.Survivors.Chrono {
                 keywordTokens = new string[] { "KEYWORD_AGILE" },
                 skillIcon = assetBundle.LoadAsset<Sprite>("texSecondaryIcon"),
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Shoot)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(TimePiercer)),
                 activationStateMachineName = "Weapon2",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
-                baseRechargeInterval = 1f,
+                baseRechargeInterval = 2f,
+                baseMaxStock = 8,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+                attackSpeedBuffsRestockSpeed = true,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+            });
+
+            SkillDef secondarySkillDef2 = Skills.CreateSkillDef(new SkillDefInfo {
+                skillName = "ChronoHorizon",
+                skillNameToken = CHRONO_PREFIX + "SECONDARY_HORIZON_NAME",
+                skillDescriptionToken = CHRONO_PREFIX + "SECONDARY_HORIZON_DESCRIPTION",
+                keywordTokens = new string[] { "KEYWORD_AGILE" },
+                skillIcon = assetBundle.LoadAsset<Sprite>("texSecondaryIcon"),
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(EventHorizon)),
+                activationStateMachineName = "Weapon2",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 12f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -255,24 +307,23 @@ namespace ChronoMod.Survivors.Chrono {
 
             });
 
-            Skills.AddSecondarySkills(bodyPrefab, secondarySkillDef1);
+            Skills.AddSecondarySkills(bodyPrefab, secondarySkillDef1, secondarySkillDef2);
         }
 
-        private void AddUtiitySkills() {
+        private void AddUtilitySkills() {
             Skills.CreateGenericSkillWithSkillFamily(bodyPrefab, SkillSlot.Utility);
 
-            //here's a skilldef of a typical movement skill.
             SkillDef utilitySkillDef1 = Skills.CreateSkillDef(new SkillDefInfo {
                 skillName = "ChronoEcho",
                 skillNameToken = CHRONO_PREFIX + "UTILITY_ECHO_NAME",
                 skillDescriptionToken = CHRONO_PREFIX + "UTILITY_ECHO_DESCRIPTION",
                 skillIcon = assetBundle.LoadAsset<Sprite>("texUtilityIcon"),
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(Roll)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(EchoOfTomorrow)),
                 activationStateMachineName = "Body",
                 interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
 
-                baseRechargeInterval = 4f,
+                baseRechargeInterval = 8f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -291,7 +342,36 @@ namespace ChronoMod.Survivors.Chrono {
                 forceSprintDuringState = true,
             });
 
-            Skills.AddUtilitySkills(bodyPrefab, utilitySkillDef1);
+            SkillDef utilitySkillDef2 = Skills.CreateSkillDef(new SkillDefInfo {
+                skillName = "ChronoContinuum",
+                skillNameToken = CHRONO_PREFIX + "UTILITY_CONTINUUM_NAME",
+                skillDescriptionToken = CHRONO_PREFIX + "UTILITY_CONTINUUM_DESCRIPTION",
+                skillIcon = assetBundle.LoadAsset<Sprite>("texUtilityIcon"),
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(ContinuumFreeze)),
+                activationStateMachineName = "Weapon2",
+                interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
+
+                baseRechargeInterval = 16f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = true,
+            });
+
+            Skills.AddUtilitySkills(bodyPrefab, utilitySkillDef1, utilitySkillDef2);
         }
 
         private void AddSpecialSkills() {
@@ -304,16 +384,21 @@ namespace ChronoMod.Survivors.Chrono {
                 skillDescriptionToken = CHRONO_PREFIX + "SPECIAL_COLLAPSE_DESCRIPTION",
                 skillIcon = assetBundle.LoadAsset<Sprite>("texSpecialIcon"),
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.ThrowBomb)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(TimeCollapse)),
                 //setting this to the "weapon2" EntityStateMachine allows us to cast this skill at the same time primary, which is set to the "weapon" EntityStateMachine
-                activationStateMachineName = "Weapon2",
-                interruptPriority = EntityStates.InterruptPriority.Skill,
+                activationStateMachineName = "Weapon",
+                interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
 
                 baseMaxStock = 1,
-                baseRechargeInterval = 10f,
+                baseRechargeInterval = 30f,
+
+                beginSkillCooldownOnSkillEnd = true,
 
                 isCombatSkill = true,
-                mustKeyPress = false,
+                // dontAllowPastMaxStocks = true,
+                mustKeyPress = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
             });
 
             Skills.AddSpecialSkills(bodyPrefab, specialSkillDef1);
@@ -403,17 +488,6 @@ namespace ChronoMod.Survivors.Chrono {
 
             //how to load a master set up in unity, can be an empty gameobject with just AISkillDriver components
             //assetBundle.LoadMaster(bodyPrefab, masterName);
-        }
-
-        private void AddHooks() {
-            R2API.RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
-        }
-
-        private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args) {
-
-            if (sender.HasBuff(ChronoBuffs.armorBuff)) {
-                args.armorAdd += 300;
-            }
         }
     }
 }

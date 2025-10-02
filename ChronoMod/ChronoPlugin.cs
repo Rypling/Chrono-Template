@@ -1,8 +1,10 @@
 ﻿using System.Security;
 using System.Security.Permissions;
 using BepInEx;
+using ChronoMod.Modules;
 using ChronoMod.Survivors.Chrono;
 using R2API.Utils;
+using RoR2;
 
 [module: UnverifiableCode]
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
@@ -37,8 +39,16 @@ namespace ChronoMod {
             // character initialization
             new ChronoSurvivor().Initialize();
 
+            RoR2Application.onLoadFinished += OnLoadFinished;
+
             // make a content pack and add it. this has to be last
             new Modules.ContentPacks().Initialize();
+        }
+
+        private void OnLoadFinished() {
+            DamageTypeCollection.Init();
+            Hooks.AddHooks();
+            ChronoAssets.AssignDamageTypes();
         }
     }
 }

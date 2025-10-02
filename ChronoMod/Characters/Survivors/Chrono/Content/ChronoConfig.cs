@@ -1,17 +1,14 @@
 ﻿using BepInEx.Configuration;
 using ChronoMod.Modules;
 
-namespace ChronoMod.Survivors.Chrono
-{
-    public static class ChronoConfig
-    {
+namespace ChronoMod.Survivors.Chrono {
+    public static class ChronoConfig {
         public static ConfigEntry<bool> someConfigBool;
         public static ConfigEntry<float> someConfigFloat;
         public static ConfigEntry<float> someConfigFloatWithCustomRange;
 
-        public static void Init()
-        {
-            string section = "Henry";
+        public static void Init() {
+            string section = "Chrono";
 
             someConfigBool = Config.BindAndOptions(
                 section,

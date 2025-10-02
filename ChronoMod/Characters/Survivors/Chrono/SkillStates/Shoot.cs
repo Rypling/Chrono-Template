@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ChronoMod.Survivors.Chrono.SkillStates {
     public class Shoot : BaseSkillState {
-        public static float damageCoefficient = ChronoStaticValues.gunDamageCoefficient;
+        public static float damageCoefficient = ChronoStaticValues.piercerDamageCoefficient;
         public static float procCoefficient = 1f;
         public static float baseDuration = 0.6f;
         //delay on firing is usually ass-feeling. only set this if you know what you're doing
