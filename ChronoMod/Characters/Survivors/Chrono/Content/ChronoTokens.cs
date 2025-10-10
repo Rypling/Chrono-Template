@@ -38,7 +38,7 @@ namespace ChronoMod.Survivors.Chrono {
 
             #region Passive
             Language.Add(prefix + "PASSIVE_NAME", "Temporal Rift");
-            Language.Add(prefix + "PASSIVE_DESCRIPTION", "For each stack of <style=cIsDamage>Temporal Rift</style> you have, your <style=cIsUtility>move speed</style>, <style=cIsDamage>critical hit chance</style>, and <style=cIsDamage>critical hit damage</style> increase. Critical hit chance over 100% is converted to critical hit damage.");
+            Language.Add(prefix + "PASSIVE_DESCRIPTION", "For each stack of <style=cIsDamage>Temporal Rift</style> you have, your <style=cIsUtility>move speed</style>, <style=cIsDamage>critical hit chance</style>, and <style=cIsDamage>critical hit damage</style> increase. <style=cIsDamage>Critical hit chance</style> over 100% is converted to <style=cIsDamage>critical hit damage</style>.");
             #endregion
 
             #region Primary

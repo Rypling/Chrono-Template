@@ -117,13 +117,10 @@ namespace ChronoMod.Survivors.Chrono {
 
             // Replace animator controllers for false son's
             displayPrefab.GetComponent<Animator>().runtimeAnimatorController = Addressables.LoadAssetAsync<RuntimeAnimatorController>(RoR2_DLC2_FalseSon.animFalseSonDisplay_controller).WaitForCompletion();
-            Log.Warning("set up display anims");
             prefabCharacterModel.GetComponent<Animator>().runtimeAnimatorController = Addressables.LoadAssetAsync<RuntimeAnimatorController>(RoR2_DLC2_FalseSon.animFalseSon_controller).WaitForCompletion();
-            Log.Warning("set up body anims");
         }
 
         public void AddHitboxes() {
-            //example of how to create a HitBoxGroup. see summary for more details
             Prefabs.SetupHitBoxGroup(characterModelObject, "SwingGroup", "SwingHitbox");
         }
 

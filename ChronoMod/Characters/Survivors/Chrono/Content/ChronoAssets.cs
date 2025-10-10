@@ -3,7 +3,9 @@ using ChronoMod.Modules.DamageTypes;
 using R2API;
 using RoR2;
 using RoR2.Projectile;
+using RoR2BepInExPack.GameAssetPathsBetter;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace ChronoMod.Survivors.Chrono {
     public static class ChronoAssets {
@@ -45,7 +47,13 @@ namespace ChronoMod.Survivors.Chrono {
         private static void CreateEffects() {
             CreateBombExplosionEffect();
 
-            swordSwingEffect = _assetBundle.LoadEffect("HenrySwordSwingEffect", true);
+            swordSwingEffect = Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Merc.MercSwordSlash_prefab).WaitForCompletion();// _assetBundle.LoadEffect("HenrySwordSwingEffect", true);
+            EffectComponent effect = swordSwingEffect.AddComponent<EffectComponent>(); // why does it not have one by default. how queer
+            effect.applyScale = false;
+            effect.effectIndex = EffectIndex.Invalid;
+            effect.parentToReferencedTransform = true;
+            effect.positionAtReferencedTransform = true;
+            Content.CreateAndAddEffectDef(swordSwingEffect);
 
             swordHitImpactEffect = _assetBundle.LoadEffect("ImpactHenrySlash");
 

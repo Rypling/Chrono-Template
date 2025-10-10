@@ -31,7 +31,7 @@ namespace ChronoMod.Survivors.Chrono.SkillStates {
 
             swingSoundString = "HenrySwordSwing";
             hitSoundString = "";
-            muzzleString = swingIndex % 2 == 0 ? "SwingClubRight" : "SwingClubLeft";
+            muzzleString = swingIndex % 2 == 0 ? "SwingRight" : "SwingLeft";
             playbackRateParam = "SwingClub.playbackRate";
             swingEffectPrefab = ChronoAssets.swordSwingEffect;
             hitEffectPrefab = ChronoAssets.swordHitImpactEffect;
@@ -46,6 +46,12 @@ namespace ChronoMod.Survivors.Chrono.SkillStates {
             bool isStill = !animator.GetBool("isMoving") && animator.GetBool("isGrounded");
             string animationStateName = ((swingIndex == 0) ? "SwingClubRight" : "SwingClubLeft");
             float animDuration = Mathf.Max(duration, 0.2f);
+
+            // apart from this
+            if (swingIndex == 0) {
+                animDuration *= 0.5f;
+            }
+
             if (isStill) {
                 PlayCrossfade("FullBody, Override", animationStateName, "SwingClub.playbackRate", animDuration, 0.025f);
                 return;

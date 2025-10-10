@@ -2,7 +2,9 @@
 using EntityStates;
 using R2API;
 using RoR2;
+using RoR2BepInExPack.GameAssetPathsBetter;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace ChronoMod.Survivors.Chrono.SkillStates {
     public class TimePiercer : BaseSkillState {
@@ -14,7 +16,9 @@ namespace ChronoMod.Survivors.Chrono.SkillStates {
         public static float force = 800f;
         public static float recoil = 1f;
         public static float range = 256f;
-        public static GameObject tracerEffectPrefab = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/TracerGoldGat");
+        public static GameObject tracerEffectPrefab = Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Commando.TracerCommandoShotgun_prefab).WaitForCompletion();
+        public static GameObject muzzleFlashPrefab = Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Commando.MuzzleflashFMJ_prefab).WaitForCompletion();
+        public static GameObject hitEffectPrefab = Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Commando.HitsparkCommandoShotgun_prefab).WaitForCompletion();
 
         private float duration;
         private float fireTime;
@@ -54,7 +58,7 @@ namespace ChronoMod.Survivors.Chrono.SkillStates {
                 hasFired = true;
 
                 characterBody.AddSpreadBloom(1.5f);
-                EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, gameObject, muzzleString, false);
+                EffectManager.SimpleMuzzleFlash(muzzleFlashPrefab, gameObject, muzzleString, false);
                 Util.PlaySound("HenryShootPistol", gameObject);
 
                 if (isAuthority) {
@@ -88,7 +92,7 @@ namespace ChronoMod.Survivors.Chrono.SkillStates {
                         spreadPitchScale = 1f,
                         spreadYawScale = 1f,
                         queryTriggerInteraction = QueryTriggerInteraction.UseGlobal,
-                        hitEffectPrefab = EntityStates.Commando.CommandoWeapon.FirePistol2.hitEffectPrefab,
+                        hitEffectPrefab = hitEffectPrefab,
                     };
                     bullet.AddModdedDamageType(TimePiercerType.damageType);
                     bullet.Fire();
