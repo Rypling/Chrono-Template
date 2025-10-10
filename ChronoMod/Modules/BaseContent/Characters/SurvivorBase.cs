@@ -1,13 +1,10 @@
-﻿using BepInEx.Configuration;
+﻿using System.Collections.Generic;
 using RoR2;
-using UnityEngine;
-using System.Collections.Generic;
 using RoR2.Skills;
+using UnityEngine;
 
-namespace ChronoMod.Modules.Characters
-{
-    public abstract class SurvivorBase<T> : CharacterBase<T> where T : SurvivorBase<T>, new()
-    {
+namespace ChronoMod.Modules.Characters {
+    public abstract class SurvivorBase<T> : CharacterBase<T> where T : SurvivorBase<T>, new() {
         public abstract string masterName { get; }
 
         public abstract string displayPrefabName { get; }
@@ -18,8 +15,7 @@ namespace ChronoMod.Modules.Characters
 
         public abstract GameObject displayPrefab { get; protected set; }
 
-        public override void InitializeCharacter()
-        {
+        public override void InitializeCharacter() {
             base.InitializeCharacter();
 
             InitializeDisplayPrefab();
@@ -27,22 +23,18 @@ namespace ChronoMod.Modules.Characters
             InitializeSurvivor();
         }
 
-        protected virtual void InitializeDisplayPrefab()
-        {
+        protected virtual void InitializeDisplayPrefab() {
             displayPrefab = Prefabs.CreateDisplayPrefab(assetBundle, displayPrefabName, bodyPrefab);
         }
 
-        protected virtual void InitializeSurvivor()
-        {
+        protected virtual void InitializeSurvivor() {
             Content.CreateSurvivor(bodyPrefab, displayPrefab, bodyInfo.bodyColor, survivorTokenPrefix, characterUnlockableDef, bodyInfo.sortPosition);
         }
 
         #region CharacterSelectSurvivorPreviewDisplayController
-        protected virtual void AddCssPreviewSkill(int indexFromEditor, SkillFamily skillFamily, SkillDef skillDef)
-        {
+        protected virtual void AddCssPreviewSkill(int indexFromEditor, SkillFamily skillFamily, SkillDef skillDef) {
             CharacterSelectSurvivorPreviewDisplayController CSSPreviewDisplayConroller = displayPrefab.GetComponent<CharacterSelectSurvivorPreviewDisplayController>();
-            if (!CSSPreviewDisplayConroller)
-            {
+            if (!CSSPreviewDisplayConroller) {
                 Log.Error("trying to add skillChangeResponse to null CharacterSelectSurvivorPreviewDisplayController.\nMake sure you created one on your Display prefab in editor");
                 return;
             }
@@ -51,11 +43,9 @@ namespace ChronoMod.Modules.Characters
             CSSPreviewDisplayConroller.skillChangeResponses[indexFromEditor].triggerSkill = skillDef;
         }
 
-        protected virtual void AddCssPreviewSkin(int indexFromEditor, SkinDef skinDef)
-        {
+        protected virtual void AddCssPreviewSkin(int indexFromEditor, SkinDef skinDef) {
             CharacterSelectSurvivorPreviewDisplayController CSSPreviewDisplayConroller = displayPrefab.GetComponent<CharacterSelectSurvivorPreviewDisplayController>();
-            if (!CSSPreviewDisplayConroller)
-            {
+            if (!CSSPreviewDisplayConroller) {
                 Log.Error("trying to add skinChangeResponse to null CharacterSelectSurvivorPreviewDisplayController.\nMake sure you created one on your Display prefab in editor");
                 return;
             }
@@ -63,8 +53,7 @@ namespace ChronoMod.Modules.Characters
             CSSPreviewDisplayConroller.skinChangeResponses[indexFromEditor].triggerSkin = skinDef;
         }
 
-        protected virtual void FinalizeCSSPreviewDisplayController()
-        {
+        protected virtual void FinalizeCSSPreviewDisplayController() {
             if (!displayPrefab)
                 return;
 
@@ -78,10 +67,8 @@ namespace ChronoMod.Modules.Characters
             //clear list of null entries
             List<CharacterSelectSurvivorPreviewDisplayController.SkillChangeResponse> newlist = new List<CharacterSelectSurvivorPreviewDisplayController.SkillChangeResponse>();
 
-            for (int i = 0; i < CSSPreviewDisplayConroller.skillChangeResponses.Length; i++)
-            {
-                if (CSSPreviewDisplayConroller.skillChangeResponses[i].triggerSkillFamily != null)
-                {
+            for (int i = 0; i < CSSPreviewDisplayConroller.skillChangeResponses.Length; i++) {
+                if (CSSPreviewDisplayConroller.skillChangeResponses[i].triggerSkillFamily != null) {
                     newlist.Add(CSSPreviewDisplayConroller.skillChangeResponses[i]);
                 }
             }

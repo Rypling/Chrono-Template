@@ -5,7 +5,9 @@ using ChronoMod.Survivors.Chrono.Components;
 using ChronoMod.Survivors.Chrono.SkillStates;
 using RoR2;
 using RoR2.Skills;
+using RoR2BepInExPack.GameAssetPathsBetter;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace ChronoMod.Survivors.Chrono {
     public class ChronoSurvivor : SurvivorBase<ChronoSurvivor> {
@@ -13,14 +15,14 @@ namespace ChronoMod.Survivors.Chrono {
         public override string assetBundleName => "placeholderassetbundle";
 
         //the name of the prefab we will create. conventionally ending in "Body". must be unique
-        public override string bodyName => "HenryBody"; //if you do not change this, you get the point by now
+        public override string bodyName => "ChronoBody"; //if you do not change this, you get the point by now
 
         //name of the ai master for vengeance and goobo. must be unique
-        public override string masterName => "HenryMonsterMaster"; //if you do not
+        public override string masterName => "ChronoMonsterMaster"; //if you do not
 
         //the names of the prefabs you set up in unity that we will use to build your character
-        public override string modelPrefabName => "mdlHenry";
-        public override string displayPrefabName => "HenryDisplay";
+        public override string modelPrefabName => "mdlChronoFS";
+        public override string displayPrefabName => "ChronoFSDisplay";
 
         public const string CHRONO_PREFIX = ChronoPlugin.DEVELOPER_PREFIX + "_CHRONO_";
 
@@ -50,16 +52,18 @@ namespace ChronoMod.Survivors.Chrono {
         {
                 new CustomRendererInfo
                 {
-                    childName = "SwordModel",
-                    material = assetBundle.LoadMaterial("matHenry"),
+                    childName = "BodyMesh",
+                    material = assetBundle.LoadMaterial("matBody"),
                 },
                 new CustomRendererInfo
                 {
-                    childName = "GunModel",
+                    childName = "SpearMesh",
+                    material = assetBundle.LoadMaterial("matSpear"),
                 },
                 new CustomRendererInfo
                 {
-                    childName = "Model",
+                     childName = "OutlineMesh",
+                    material = assetBundle.LoadMaterial("matOutline")
                 }
         };
 
@@ -110,13 +114,17 @@ namespace ChronoMod.Survivors.Chrono {
         private void AdditionalBodySetup() {
             AddHitboxes();
             bodyPrefab.AddComponent<ChronoController>();
-            //bodyPrefab.AddComponent<HuntressTrackerComopnent>();
-            //anything else here
+
+            // Replace animator controllers for false son's
+            displayPrefab.GetComponent<Animator>().runtimeAnimatorController = Addressables.LoadAssetAsync<RuntimeAnimatorController>(RoR2_DLC2_FalseSon.animFalseSonDisplay_controller).WaitForCompletion();
+            Log.Warning("set up display anims");
+            prefabCharacterModel.GetComponent<Animator>().runtimeAnimatorController = Addressables.LoadAssetAsync<RuntimeAnimatorController>(RoR2_DLC2_FalseSon.animFalseSon_controller).WaitForCompletion();
+            Log.Warning("set up body anims");
         }
 
         public void AddHitboxes() {
             //example of how to create a HitBoxGroup. see summary for more details
-            Prefabs.SetupHitBoxGroup(characterModelObject, "SwordGroup", "SwordHitbox");
+            Prefabs.SetupHitBoxGroup(characterModelObject, "SwingGroup", "SwingHitbox");
         }
 
         public override void InitializeEntityStateMachines() {

@@ -38,7 +38,7 @@ namespace ChronoMod.Survivors.Chrono {
 
             #region Passive
             Language.Add(prefix + "PASSIVE_NAME", "Temporal Rift");
-            Language.Add(prefix + "PASSIVE_DESCRIPTION", "For each stack of <style=cIsDamage>Temporal Rift</style> you have, your <style=cIsUtility>move speed</style>, <style=cIsDamage>critical hit chance</style>, and <style=cIsDamage>critical hit damage</style> increase.");
+            Language.Add(prefix + "PASSIVE_DESCRIPTION", "For each stack of <style=cIsDamage>Temporal Rift</style> you have, your <style=cIsUtility>move speed</style>, <style=cIsDamage>critical hit chance</style>, and <style=cIsDamage>critical hit damage</style> increase. Critical hit chance over 100% is converted to critical hit damage.");
             #endregion
 
             #region Primary
@@ -51,7 +51,7 @@ namespace ChronoMod.Survivors.Chrono {
 
             #region Secondary
             Language.Add(prefix + "SECONDARY_PIERCER_NAME", "Time Piercer");
-            Language.Add(prefix + "SECONDARY_PIERCER_DESCRIPTION", $"{Tokens.agilePrefix} Rapidly fire for <style=cIsDamage>{100f * ChronoStaticValues.piercerDamageCoefficient}% damage</style>, <style=cIsUtility>slowing</style> enemies, additionally <style=cIsDamage>freezing</style> them if you have at least <style=cIsUtility>{(int)(ChronoStaticValues.temporalMaxBuffs * ChronoStaticValues.piercerFreezeFrac)}</style> stacks of <style=cIsDamage>Temporal Rift</style>.");
+            Language.Add(prefix + "SECONDARY_PIERCER_DESCRIPTION", $"{Tokens.agilePrefix} Rapidly fire for <style=cIsDamage>{100f * ChronoStaticValues.piercerDamageCoefficient}% damage</style>, <style=cIsUtility>slowing</style> enemies, additionally <style=cIsDamage>stunning</style> at <style=cIsUtility>{(int)(ChronoStaticValues.temporalMaxBuffs * ChronoStaticValues.piercerStunFrac)}</style> stacks of <style=cIsDamage>Temporal Rift</style>, or <style=cIsDamage>freezing</style> at <style=cIsUtility>{(int)(ChronoStaticValues.temporalMaxBuffs * ChronoStaticValues.piercerFreezeFrac)}</style>.");
 
             Language.Add(prefix + "SECONDARY_HORIZON_NAME", "Event Horizon");
             Language.Add(prefix + "SECONDARY_HORIZON_DESCRIPTION", $"{Tokens.agilePrefix} Throw a piece of time itself for <style=cIsDamage>{100f * ChronoStaticValues.horizonDamageCoefficient}% damage</style>, <style=cIsUtility>slowing</style> enemies for a duration proportional to your <style=cIsDamage>Temporal Rift</style> stacks, and <style=cIsDamage>freezing</style> them on a critical hit.");

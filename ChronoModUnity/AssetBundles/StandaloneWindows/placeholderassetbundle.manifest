@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 431939756
+CRC: 2714138177
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 18fd3cc6600665c5fffa6b1203110725
+    Hash: 3ec2a876e48cb75e38f33d09efa5544c
   TypeTreeHash:
     serializedVersion: 2
-    Hash: c48f0af19202858ab915fe1c364c323c
+    Hash: 107ffbb39d30f1095d26d60b320ee682
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -44,11 +44,13 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 1783796254, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
+  Script: {fileID: 1044368294, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+- Class: 114
+  Script: {fileID: 372142912, guid: d382a022563c7517aadbc92ca1060016, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 261c50d8a80898e4ebf2e8e415ea6766, type: 3}
 - Class: 114
   Script: {fileID: 1395413934, guid: da77c7bbf69f66ab2145560542327715, type: 3}
-- Class: 114
-  Script: {fileID: 372142912, guid: d382a022563c7517aadbc92ca1060016, type: 3}
 - Class: 114
   Script: {fileID: -132178706, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
@@ -69,8 +71,6 @@ ClassTypes:
   Script: {fileID: -270136354, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
   Script: {fileID: -1819008361, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-- Class: 114
-  Script: {fileID: 1044368294, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
   Script: {fileID: -1895344032, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
@@ -119,21 +119,25 @@ SerializeReferenceClassIdentifiers:
 Assets:
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/DefaultPose.anim
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texMasteryAchievement.png
+- Assets/Chrono/Model/FS/texture/Emission_Colour.png
 - Assets/Henry/HenryAssets/HenryBundle/Materials/matRebellion.mat
+- Assets/Chrono/Model/FS/texture/matOutline.mat
 - Assets/Henry/HenryAssets/HenryBundle/Mesh/meshNeoCoat.mesh
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/Slash2.anim
 - Assets/Henry/HenryAssets/HenryBundle/Mesh/meshVergil.mesh
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/Descend.anim
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texHenryAchievement.png
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texSpecialIcon.png
+- Assets/Chrono/Model/FS/texture/matSpear.mat
 - Assets/Henry/HenryAssets/HenryBundle/VFX/HenryFistSwingEffect.prefab
-- Assets/Henry/HenryAssets/HenryBundle/Animation/clips/Idle.anim
+- Assets/Henry/HenryAssets/HenryBundle/Animation/clips/WalkB.anim
+- Assets/Chrono/Model/FS/texture/matBody.mat
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texUtilityIcon.png
-- Assets/Henry/HenryAssets/HenryBundle/Animation/clips/SprintR.anim
+- Assets/Henry/HenryAssets/HenryBundle/Animation/clips/Idle.anim
 - Assets/Henry/HenryAssets/HenryBundle/Animation/animHenryMenu.controller
 - Assets/Henry/HenryAssets/HenryBundle/Animation/maskImpact.mask
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/ShootGun.anim
-- Assets/Henry/HenryAssets/HenryBundle/Animation/clips/WalkB.anim
+- Assets/Henry/HenryAssets/HenryBundle/Animation/clips/SprintR.anim
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texStingerIcon.png
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texHenryIcon.png
 - Assets/Henry/HenryAssets/HenryBundle/Mesh/meshHenryAlt.mesh
@@ -144,13 +148,16 @@ Assets:
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/IdleAdditive.anim
 - Assets/Henry/HenryAssets/HenryBundle/HenryBombGhost.prefab
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/WalkR.anim
-- Assets/Henry/HenryAssets/HenryBundle/Materials/matBoxingGlove.mat
+- Assets/Chrono/Model/FS/texture/Base_Colour.png
 - Assets/Henry/HenryAssets/HenryBundle/VFX/Mesh/meshBoxingGlove.mesh
+- Assets/Henry/HenryAssets/HenryBundle/Materials/matBoxingGlove.mat
 - Assets/Henry/HenryAssets/HenryBundle/Textures/texShotgun.png
 - Assets/Henry/HenryAssets/HenryBundle/VFX/Textures/texSmoke.png
 - Assets/Henry/HenryAssets/HenryBundle/VFX/Materials/matPunchEffect.mat
+- Assets/Chrono/Model/FS/texture/Gun_Base_Colour.png
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texBazookaOutIcon.png
 - Assets/Henry/HenryAssets/HenryBundle/VFX/Textures/texSlash.png
+- Assets/Chrono/Model/FS/ChronoFSDisplay.prefab
 - Assets/Henry/HenryAssets/HenryBundle/Mesh/MeshHenryGun.mesh
 - Assets/Henry/HenryAssets/HenryBundle/Materials/matDante.mat
 - Assets/Henry/HenryAssets/HenryBundle/Textures/texHenryJediEmission.png
@@ -174,8 +181,8 @@ Assets:
 - Assets/Henry/HenryAssets/HenryBundle/VFX/Materials/matTrail.mat
 - Assets/Henry/HenryAssets/HenryBundle/Materials/matHenryJedi.mat
 - Assets/Henry/HenryAssets/HenryBundle/Textures/texHenryDanteEmission.png
+- Assets/Chrono/Model/FS/texture/matGun.mat
 - Assets/Henry/HenryAssets/HenryBundle/Textures/texHenryVergil.png
-- Assets/Henry/HenryAssets/HenryBundle/VFX/Textures/texLightning.tif
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/Roll.anim
 - Assets/Henry/HenryAssets/HenryBundle/Materials/matShotgun.mat
 - Assets/Henry/HenryAssets/HenryBundle/VFX/Materials/matPunchImpactShadow.mat
@@ -184,6 +191,7 @@ Assets:
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/IdleIn.anim
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texBoxingGlovesIcon.png
 - Assets/Henry/HenryAssets/HenryBundle/VFX/Textures/texFire.tga
+- Assets/Henry/HenryAssets/HenryBundle/VFX/Textures/texLightning.tif
 - Assets/Henry/HenryAssets/HenryBundle/Mesh/meshYamato.mesh
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/AimPitch.anim
 - Assets/Henry/HenryAssets/HenryBundle/VFX/Materials/matEmbers.mat
@@ -202,7 +210,7 @@ Assets:
 - Assets/Henry/HenryAssets/HenryBundle/mdlHenry.prefab
 - Assets/Henry/HenryAssets/HenryBundle/VFX/Textures/texSwingEffect.png
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/Jump.anim
-- Assets/Henry/HenryAssets/HenryBundle/Mesh/meshPistol.mesh
+- Assets/Chrono/Model/FS/mdlChronoFS.prefab
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texUziIcon.png
 - Assets/Henry/HenryAssets/HenryBundle/Animation/maskLeftArm.mask
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/SprintF.anim
@@ -213,6 +221,7 @@ Assets:
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/RestIdle.anim
 - Assets/Henry/HenryAssets/HenryBundle/VFX/Materials/matFistSwing.mat
 - Assets/Henry/HenryAssets/HenryBundle/Materials/matVergil.mat
+- Assets/Henry/HenryAssets/HenryBundle/Mesh/meshPistol.mesh
 - Assets/Henry/HenryAssets/HenryBundle/VFX/HenryDustEffect.prefab
 - Assets/Henry/HenryAssets/HenryBundle/Materials/matHenry.mat
 - Assets/Henry/HenryAssets/HenryBundle/VFX/Mesh/meshPunchShockwave.mesh
@@ -257,6 +266,7 @@ Assets:
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texScepterSpecialIcon.png
 - Assets/Henry/HenryAssets/HenryBundle/VFX/Textures/texPunchImpactShadow.png
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texBazookaFireIcon.png
+- Assets/Chrono/Model/FS/texture/Spear_Base_Colour.png
 - Assets/Henry/HenryAssets/HenryBundle/Mesh/meshVergilCoat.mesh
 - Assets/Henry/HenryAssets/HenryBundle/VFX/ImpactHenrySlash.prefab
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texBazookaIcon.png

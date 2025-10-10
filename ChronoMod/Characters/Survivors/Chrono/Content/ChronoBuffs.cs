@@ -51,7 +51,6 @@ namespace ChronoMod.Survivors.Chrono {
             ChronoController controller = self.GetComponent<ChronoController>();
             if (self.HasBuff(temporalRiftBuff) && controller != null) {
                 float buffFrac = self.GetBuffCount(temporalRiftBuff) / ChronoStaticValues.temporalMaxBuffs;
-                Log.Info($"buffFrac increase is {buffFrac}");
                 args.moveSpeedMultAdd += ChronoStaticValues.temporalMaxSpdMultAdd * buffFrac;
                 args.critAdd += ChronoStaticValues.temporalMaxCritAdd * buffFrac;
                 args.critDamageMultAdd += ChronoStaticValues.temporalMaxCritDmgMultAdd * buffFrac;
@@ -73,8 +72,9 @@ namespace ChronoMod.Survivors.Chrono {
         }
 
         private static void ContinuumFreezeLifesteal(HealthComponent self, DamageInfo damageInfo) {
-            HealthComponent attackerHealth = damageInfo.attacker?.GetComponent<HealthComponent>();
-            if (attackerHealth != null && attackerHealth?.body != null && attackerHealth.body.HasBuff(continuumFreezeBuff)) {
+            HealthComponent attackerHealth = damageInfo?.attacker?.GetComponent<HealthComponent>();
+            CharacterBody body = attackerHealth?.body;
+            if (body != null && body.HasBuff(continuumFreezeBuff)) {
                 attackerHealth.Heal(damageInfo.damage * 0.1f, default(ProcChainMask));
             }
         }

@@ -20,7 +20,7 @@
 
         public const float temporalLowerDecayTime = 1.5f;
 
-        public const float temporalMaxSpdMultAdd = 1f;
+        public const float temporalMaxSpdMultAdd = 0.8f;
 
         public const float temporalMaxCritAdd = 35f;
 
@@ -29,7 +29,9 @@
         public const float temporalOnBuffSlowTimer = 1.2f;
 
         // time piercer freeze
-        public const float piercerFreezeFrac = 0.5f;
+        public const float piercerFreezeFrac = 0.75f;
+
+        public const float piercerStunFrac = 0.5f;
 
         // horizon slow
         public const float horizonMinSlowDuration = 4f;

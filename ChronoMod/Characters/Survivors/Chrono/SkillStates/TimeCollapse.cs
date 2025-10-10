@@ -84,7 +84,6 @@ namespace ChronoMod.Survivors.Chrono.SkillStates {
                 };
                 orb.AddModdedDamageType(TimeCollapseType.damageType);
                 OrbManager.instance.AddOrb(orb);
-                Log.Info($"recentDamageTracker was at {characterBody.GetComponent<ChronoController>().recentDamageTracker}, multiplied it by {1 + buffCount / ChronoStaticValues.temporalMaxBuffs}");
                 currentTarget = default(EquipmentSlot.UserTargetInfo);
                 return true;
             }

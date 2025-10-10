@@ -32,11 +32,9 @@ namespace ChronoMod.Survivors.Chrono {
 
             _assetBundle = assetBundle;
 
-            swordHitSoundEvent = Content.CreateAndAddNetworkSoundEventDef("HenrySwordHit");
-
             ChronoPlugin.instance.StartCoroutine(ShaderSwapper.ShaderSwapper.UpgradeStubbedShadersAsync(assetBundle));
 
-            // ShaderSwapper.ShaderSwapper.UpgradeStubbedShader(_assetBundle.LoadAsset<Material>("matContinuumSphereIndicator"));
+            swordHitSoundEvent = Content.CreateAndAddNetworkSoundEventDef("HenrySwordHit");
 
             CreateEffects();
 

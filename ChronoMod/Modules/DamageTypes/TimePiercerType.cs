@@ -16,8 +16,13 @@ namespace ChronoMod.Modules.DamageTypes {
         private static void AddSlowBuffs(HealthComponent self, DamageInfo damageInfo) {
             if (damageInfo.HasModdedDamageType(damageType)) {
                 CharacterBody attackerBody = damageInfo.attacker?.GetComponent<CharacterBody>();
-                if (attackerBody != null && attackerBody.GetBuffCount(ChronoBuffs.temporalRiftBuff) >= ChronoStaticValues.temporalMaxBuffs * ChronoStaticValues.piercerFreezeFrac) {
-                    self.body?.GetComponent<SetStateOnHurt>()?.SetFrozen(2f);
+                if (attackerBody != null) {
+                    int buffCount = attackerBody.GetBuffCount(ChronoBuffs.temporalRiftBuff);
+                    if (buffCount >= ChronoStaticValues.temporalMaxBuffs * ChronoStaticValues.piercerFreezeFrac) {
+                        self.body?.GetComponent<SetStateOnHurt>()?.SetFrozen(2f);
+                    } else if (buffCount >= ChronoStaticValues.temporalMaxBuffs * ChronoStaticValues.piercerStunFrac) {
+                        self.body?.GetComponent<SetStateOnHurt>()?.SetStun(2f);
+                    }
                 }
                 self.body?.AddTimedBuff(RoR2Content.Buffs.Slow60, 4f);
             }

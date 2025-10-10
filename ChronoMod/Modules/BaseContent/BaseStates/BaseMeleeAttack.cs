@@ -2,15 +2,11 @@
 using RoR2;
 using RoR2.Audio;
 using RoR2.Skills;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace ChronoMod.Modules.BaseStates
-{
-    public abstract class BaseMeleeAttack : BaseSkillState, SteppedSkillDef.IStepSetter
-    {
+namespace ChronoMod.Modules.BaseStates {
+    public abstract class BaseMeleeAttack : BaseSkillState, SteppedSkillDef.IStepSetter {
         public int swingIndex;
 
         protected string hitboxGroupName = "SwordGroup";
@@ -50,8 +46,7 @@ namespace ChronoMod.Modules.BaseStates
         private HitStopCachedState hitStopCachedState;
         private Vector3 storedVelocity;
 
-        public override void OnEnter()
-        {
+        public override void OnEnter() {
             base.OnEnter();
             duration = baseDuration / attackSpeedStat;
             animator = GetModelAnimator();
@@ -76,38 +71,30 @@ namespace ChronoMod.Modules.BaseStates
             ModifyOverlapAttack(attack);
         }
 
-        protected virtual void ModifyOverlapAttack(OverlapAttack attack)
-        {
+        protected virtual void ModifyOverlapAttack(OverlapAttack attack) {
 
         }
 
-        protected virtual void PlayAttackAnimation()
-        {
+        protected virtual void PlayAttackAnimation() {
             PlayCrossfade("Gesture, Override", "Slash" + (1 + swingIndex), playbackRateParam, duration, 0.05f);
         }
 
-        public override void OnExit()
-        {
-            if (inHitPause)
-            {
+        public override void OnExit() {
+            if (inHitPause) {
                 RemoveHitstop();
             }
             base.OnExit();
         }
 
-        protected virtual void PlaySwingEffect()
-        {
+        protected virtual void PlaySwingEffect() {
             EffectManager.SimpleMuzzleFlash(swingEffectPrefab, gameObject, muzzleString, false);
         }
 
-        protected virtual void OnHitEnemyAuthority()
-        {
+        protected virtual void OnHitEnemyAuthority() {
             Util.PlaySound(hitSoundString, gameObject);
 
-            if (!hasHopped)
-            {
-                if (characterMotor && !characterMotor.isGrounded && hitHopVelocity > 0f)
-                {
+            if (!hasHopped) {
+                if (characterMotor && !characterMotor.isGrounded && hitHopVelocity > 0f) {
                     SmallHop(characterMotor, hitHopVelocity);
                 }
 
@@ -117,10 +104,8 @@ namespace ChronoMod.Modules.BaseStates
             ApplyHitstop();
         }
 
-        protected void ApplyHitstop()
-        {
-            if (!inHitPause && hitStopDuration > 0f)
-            {
+        protected void ApplyHitstop() {
+            if (!inHitPause && hitStopDuration > 0f) {
                 storedVelocity = characterMotor.velocity;
                 hitStopCachedState = CreateHitStopCachedState(characterMotor, animator, playbackRateParam);
                 hitPauseTimer = hitStopDuration / attackSpeedStat;
@@ -128,47 +113,37 @@ namespace ChronoMod.Modules.BaseStates
             }
         }
 
-        private void FireAttack()
-        {
-            if (isAuthority)
-            {
-                if (attack.Fire())
-                {
+        private void FireAttack() {
+            if (isAuthority) {
+                if (attack.Fire()) {
                     OnHitEnemyAuthority();
                 }
             }
         }
 
-        private void EnterAttack()
-        {
+        private void EnterAttack() {
             hasFired = true;
             Util.PlayAttackSpeedSound(swingSoundString, gameObject, attackSpeedStat);
 
             PlaySwingEffect();
 
-            if (isAuthority)
-            {
+            if (isAuthority) {
                 AddRecoil(-1f * attackRecoil, -2f * attackRecoil, -0.5f * attackRecoil, 0.5f * attackRecoil);
             }
         }
 
-        public override void FixedUpdate()
-        {
+        public override void FixedUpdate() {
             base.FixedUpdate();
 
             hitPauseTimer -= Time.deltaTime;
 
-            if (hitPauseTimer <= 0f && inHitPause)
-            {
+            if (hitPauseTimer <= 0f && inHitPause) {
                 RemoveHitstop();
             }
 
-            if (!inHitPause)
-            {
+            if (!inHitPause) {
                 stopwatch += Time.deltaTime;
-            }
-            else
-            {
+            } else {
                 if (characterMotor) characterMotor.velocity = Vector3.zero;
                 if (animator) animator.SetFloat(playbackRateParam, 0f);
             }
@@ -177,52 +152,43 @@ namespace ChronoMod.Modules.BaseStates
             bool fireEnded = stopwatch >= duration * attackEndPercentTime;
 
             //to guarantee attack comes out if at high attack speed the stopwatch skips past the firing duration between frames
-            if (fireStarted && !fireEnded || fireStarted && fireEnded && !hasFired)
-            {
-                if (!hasFired)
-                {
+            if (fireStarted && !fireEnded || fireStarted && fireEnded && !hasFired) {
+                if (!hasFired) {
                     EnterAttack();
                 }
                 FireAttack();
             }
 
-            if (stopwatch >= duration && isAuthority)
-            {
+            if (stopwatch >= duration && isAuthority) {
                 outer.SetNextStateToMain();
                 return;
             }
         }
 
-        private void RemoveHitstop()
-        {
+        private void RemoveHitstop() {
             ConsumeHitStopCachedState(hitStopCachedState, characterMotor, animator);
             inHitPause = false;
             characterMotor.velocity = storedVelocity;
         }
 
-        public override InterruptPriority GetMinimumInterruptPriority()
-        {
-            if (stopwatch >= duration * earlyExitPercentTime)
-            {
+        public override InterruptPriority GetMinimumInterruptPriority() {
+            if (stopwatch >= duration * earlyExitPercentTime) {
                 return InterruptPriority.Any;
             }
             return InterruptPriority.Skill;
         }
 
-        public override void OnSerialize(NetworkWriter writer)
-        {
+        public override void OnSerialize(NetworkWriter writer) {
             base.OnSerialize(writer);
             writer.Write(swingIndex);
         }
 
-        public override void OnDeserialize(NetworkReader reader)
-        {
+        public override void OnDeserialize(NetworkReader reader) {
             base.OnDeserialize(reader);
             swingIndex = reader.ReadInt32();
         }
 
-        public void SetStep(int i)
-        {
+        public void SetStep(int i) {
             swingIndex = i;
         }
     }
