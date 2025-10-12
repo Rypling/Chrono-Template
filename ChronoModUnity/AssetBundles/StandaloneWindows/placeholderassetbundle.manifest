@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2744323461
+CRC: 3527112210
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: da3e0ef223adc98d6a28ebf372844d45
+    Hash: 91a6f25f7b3c970310afc1b878bb04ec
   TypeTreeHash:
     serializedVersion: 2
-    Hash: e7bf4de7482eb7bc99e4d2a2abb0fa9a
+    Hash: 381363124251db8ca12af2166622e60d
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -44,8 +44,6 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 1783796254, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
-  Script: {fileID: 1044368294, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-- Class: 114
   Script: {fileID: 372142912, guid: d382a022563c7517aadbc92ca1060016, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 261c50d8a80898e4ebf2e8e415ea6766, type: 3}
@@ -57,10 +55,6 @@ ClassTypes:
   Script: {fileID: -1845404088, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
   Script: {fileID: 1788389205, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-- Class: 114
-  Script: {fileID: -875252823, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-- Class: 114
-  Script: {fileID: 488236779, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
   Script: {fileID: -1848696948, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
@@ -75,6 +69,8 @@ ClassTypes:
   Script: {fileID: -1819008361, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
   Script: {fileID: 2137989374, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+- Class: 114
+  Script: {fileID: -455717551, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
   Script: {fileID: -1895344032, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
@@ -108,8 +104,6 @@ SerializeReferenceClassIdentifiers:
   ClassName: ChildLocator/NameTransformPair
 - AssemblyName: RoR2
   ClassName: RoR2.DamageTypeCombo
-- AssemblyName: RoR2
-  ClassName: Wave
 - AssemblyName: Unity.Addressables
   ClassName: UnityEngine.AddressableAssets.AssetReferenceT`1[UnityEngine.GameObject]
 - AssemblyName: UnityEngine.CoreModule
@@ -125,6 +119,7 @@ Assets:
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texMasteryAchievement.png
 - Assets/Chrono/Model/FS/texture/Emission_Colour.png
 - Assets/Henry/HenryAssets/HenryBundle/Materials/matRebellion.mat
+- Assets/Chrono/Skills/AltPrimary/matThrowTrail1.mat
 - Assets/Chrono/Model/FS/texture/matOutline.mat
 - Assets/Henry/HenryAssets/HenryBundle/Mesh/meshNeoCoat.mesh
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/Slash2.anim
@@ -211,8 +206,8 @@ Assets:
 - Assets/Henry/HenryAssets/HenryBundle/Animation/maskAimBazooka.mask
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texBazookaIconScepter.png
 - Assets/Henry/HenryAssets/HenryBundle/VFX/Textures/texPunchImpact.png
+- Assets/Chrono/Skills/AltSecondary/HorizonProjectileGhost.prefab
 - Assets/Henry/HenryAssets/HenryBundle/mdlHenry.prefab
-- Assets/Henry/HenryAssets/HenryBundle/VFX/Textures/texSwingEffect.png
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/Jump.anim
 - Assets/Chrono/Model/FS/mdlChronoFS.prefab
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texUziIcon.png
@@ -236,6 +231,7 @@ Assets:
 - Assets/Henry/HenryAssets/HenryBundle/Animation/animHenry.controller
 - Assets/Henry/HenryAssets/HenryBundle/Mesh/meshUzi.mesh
 - Assets/Chrono/Skills/AltPrimary/ThrowProjectile.prefab
+- Assets/Henry/HenryAssets/HenryBundle/VFX/Textures/texSwingEffect.png
 - Assets/Chrono/Skills/AltUtility/ContinuumWard.prefab
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/ThrowBomb.anim
 - Assets/Henry/HenryAssets/HenryBundle/VFX/Textures/texEmbers.png

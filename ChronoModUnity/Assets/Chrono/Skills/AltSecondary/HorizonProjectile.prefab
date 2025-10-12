@@ -2414,7 +2414,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   catalogIndex: 28
-  ghostPrefab: {fileID: 1477441372478857, guid: 94d60ed14c997934085daf2c947c1ef4, type: 3}
+  ghostPrefab: {fileID: 0}
   ghostPrefabReference:
     m_AssetGUID: 
     m_SubObjectName: 
@@ -2581,7 +2581,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1838001627886593}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -132178706, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 

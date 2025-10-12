@@ -15,10 +15,10 @@ namespace ChronoMod.Survivors.Chrono {
         public override string assetBundleName => "placeholderassetbundle";
 
         //the name of the prefab we will create. conventionally ending in "Body". must be unique
-        public override string bodyName => "ChronoBody"; //if you do not change this, you get the point by now
+        public override string bodyName => "ChronoBody";
 
         //name of the ai master for vengeance and goobo. must be unique
-        public override string masterName => "ChronoMonsterMaster"; //if you do not
+        public override string masterName => "ChronoMonsterMaster";
 
         //the names of the prefabs you set up in unity that we will use to build your character
         public override string modelPrefabName => "mdlChronoFS";
@@ -223,7 +223,7 @@ namespace ChronoMod.Survivors.Chrono {
             primarySkillDef1.stepCount = 2;
             primarySkillDef1.stepGraceDuration = 0.5f;
 
-            SkillDef primarySkillDef2 = Skills.CreateSkillDef(new SkillDefInfo {
+            SteppedSkillDef primarySkillDef2 = Skills.CreateSkillDef<SteppedSkillDef>(new SkillDefInfo {
                 skillName = "ChronoThrow",
                 skillNameToken = CHRONO_PREFIX + "PRIMARY_THROW_NAME",
                 skillDescriptionToken = CHRONO_PREFIX + "PRIMARY_THROW_DESCRIPTION",
@@ -243,6 +243,8 @@ namespace ChronoMod.Survivors.Chrono {
                 cancelSprintingOnActivation = false,
                 forceSprintDuringState = false,
             });
+            primarySkillDef2.stepCount = 2;
+            primarySkillDef2.stepGraceDuration = 0.5f;
 
             Skills.AddPrimarySkills(bodyPrefab, primarySkillDef1, primarySkillDef2);
         }
@@ -302,7 +304,7 @@ namespace ChronoMod.Survivors.Chrono {
                 resetCooldownTimerOnUse = false,
                 fullRestockOnAssign = true,
                 dontAllowPastMaxStocks = false,
-                mustKeyPress = false,
+                mustKeyPress = true,
                 beginSkillCooldownOnSkillEnd = false,
 
                 isCombatSkill = true,

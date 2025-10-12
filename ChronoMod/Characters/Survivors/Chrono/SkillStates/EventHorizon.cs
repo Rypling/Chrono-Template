@@ -41,10 +41,8 @@ namespace ChronoMod.Survivors.Chrono.SkillStates {
         }
 
         public override void PlayAnimation(float duration) {
-
-            if (GetModelAnimator()) {
-                PlayAnimation("Gesture, Override", "ThrowBomb", "ThrowBomb.playbackRate", this.duration);
-            }
+            PlayCrossfade("Gesture, Additive", "FireLunarSpike", "LunarSpike.playbackRate", duration, 0.1f);
+            PlayCrossfade("Gesture, Override", "FireLunarSpike", "LunarSpike.playbackRate", duration, 0.1f);
         }
     }
 }

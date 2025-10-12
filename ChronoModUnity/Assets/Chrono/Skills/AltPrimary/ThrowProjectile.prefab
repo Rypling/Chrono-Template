@@ -2326,8 +2326,9 @@ GameObject:
   - component: {fileID: 114871974654266928}
   - component: {fileID: 114800064881786394}
   - component: {fileID: 114318709684010258}
-  - component: {fileID: 114077254220000434}
   - component: {fileID: 3890211906599226238}
+  - component: {fileID: 8418958802224604815}
+  - component: {fileID: 1786251777724621644}
   m_Layer: 14
   m_Name: ThrowProjectile
   m_TagString: Untagged
@@ -2414,7 +2415,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   catalogIndex: 28
-  ghostPrefab: {fileID: 1477441372478857, guid: 94d60ed14c997934085daf2c947c1ef4, type: 3}
+  ghostPrefab: {fileID: 1282770412666854368, guid: a2349651f0e416b4aba3aec04f4068f2, type: 3}
   ghostPrefabReference:
     m_AssetGUID: 
     m_SubObjectName: 
@@ -2574,20 +2575,6 @@ MonoBehaviour:
     damageSource: 1
   useDotMaxStacksFromAttacker: 0
   dotMaxStacksFromAttacker: 4294967295
---- !u!114 &114077254220000434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1838001627886593}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -132178706, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  localTorque: {x: 300, y: 300, z: 300}
-  randomize: 1
 --- !u!135 &3890211906599226238
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2601,6 +2588,39 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8418958802224604815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838001627886593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1395413934, guid: da77c7bbf69f66ab2145560542327715, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 1
+  _slowRotationSpeed: 180
+  _fastRotationSpeed: 20
+  _rotateAroundAxis: 2
+  _relativeTo: 1
+  _reverse: 0
+--- !u!114 &1786251777724621644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838001627886593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -455717551, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  setRandomXRotation: 0
+  setRandomYRotation: 0
+  setRandomZRotation: 1
 --- !u!1 &1929384938584778
 GameObject:
   m_ObjectHideFlags: 0

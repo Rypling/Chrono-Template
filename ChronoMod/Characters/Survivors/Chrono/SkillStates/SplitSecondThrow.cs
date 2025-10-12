@@ -1,15 +1,18 @@
-﻿using EntityStates;
+﻿using System.Collections;
+using EntityStates;
 using RoR2.Projectile;
+using RoR2.Skills;
+using UnityEngine;
+using UnityEngine.Networking;
 
 namespace ChronoMod.Survivors.Chrono.SkillStates {
-    public class SplitSecondThrow : GenericProjectileBaseState {
+    public class SplitSecondThrow : GenericProjectileBaseState, SteppedSkillDef.IStepSetter {
+        public int swingIndex;
 
         public override void OnEnter() {
             projectilePrefab = ChronoAssets.throwProjectilePrefab;
             //base.effectPrefab = Modules.Assets.SomeMuzzleEffect;
-            // targetMuzzle = "muzzleThrow";
-
-            attackSoundString = "HenryBombThrow";
+            targetMuzzle = "HandL";
 
             baseDuration = 0.8f;
             baseDelayBeforeFiringProjectile = 0.0f;
@@ -41,10 +44,47 @@ namespace ChronoMod.Survivors.Chrono.SkillStates {
         }
 
         public override void PlayAnimation(float duration) {
+            // Logic from slashcombo which is from false son.... hm
+            Animator animator = GetModelAnimator();
+            bool isStill = !animator.GetBool("isMoving") && animator.GetBool("isGrounded");
+            string animationStateName = ((swingIndex == 0) ? "SwingClubRight" : "SwingClubLeft");
+            float animDuration = Mathf.Max(duration, 0.2f);
 
-            if (GetModelAnimator()) {
-                PlayAnimation("Gesture, Override", "ThrowBomb", "ThrowBomb.playbackRate", this.duration);
+            characterBody.StartCoroutine(HideSpearMesh(animDuration * 0.6f));
+
+            if (swingIndex == 0) {
+                animDuration *= 0.5f;
             }
+
+            if (isStill) {
+                PlayCrossfade("FullBody, Override", animationStateName, "SwingClub.playbackRate", animDuration, 0.025f);
+                return;
+            }
+            PlayCrossfade("Gesture, Additive", animationStateName, "SwingClub.playbackRate", animDuration, 0.1f);
+            PlayCrossfade("Gesture, Override", animationStateName, "SwingClub.playbackRate", animDuration, 0.1f);
+        }
+
+        protected IEnumerator HideSpearMesh(float duration) {
+            GameObject spear = GetModelChildLocator()?.FindChild("SpearMesh")?.gameObject;
+            if (spear != null && spear.activeSelf) {
+                spear.SetActive(false);
+                yield return new WaitForSeconds(duration);
+                spear.SetActive(true);
+            }
+        }
+
+        public override void OnSerialize(NetworkWriter writer) {
+            base.OnSerialize(writer);
+            writer.Write(swingIndex);
+        }
+
+        public override void OnDeserialize(NetworkReader reader) {
+            base.OnDeserialize(reader);
+            swingIndex = reader.ReadInt32();
+        }
+
+        public void SetStep(int i) {
+            swingIndex = i;
         }
     }
 }
