@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3527112210
+CRC: 2443013718
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 91a6f25f7b3c970310afc1b878bb04ec
+    Hash: 89422ce91bf6768eeb0769c40e841ffd
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 381363124251db8ca12af2166622e60d
+    Hash: 56f1f62cb724d466fccd5aa11c0b7281
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -42,9 +42,13 @@ ClassTypes:
 - Class: 108
   Script: {instanceID: 0}
 - Class: 114
+  Script: {fileID: 678291247, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+- Class: 114
   Script: {fileID: 1783796254, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
   Script: {fileID: 372142912, guid: d382a022563c7517aadbc92ca1060016, type: 3}
+- Class: 114
+  Script: {fileID: 1788389205, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 261c50d8a80898e4ebf2e8e415ea6766, type: 3}
 - Class: 114
@@ -54,13 +58,9 @@ ClassTypes:
 - Class: 114
   Script: {fileID: -1845404088, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
-  Script: {fileID: 1788389205, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-- Class: 114
   Script: {fileID: -1848696948, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
   Script: {fileID: 1790887305, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-- Class: 114
-  Script: {fileID: 678291247, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
   Script: {fileID: -317677761, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
@@ -116,6 +116,7 @@ SerializeReferenceClassIdentifiers:
   ClassName: UnityEngine.Networking.NetworkSceneId
 Assets:
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/DefaultPose.anim
+- Assets/Chrono/Icons/texChronoIcon.png
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texMasteryAchievement.png
 - Assets/Chrono/Model/FS/texture/Emission_Colour.png
 - Assets/Henry/HenryAssets/HenryBundle/Materials/matRebellion.mat
@@ -206,8 +207,8 @@ Assets:
 - Assets/Henry/HenryAssets/HenryBundle/Animation/maskAimBazooka.mask
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texBazookaIconScepter.png
 - Assets/Henry/HenryAssets/HenryBundle/VFX/Textures/texPunchImpact.png
-- Assets/Chrono/Skills/AltSecondary/HorizonProjectileGhost.prefab
 - Assets/Henry/HenryAssets/HenryBundle/mdlHenry.prefab
+- Assets/Henry/HenryAssets/HenryBundle/VFX/Textures/texSwingEffect.png
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/Jump.anim
 - Assets/Chrono/Model/FS/mdlChronoFS.prefab
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texUziIcon.png
@@ -231,7 +232,6 @@ Assets:
 - Assets/Henry/HenryAssets/HenryBundle/Animation/animHenry.controller
 - Assets/Henry/HenryAssets/HenryBundle/Mesh/meshUzi.mesh
 - Assets/Chrono/Skills/AltPrimary/ThrowProjectile.prefab
-- Assets/Henry/HenryAssets/HenryBundle/VFX/Textures/texSwingEffect.png
 - Assets/Chrono/Skills/AltUtility/ContinuumWard.prefab
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/ThrowBomb.anim
 - Assets/Henry/HenryAssets/HenryBundle/VFX/Textures/texEmbers.png

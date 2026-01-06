@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Reflection;
 using R2API;
 using RoR2;
 using RoR2.Projectile;
@@ -24,7 +25,14 @@ namespace ChronoMod.Modules {
 
             AssetBundle assetBundle = null;
             try {
-                assetBundle = AssetBundle.LoadFromFile(Path.Combine(Path.GetDirectoryName(ChronoPlugin.instance.Info.Location), "AssetBundles", bundleName));
+                using (var assetStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"ChronoMod.{bundleName}")) {
+                    if (assetStream != null) {
+                        assetBundle = AssetBundle.LoadFromStream(assetStream);
+                    }
+                }
+                if (assetBundle == null) {
+                    assetBundle = AssetBundle.LoadFromFile(Path.Combine(Path.GetDirectoryName(ChronoPlugin.instance.Info.Location), "AssetBundles", bundleName));
+                }
             } catch (System.Exception e) {
                 Log.Error($"Error loading asset bundle, {bundleName}. Your asset bundle must be in a folder next to your mod dll called 'AssetBundles'. Follow the guide to build and install your mod correctly!\n{e}");
             }

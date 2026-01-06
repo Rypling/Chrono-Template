@@ -1,17 +1,12 @@
-﻿using R2API;
-using RoR2;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using RoR2;
 using UnityEngine;
 
-namespace ChronoMod.Modules
-{
-    internal static class Skins
-    {
-        internal static SkinDef CreateSkinDef(string skinName, Sprite skinIcon, CharacterModel.RendererInfo[] defaultRendererInfos, GameObject root, UnlockableDef unlockableDef = null)
-        {
-            SkinDefInfo skinDefInfo = new SkinDefInfo
-            {
+namespace ChronoMod.Modules {
+    internal static class Skins {
+        internal static SkinDef CreateSkinDef(string skinName, Sprite skinIcon, CharacterModel.RendererInfo[] defaultRendererInfos, GameObject root, UnlockableDef unlockableDef = null) {
+            SkinDefInfo skinDefInfo = new SkinDefInfo {
                 BaseSkins = Array.Empty<SkinDef>(),
                 GameObjectActivations = new SkinDef.GameObjectActivation[0],
                 Icon = skinIcon,
@@ -25,7 +20,7 @@ namespace ChronoMod.Modules
                 UnlockableDef = unlockableDef
             };
 
-            On.RoR2.SkinDef.Awake += DoNothing;
+            // On.RoR2.SkinDef.Awake += DoNothing;
 
             SkinDef skinDef = ScriptableObject.CreateInstance<RoR2.SkinDef>();
             skinDef.baseSkins = skinDefInfo.BaseSkins;
@@ -41,17 +36,15 @@ namespace ChronoMod.Modules
             skinDef.nameToken = skinDefInfo.NameToken;
             skinDef.name = skinDefInfo.Name;
 
-            On.RoR2.SkinDef.Awake -= DoNothing;
+            // On.RoR2.SkinDef.Awake -= DoNothing;
 
             return skinDef;
         }
 
-        private static void DoNothing(On.RoR2.SkinDef.orig_Awake orig, RoR2.SkinDef self)
-        {
+        private static void DoNothing(On.RoR2.SkinDef.orig_Awake orig, RoR2.SkinDef self) {
         }
 
-        internal struct SkinDefInfo
-        {
+        internal struct SkinDefInfo {
             internal SkinDef[] BaseSkins;
             internal Sprite Icon;
             internal string NameToken;
@@ -65,19 +58,14 @@ namespace ChronoMod.Modules
             internal string Name;
         }
 
-        private static CharacterModel.RendererInfo[] getRendererMaterials(CharacterModel.RendererInfo[] defaultRenderers, params Material[] materials)
-        {
+        private static CharacterModel.RendererInfo[] getRendererMaterials(CharacterModel.RendererInfo[] defaultRenderers, params Material[] materials) {
             CharacterModel.RendererInfo[] newRendererInfos = new CharacterModel.RendererInfo[defaultRenderers.Length];
             defaultRenderers.CopyTo(newRendererInfos, 0);
 
-            for (int i = 0; i < newRendererInfos.Length; i++)
-            {
-                try
-                {
+            for (int i = 0; i < newRendererInfos.Length; i++) {
+                try {
                     newRendererInfos[i].defaultMaterial = materials[i];
-                }
-                catch
-                {
+                } catch {
                     Log.Error("error adding skin rendererinfo material. make sure you're not passing in too many");
                 }
             }
@@ -97,19 +85,16 @@ namespace ChronoMod.Modules
         /// <param name="defaultRendererInfos">your skindef's rendererinfos to access the renderers</param>
         /// <param name="meshes">name of the mesh assets in your project</param>
         /// <returns></returns>
-        internal static SkinDef.MeshReplacement[] getMeshReplacements(AssetBundle assetBundle, CharacterModel.RendererInfo[] defaultRendererInfos, params string[] meshes)
-        {
+        internal static SkinDef.MeshReplacement[] getMeshReplacements(AssetBundle assetBundle, CharacterModel.RendererInfo[] defaultRendererInfos, params string[] meshes) {
 
             List<SkinDef.MeshReplacement> meshReplacements = new List<SkinDef.MeshReplacement>();
 
-            for (int i = 0; i < defaultRendererInfos.Length; i++)
-            {
+            for (int i = 0; i < defaultRendererInfos.Length; i++) {
                 if (string.IsNullOrEmpty(meshes[i]))
                     continue;
 
                 meshReplacements.Add(
-                new SkinDef.MeshReplacement
-                {
+                new SkinDef.MeshReplacement {
                     renderer = defaultRendererInfos[i].renderer,
                     mesh = assetBundle.LoadAsset<Mesh>(meshes[i])
                 });

@@ -34,7 +34,7 @@ namespace ChronoMod.Survivors.Chrono {
             bodyNameToken = CHRONO_PREFIX + "NAME",
             subtitleNameToken = CHRONO_PREFIX + "SUBTITLE",
 
-            characterPortrait = assetBundle.LoadAsset<Texture>("texHenryIcon"),
+            characterPortrait = assetBundle.LoadAsset<Texture>("texChronoIcon"),
             bodyColor = Color.white,
             sortPosition = 100,
 

@@ -13,6 +13,7 @@ using RoR2;
 namespace ChronoMod {
     //[BepInDependency("com.rune580.riskofoptions", BepInDependency.DependencyFlags.SoftDependency)]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
+    [BepInDependency("com.groovesalad.TestPlugin", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInPlugin(MODUID, MODNAME, MODVERSION)]
     public class ChronoPlugin : BaseUnityPlugin {
         // if you do not change this, you are giving permission to deprecate the mod-

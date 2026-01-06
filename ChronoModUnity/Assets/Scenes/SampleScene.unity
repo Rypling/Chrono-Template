@@ -2040,8 +2040,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9198731495697428797, guid: dd0e7667dd7d13a45a9acb7c9ca56b80, type: 3}
+      propertyPath: transformPairs.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9198731495697428797, guid: dd0e7667dd7d13a45a9acb7c9ca56b80, type: 3}
+      propertyPath: transformPairs.Array.data[10].name
+      value: HandL
+      objectReference: {fileID: 0}
+    - target: {fileID: 9198731495697428797, guid: dd0e7667dd7d13a45a9acb7c9ca56b80, type: 3}
+      propertyPath: transformPairs.Array.data[10].transform
+      value: 
+      objectReference: {fileID: 4703970600023830240}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd0e7667dd7d13a45a9acb7c9ca56b80, type: 3}
+--- !u!4 &4703970600023830240 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 655181223421236850, guid: dd0e7667dd7d13a45a9acb7c9ca56b80, type: 3}
+  m_PrefabInstance: {fileID: 4703970600023830239}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6412051161302034135
 PrefabInstance:
   m_ObjectHideFlags: 0

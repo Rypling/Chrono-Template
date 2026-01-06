@@ -1,4 +1,5 @@
-﻿using ChronoMod.Modules;
+﻿using System;
+using ChronoMod.Modules;
 using ChronoMod.Survivors.Chrono.Components;
 using RoR2;
 using UnityEngine;
@@ -72,10 +73,17 @@ namespace ChronoMod.Survivors.Chrono {
         }
 
         private static void ContinuumFreezeLifesteal(HealthComponent self, DamageInfo damageInfo) {
-            HealthComponent attackerHealth = damageInfo?.attacker?.GetComponent<HealthComponent>();
-            CharacterBody body = attackerHealth?.body;
-            if (body != null && body.HasBuff(continuumFreezeBuff)) {
-                attackerHealth.Heal(damageInfo.damage * 0.1f, default(ProcChainMask));
+            try {
+                if (damageInfo.attacker) {
+                    HealthComponent attackerHealth = damageInfo?.attacker?.GetComponent<HealthComponent>();
+                    CharacterBody body = attackerHealth?.body;
+                    float damage = damageInfo?.damage ?? 0f;
+                    if (body != null && body.HasBuff(continuumFreezeBuff) && damage > 0f) {
+                        attackerHealth?.Heal(damage * 0.1f, default(ProcChainMask));
+                    }
+                }
+            } catch (NullReferenceException e) {
+                Log.Warning("ContinuumFreezeLifesteal NRE");
             }
         }
     }
