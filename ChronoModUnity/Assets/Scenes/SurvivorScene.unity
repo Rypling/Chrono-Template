@@ -1992,6 +1992,34 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 562b38593a846aa4283e1a1171208c9a, type: 2}
+    - target: {fileID: 390977290757863772, guid: dd0e7667dd7d13a45a9acb7c9ca56b80, type: 3}
+      propertyPath: m_Height
+      value: 1.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 390977290757863772, guid: dd0e7667dd7d13a45a9acb7c9ca56b80, type: 3}
+      propertyPath: m_Radius
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 390977290757863772, guid: dd0e7667dd7d13a45a9acb7c9ca56b80, type: 3}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3171354520122130758, guid: dd0e7667dd7d13a45a9acb7c9ca56b80, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3171354520122130758, guid: dd0e7667dd7d13a45a9acb7c9ca56b80, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3171354520122130758, guid: dd0e7667dd7d13a45a9acb7c9ca56b80, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3171354520122130758, guid: dd0e7667dd7d13a45a9acb7c9ca56b80, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.914
+      objectReference: {fileID: 0}
     - target: {fileID: 3982597058003322436, guid: dd0e7667dd7d13a45a9acb7c9ca56b80, type: 3}
       propertyPath: m_Name
       value: mdlChronoFS

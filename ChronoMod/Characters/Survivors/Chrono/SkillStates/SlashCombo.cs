@@ -29,7 +29,9 @@ namespace ChronoMod.Survivors.Chrono.SkillStates {
             attackRecoil = 0.5f;
             hitHopVelocity = 4f;
 
-            swingSoundString = "HenrySwordSwing";
+            swingSoundString = "Play_merc_sword_swing";
+            swingSoundSpeedScalingMultiplier = 0.1f;
+            swingSoundSpeedConstantMultiplier = 0.8f;
             hitSoundString = "";
             muzzleString = swingIndex % 2 == 0 ? "SwingRight" : "SwingLeft";
             playbackRateParam = "SwingClub.playbackRate";

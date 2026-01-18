@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2443013718
+CRC: 3867962240
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 89422ce91bf6768eeb0769c40e841ffd
+    Hash: 7309aa44bfccb097d793f1c243d21e00
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 56f1f62cb724d466fccd5aa11c0b7281
+    Hash: b86c894ea59b0d54bca9c9f8031012f5
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -44,15 +44,21 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 678291247, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
+  Script: {fileID: 816898038, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+- Class: 114
   Script: {fileID: 1783796254, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+- Class: 114
+  Script: {fileID: 1790887305, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
   Script: {fileID: 372142912, guid: d382a022563c7517aadbc92ca1060016, type: 3}
 - Class: 114
+  Script: {fileID: 1395413934, guid: da77c7bbf69f66ab2145560542327715, type: 3}
+- Class: 114
   Script: {fileID: 1788389205, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: 261c50d8a80898e4ebf2e8e415ea6766, type: 3}
+  Script: {fileID: 2137989374, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
-  Script: {fileID: 1395413934, guid: da77c7bbf69f66ab2145560542327715, type: 3}
+  Script: {fileID: 11500000, guid: 261c50d8a80898e4ebf2e8e415ea6766, type: 3}
 - Class: 114
   Script: {fileID: -132178706, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
@@ -60,21 +66,15 @@ ClassTypes:
 - Class: 114
   Script: {fileID: -1848696948, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
-  Script: {fileID: 1790887305, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-- Class: 114
   Script: {fileID: -317677761, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
   Script: {fileID: -270136354, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
   Script: {fileID: -1819008361, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
-  Script: {fileID: 2137989374, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-- Class: 114
   Script: {fileID: -455717551, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
   Script: {fileID: -1895344032, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-- Class: 114
-  Script: {fileID: 816898038, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 68ee60b5bcd2668489cac0473619dffe, type: 3}
 - Class: 114
@@ -116,7 +116,6 @@ SerializeReferenceClassIdentifiers:
   ClassName: UnityEngine.Networking.NetworkSceneId
 Assets:
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/DefaultPose.anim
-- Assets/Chrono/Icons/texChronoIcon.png
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texMasteryAchievement.png
 - Assets/Chrono/Model/FS/texture/Emission_Colour.png
 - Assets/Henry/HenryAssets/HenryBundle/Materials/matRebellion.mat
@@ -242,6 +241,7 @@ Assets:
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/MenuIdleIn.anim
 - Assets/Henry/HenryAssets/HenryBundle/VFX/Textures/texHenrySwing2.png
 - Assets/Henry/HenryAssets/HenryBundle/Materials/matRoy.mat
+- Assets/Chrono/Icons/texChronoIcon.png
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texMainSkin.png
 - Assets/Henry/HenryAssets/HenryBundle/VFX/HenryBazookaExplosionEffect.prefab
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texGrandMasteryAchievement.png

@@ -28,6 +28,8 @@ namespace ChronoMod.Modules.BaseStates {
         protected float hitHopVelocity = 4f;
 
         protected string swingSoundString = "";
+        protected float swingSoundSpeedScalingMultiplier = 1f;
+        protected float swingSoundSpeedConstantMultiplier = 1f;
         protected string hitSoundString = "";
         protected string muzzleString = "SwingCenter";
         protected string playbackRateParam = "Slash.playbackRate";
@@ -123,7 +125,7 @@ namespace ChronoMod.Modules.BaseStates {
 
         private void EnterAttack() {
             hasFired = true;
-            Util.PlayAttackSpeedSound(swingSoundString, gameObject, attackSpeedStat);
+            Util.PlayAttackSpeedSound(swingSoundString, gameObject, Mathf.Max(0.0001f, (1f + (attackSpeedStat - 1f) * swingSoundSpeedScalingMultiplier) * swingSoundSpeedConstantMultiplier));
 
             PlaySwingEffect();
 

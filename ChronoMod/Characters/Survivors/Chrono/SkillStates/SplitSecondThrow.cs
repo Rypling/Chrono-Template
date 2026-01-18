@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using EntityStates;
+using RoR2;
 using RoR2.Projectile;
 using RoR2.Skills;
 using UnityEngine;
@@ -27,6 +28,8 @@ namespace ChronoMod.Survivors.Chrono.SkillStates {
 
             recoilAmplitude = 0.1f;
             bloom = 10;
+
+            attackSoundString = "Play_drifter_repossess_expel_toss";
 
             base.OnEnter();
         }

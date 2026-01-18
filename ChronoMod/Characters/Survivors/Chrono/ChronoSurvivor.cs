@@ -5,28 +5,24 @@ using ChronoMod.Survivors.Chrono.Components;
 using ChronoMod.Survivors.Chrono.SkillStates;
 using RoR2;
 using RoR2.Skills;
-using RoR2BepInExPack.GameAssetPathsBetter;
+using RoR2BepInExPack.GameAssetPaths.Version_1_39_0;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 namespace ChronoMod.Survivors.Chrono {
     public class ChronoSurvivor : SurvivorBase<ChronoSurvivor> {
-        //used to load the assetbundle for this character. must be unique
         public override string assetBundleName => "placeholderassetbundle";
 
-        //the name of the prefab we will create. conventionally ending in "Body". must be unique
         public override string bodyName => "ChronoBody";
 
-        //name of the ai master for vengeance and goobo. must be unique
         public override string masterName => "ChronoMonsterMaster";
 
-        //the names of the prefabs you set up in unity that we will use to build your character
         public override string modelPrefabName => "mdlChronoFS";
+
         public override string displayPrefabName => "ChronoFSDisplay";
 
         public const string CHRONO_PREFIX = ChronoPlugin.DEVELOPER_PREFIX + "_CHRONO_";
 
-        //used when registering your survivor's language tokens
         public override string survivorTokenPrefix => CHRONO_PREFIX;
 
         public override BodyInfo bodyInfo => new BodyInfo {
@@ -118,6 +114,27 @@ namespace ChronoMod.Survivors.Chrono {
             // Replace animator controllers for false son's
             displayPrefab.GetComponent<Animator>().runtimeAnimatorController = Addressables.LoadAssetAsync<RuntimeAnimatorController>(RoR2_DLC2_FalseSon.animFalseSonDisplay_controller).WaitForCompletion();
             prefabCharacterModel.GetComponent<Animator>().runtimeAnimatorController = Addressables.LoadAssetAsync<RuntimeAnimatorController>(RoR2_DLC2_FalseSon.animFalseSon_controller).WaitForCompletion();
+
+            // Load soundbanks required for sfx reuse
+            SetupAkBanks();
+        }
+
+        private void SetupAkBanks() {
+            AkBank[] banksToLoad = {
+                Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Merc.MercBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
+                Addressables.LoadAssetAsync<GameObject>(RoR2_DLC2_FalseSon.FalseSonBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
+                Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Brother.BrotherBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
+                Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Vulture.VultureBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
+                Addressables.LoadAssetAsync<GameObject>(RoR2_DLC3_Drifter.DrifterBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
+            };
+            foreach (AkBank bank in banksToLoad) {
+                if (bank != null) {
+                    AkBank akBank = bodyPrefab.AddComponent<AkBank>();
+                    akBank.triggerList = bank.triggerList;
+                    akBank.data.WwiseObjectReference = bank.data.WwiseObjectReference;
+                    akBank.unloadTriggerList = bank.unloadTriggerList;
+                }
+            }
         }
 
         public void AddHitboxes() {

@@ -19,7 +19,8 @@ namespace ChronoMod.Survivors.Chrono {
                 LegacyResourcesAPI.Load<BuffDef>("BuffDefs/AffixLunar").iconSprite,
                 Color.cyan,
                 true,
-                false
+                false,
+                BuffDef.StackingDisplayMethod.Percentage
                 );
 
             timeWarpBuff = Modules.Content.CreateAndAddBuff(

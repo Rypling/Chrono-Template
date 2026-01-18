@@ -20,17 +20,19 @@ namespace ChronoMod.Survivors.Chrono.SkillStates {
         public static GameObject muzzleFlashPrefab = Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Commando.MuzzleflashFMJ_prefab).WaitForCompletion();
         public static GameObject hitEffectPrefab = Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Commando.HitsparkCommandoShotgun_prefab).WaitForCompletion();
 
+        private string weakSoundString = "Play_falseson_skill2_lunarSpikes_shoot";
+        private string strongSoundString = "Play_moonBrother_m1_laser_shoot";
+
         private float duration;
         private float fireTime;
         private bool hasFired;
-        private string muzzleString;
+        private string muzzleString = "Muzzle";
 
         public override void OnEnter() {
             base.OnEnter();
             duration = baseDuration / attackSpeedStat;
             fireTime = firePercentTime * duration;
             characterBody.SetAimTimer(2f);
-            muzzleString = "Muzzle";
 
             PlayCrossfade("Gesture, Additive", "FireLunarSpike", "LunarSpike.playbackRate", duration, 0.1f);
             PlayCrossfade("Gesture, Override", "FireLunarSpike", "LunarSpike.playbackRate", duration, 0.1f);
@@ -59,7 +61,13 @@ namespace ChronoMod.Survivors.Chrono.SkillStates {
 
                 characterBody.AddSpreadBloom(1.5f);
                 EffectManager.SimpleMuzzleFlash(muzzleFlashPrefab, gameObject, muzzleString, false);
-                Util.PlaySound("HenryShootPistol", gameObject);
+
+                int buffCount = characterBody.GetBuffCount(ChronoBuffs.temporalRiftBuff);
+                if (buffCount < ChronoStaticValues.temporalMaxBuffs * ChronoStaticValues.piercerFreezeFrac) {
+                    Util.PlaySound(weakSoundString, gameObject);
+                } else {
+                    Util.PlaySound(strongSoundString, gameObject);
+                }
 
                 if (isAuthority) {
                     Ray aimRay = GetAimRay();

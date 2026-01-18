@@ -6,19 +6,13 @@ using ChronoMod.Survivors.Chrono;
 using R2API.Utils;
 using RoR2;
 
-[module: UnverifiableCode]
-[assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
 
-//rename this namespace
 namespace ChronoMod {
     //[BepInDependency("com.rune580.riskofoptions", BepInDependency.DependencyFlags.SoftDependency)]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     [BepInDependency("com.groovesalad.TestPlugin", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInPlugin(MODUID, MODNAME, MODVERSION)]
     public class ChronoPlugin : BaseUnityPlugin {
-        // if you do not change this, you are giving permission to deprecate the mod-
-        //  please change the names to your own stuff, thanks
-        //   this shouldn't even have to be said
         public const string MODUID = "com.Rypling.ChronoMod";
         public const string MODNAME = "ChronoMod";
         public const string MODVERSION = "1.0.0";

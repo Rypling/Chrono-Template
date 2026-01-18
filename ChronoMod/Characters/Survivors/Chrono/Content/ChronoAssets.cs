@@ -14,13 +14,10 @@ namespace ChronoMod.Survivors.Chrono {
 
         public static GameObject swordHitImpactEffect;
 
-        public static GameObject bombExplosionEffect;
+        public static GameObject throwProjectileExplosionEffect;
 
         // networked hit sounds
         public static NetworkSoundEventDef swordHitSoundEvent;
-
-        //projectiles
-        public static GameObject bombProjectilePrefab;
 
         public static GameObject throwProjectilePrefab;
 
@@ -36,11 +33,15 @@ namespace ChronoMod.Survivors.Chrono {
 
             ChronoPlugin.instance.StartCoroutine(ShaderSwapper.ShaderSwapper.UpgradeStubbedShadersAsync(assetBundle));
 
-            swordHitSoundEvent = Content.CreateAndAddNetworkSoundEventDef("HenrySwordHit");
+            CreateSounds();
 
             CreateEffects();
 
             CreateProjectiles();
+        }
+
+        private static void CreateSounds() {
+            swordHitSoundEvent = Addressables.LoadAssetAsync<NetworkSoundEventDef>(RoR2_Base_Merc.nseMercSwordImpact_asset).WaitForCompletion();
         }
 
         #region effects
@@ -53,7 +54,7 @@ namespace ChronoMod.Survivors.Chrono {
             effect.positionAtReferencedTransform = true;
             Content.CreateAndAddEffectDef(swordSwingEffect);
 
-            swordHitImpactEffect = _assetBundle.LoadEffect("ImpactHenrySlash");
+            swordHitImpactEffect = Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Merc.OmniImpactVFXSlashMerc_prefab).WaitForCompletion();
 
             continuumWardPrefab = _assetBundle.LoadAsset<GameObject>("ContinuumWard");
             continuumWardPrefab.GetComponent<BuffWard>().buffDef = ChronoBuffs.continuumFreezeBuff;
@@ -63,7 +64,13 @@ namespace ChronoMod.Survivors.Chrono {
         #region projectiles
         private static void CreateProjectiles() {
             throwProjectilePrefab = Asset.LoadAndAddProjectilePrefab(_assetBundle, "ThrowProjectile");
-            throwProjectilePrefab.GetComponent<ProjectileImpactExplosion>().explosionEffect = Addressables.LoadAssetAsync<GameObject>(RoR2_Junk_Common_VFX.ImpactLightning_prefab).WaitForCompletion();
+            throwProjectileExplosionEffect = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(RoR2_Junk_Common_VFX.ImpactLightning_prefab).WaitForCompletion(), "ImpactLightningScaled");
+            foreach (Transform child in throwProjectileExplosionEffect.transform) {
+                child.localScale = Vector3.one * 2.5f;
+            }
+            throwProjectileExplosionEffect.GetComponent<EffectComponent>().soundName = "Play_mage_m1_impact";
+            throwProjectilePrefab.GetComponent<ProjectileImpactExplosion>().explosionEffect = throwProjectileExplosionEffect;
+            Content.CreateAndAddEffectDef(throwProjectileExplosionEffect);
 
             horizonProjectilePrefab = Asset.LoadAndAddProjectilePrefab(_assetBundle, "HorizonProjectile");
             horizonProjectilePrefab.GetComponent<ProjectileController>().ghostPrefab = CreateEventHorizonGhost();
