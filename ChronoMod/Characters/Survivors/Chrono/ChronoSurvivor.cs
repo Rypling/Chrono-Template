@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using ChronoMod.Modules;
+﻿using ChronoMod.Modules;
 using ChronoMod.Modules.Characters;
 using ChronoMod.Survivors.Chrono.Components;
 using ChronoMod.Survivors.Chrono.SkillStates;
 using RoR2;
 using RoR2.Skills;
 using RoR2BepInExPack.GameAssetPaths.Version_1_39_0;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -126,6 +126,7 @@ namespace ChronoMod.Survivors.Chrono {
                 Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Brother.BrotherBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
                 Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Vulture.VultureBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
                 Addressables.LoadAssetAsync<GameObject>(RoR2_DLC3_Drifter.DrifterBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
+                Addressables.LoadAssetAsync<GameObject>(RoR2_DLC1_VoidSurvivor.VoidSurvivorBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
             };
             foreach (AkBank bank in banksToLoad) {
                 if (bank != null) {
@@ -152,7 +153,7 @@ namespace ChronoMod.Survivors.Chrono {
             //don't forget to register custom entitystates in your HenryStates.cs
 
             Prefabs.AddEntityStateMachine(bodyPrefab, "Weapon");
-            Prefabs.AddEntityStateMachine(bodyPrefab, "Weapon2");
+            Prefabs.AddEntityStateMachine(bodyPrefab, "Utility");
         }
 
         #region skills
@@ -226,16 +227,27 @@ namespace ChronoMod.Survivors.Chrono {
 
             //the primary skill is created using a constructor for a typical primary
             //it is also a SteppedSkillDef. Custom Skilldefs are very useful for custom behaviors related to casting a skill. see ror2's different skilldefs for reference
-            SteppedSkillDef primarySkillDef1 = Skills.CreateSkillDef<SteppedSkillDef>(new SkillDefInfo
-                (
-                    "ChronoEdge",
-                    CHRONO_PREFIX + "PRIMARY_EDGE_NAME",
-                    CHRONO_PREFIX + "PRIMARY_EDGE_DESCRIPTION",
-                    assetBundle.LoadAsset<Sprite>("texPrimaryIcon"),
-                    new EntityStates.SerializableEntityStateType(typeof(SkillStates.SlashCombo)),
-                    "Weapon",
-                    true
-                ));
+            SteppedSkillDef primarySkillDef1 = Skills.CreateSkillDef<SteppedSkillDef>(new SkillDefInfo {
+                skillName = "ChronoEdge",
+                skillNameToken = CHRONO_PREFIX + "PRIMARY_EDGE_NAME",
+                skillDescriptionToken = CHRONO_PREFIX + "PRIMARY_EDGE_DESCRIPTION",
+                keywordTokens = new string[] { },
+                skillIcon = assetBundle.LoadAsset<Sprite>("texPrimaryIcon"),
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(EonsEdge)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = EntityStates.InterruptPriority.Any,
+
+                dontAllowPastMaxStocks = true,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = true,
+                forceSprintDuringState = false,
+            });
+
             //custom Skilldefs can have additional fields that you can set manually
             primarySkillDef1.stepCount = 2;
             primarySkillDef1.stepGraceDuration = 0.5f;
@@ -277,7 +289,7 @@ namespace ChronoMod.Survivors.Chrono {
                 skillIcon = assetBundle.LoadAsset<Sprite>("texSecondaryIcon"),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(TimePiercer)),
-                activationStateMachineName = "Weapon2",
+                activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
                 baseRechargeInterval = 2f,
@@ -308,7 +320,7 @@ namespace ChronoMod.Survivors.Chrono {
                 skillIcon = assetBundle.LoadAsset<Sprite>("texSecondaryIcon"),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(EventHorizon)),
-                activationStateMachineName = "Weapon2",
+                activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
                 baseRechargeInterval = 12f,
@@ -344,7 +356,7 @@ namespace ChronoMod.Survivors.Chrono {
                 skillIcon = assetBundle.LoadAsset<Sprite>("texUtilityIcon"),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(EchoOfTomorrow)),
-                activationStateMachineName = "Body",
+                activationStateMachineName = "Utility",
                 interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
 
                 baseRechargeInterval = 8f,
@@ -373,7 +385,7 @@ namespace ChronoMod.Survivors.Chrono {
                 skillIcon = assetBundle.LoadAsset<Sprite>("texUtilityIcon"),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(ContinuumFreeze)),
-                activationStateMachineName = "Weapon2",
+                activationStateMachineName = "Utility",
                 interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
 
                 baseRechargeInterval = 16f,
@@ -409,7 +421,6 @@ namespace ChronoMod.Survivors.Chrono {
                 skillIcon = assetBundle.LoadAsset<Sprite>("texSpecialIcon"),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(TimeCollapse)),
-                //setting this to the "weapon2" EntityStateMachine allows us to cast this skill at the same time primary, which is set to the "weapon" EntityStateMachine
                 activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
 

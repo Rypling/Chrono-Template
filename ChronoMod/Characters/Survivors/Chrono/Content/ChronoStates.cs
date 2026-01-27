@@ -3,7 +3,7 @@
 namespace ChronoMod.Survivors.Chrono {
     public static class ChronoStates {
         public static void Init() {
-            Modules.Content.AddEntityState(typeof(SlashCombo));
+            Modules.Content.AddEntityState(typeof(EonsEdge));
 
             Modules.Content.AddEntityState(typeof(SplitSecondThrow));
 

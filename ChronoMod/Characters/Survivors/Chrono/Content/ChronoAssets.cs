@@ -2,6 +2,7 @@
 using ChronoMod.Modules.DamageTypes;
 using R2API;
 using RoR2;
+using RoR2.Audio;
 using RoR2.Projectile;
 using RoR2BepInExPack.GameAssetPathsBetter;
 using UnityEngine;
@@ -73,7 +74,9 @@ namespace ChronoMod.Survivors.Chrono {
             Content.CreateAndAddEffectDef(throwProjectileExplosionEffect);
 
             horizonProjectilePrefab = Asset.LoadAndAddProjectilePrefab(_assetBundle, "HorizonProjectile");
-            horizonProjectilePrefab.GetComponent<ProjectileController>().ghostPrefab = CreateEventHorizonGhost();
+            ProjectileController horizonProjectileController = horizonProjectilePrefab.GetComponent<ProjectileController>();
+            horizonProjectileController.flightSoundLoop = Addressables.LoadAssetAsync<LoopSoundDef>(RoR2_DLC1_VoidSurvivor.lsdVoidMegaBlasterFlight_asset).WaitForCompletion();
+            horizonProjectileController.ghostPrefab = CreateEventHorizonGhost();
             horizonProjectilePrefab.GetComponent<ProjectileImpactExplosion>().explosionEffect = CreateEventHorizonExplosion();
         }
 
@@ -112,6 +115,8 @@ namespace ChronoMod.Survivors.Chrono {
 
             // Swirl
             Transform tSwirl = horizonProjectileGhost.transform.Find("Sphere Fresnel/Swirl");
+            Object.Destroy(tSwirl.gameObject);
+            /*
             main = tSwirl.GetComponent<ParticleSystem>().main;
             main.loop = true;
             main.startLifetime = 4f;
@@ -119,6 +124,7 @@ namespace ChronoMod.Survivors.Chrono {
             matSwirl.SetColor("_TintColor", new Color(0.56f, 0.83f, 1f, 1f));
             matSwirl.SetColor("_EmissionColor", new Color(0f, 0f, 0f, 1f));
             tSwirl.GetComponent<ParticleSystemRenderer>().sharedMaterial = matSwirl;
+            */
 
             // Splashes, Trail
             Transform tSplashesTrail = horizonProjectileGhost.transform.Find("Sphere Fresnel/Splashes, Trail");
@@ -141,6 +147,8 @@ namespace ChronoMod.Survivors.Chrono {
 
         private static GameObject CreateEventHorizonExplosion() {
             GameObject horizonProjectileExplosion = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(RoR2_DLC2_Seeker.SoulSearchExplosionVFX_prefab).WaitForCompletion(), "HorizonProjectileExplosion", false);
+            horizonProjectileExplosion.GetComponent<EffectComponent>().soundName = "Play_voidman_m2_explode";
+
             // Flash, White
             Transform tFlashWhite = horizonProjectileExplosion.transform.Find("Flash, White");
             Material matFlashWhite = new Material(tFlashWhite.GetComponent<ParticleSystemRenderer>().sharedMaterial);

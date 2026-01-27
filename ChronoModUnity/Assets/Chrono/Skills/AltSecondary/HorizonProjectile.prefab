@@ -2475,6 +2475,7 @@ MonoBehaviour:
   m_Script: {fileID: -1819008361, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnEffect: {fileID: 0}
   lifetime: 12
   lifetimeExpiredEffect: {fileID: 0}
   desiredForwardSpeed: 50
@@ -2510,6 +2511,7 @@ MonoBehaviour:
   canRejectForce: 1
   projectileHealthComponent: {fileID: 0}
   explosionEffect: {fileID: 0}
+  blastImpactEffect: {fileID: 0}
   preserveExplosionOrientation: 0
   explosionSoundString: 
   fireChildren: 0
@@ -2541,6 +2543,7 @@ MonoBehaviour:
   lifetimeExpiredSound: {fileID: 0}
   offsetForLifetimeExpiredSound: 1
   destroyOnEnemy: 0
+  detonateOnEnemy: 0
   destroyOnWorld: 0
   destroyOnDistance: 0
   maxDistance: 0
@@ -2645,3 +2648,4 @@ MonoBehaviour:
   m_Script: {fileID: 1783796254, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showAsSphere: 0

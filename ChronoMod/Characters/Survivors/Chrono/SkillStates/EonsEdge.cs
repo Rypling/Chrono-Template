@@ -5,7 +5,7 @@ using RoR2;
 using UnityEngine;
 
 namespace ChronoMod.Survivors.Chrono.SkillStates {
-    public class SlashCombo : BaseMeleeAttack {
+    public class EonsEdge : BaseMeleeAttack {
         public override void OnEnter() {
             hitboxGroupName = "SwingGroup";
 

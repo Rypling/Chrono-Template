@@ -7,9 +7,9 @@ namespace ChronoMod.Survivors.Chrono.SkillStates {
         public override void OnEnter() {
             projectilePrefab = ChronoAssets.horizonProjectilePrefab;
             //base.effectPrefab = Modules.Assets.SomeMuzzleEffect;
-            //targetmuzzle = "muzzleThrow"
+            targetMuzzle = "Muzzle";
 
-            attackSoundString = "HenryBombThrow";
+            attackSoundString = "Play_voidman_m2_shoot_fullCharge";
 
             baseDuration = 0.6f;
             baseDelayBeforeFiringProjectile = 0.0f;
