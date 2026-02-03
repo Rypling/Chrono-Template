@@ -45,6 +45,8 @@ namespace ChronoMod.Characters.Survivors.Chrono.SkillStates {
 
         protected float addedGravity;
 
+        protected bool hasCollided;
+
         private AimThrowableBase.CalculateArcPointsJob calculateArcPointsJob;
 
         private JobHandle calculateArcPointsJobHandle;
@@ -59,6 +61,7 @@ namespace ChronoMod.Characters.Survivors.Chrono.SkillStates {
 
         public override void OnEnter() {
             base.OnEnter();
+
             _endpointVisualizerPrefab = endpointVisualizerPrefab;
 
             if (arcVisualizerPrefab) {
@@ -120,7 +123,6 @@ namespace ChronoMod.Characters.Survivors.Chrono.SkillStates {
             base.FixedUpdate();
 
             if (isAuthority && !KeyIsDown() && fixedAge >= minimumDuration) {
-                UpdateTrajectoryInfo(out currentTrajectoryInfo);
                 EntityState entityState = PickNextState();
 
                 if (entityState != null) {
@@ -142,25 +144,27 @@ namespace ChronoMod.Characters.Survivors.Chrono.SkillStates {
         public override void Update() {
             base.Update();
 
-            UpdateTrajectoryInfo(out currentTrajectoryInfo);
+            Ray aimRay;
+
+            UpdateTrajectoryInfo(out currentTrajectoryInfo, out aimRay);
             UpdateVisualizers(currentTrajectoryInfo);
         }
 
-        protected virtual void UpdateTrajectoryInfo(out AimThrowableBase.TrajectoryInfo dest) {
+        protected virtual void UpdateTrajectoryInfo(out AimThrowableBase.TrajectoryInfo dest, out Ray aimRay) {
             dest = default;
-            Ray aimRay = GetAimRay();
             RaycastHit hitInfo = default;
-            bool flag = false;
+            hasCollided = false;
+            aimRay = GetAimRay();
 
-            if (rayRadius > 0f && Util.CharacterSpherecast(base.gameObject, aimRay, rayRadius, out hitInfo, maxDistance, LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.UseGlobal) && (bool)hitInfo.collider.GetComponent<HurtBox>()) {
-                flag = true;
+            if (rayRadius > 0f && Util.CharacterSpherecast(base.gameObject, aimRay, rayRadius, out hitInfo, maxDistance, LayerIndex.world.mask, QueryTriggerInteraction.UseGlobal) && (bool)hitInfo.collider.GetComponent<HurtBox>()) {
+                hasCollided = true;
             }
 
-            if (!flag) {
-                flag = Util.CharacterRaycast(base.gameObject, aimRay, out hitInfo, maxDistance, LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.UseGlobal);
+            if (!hasCollided) {
+                hasCollided = Util.CharacterRaycast(base.gameObject, aimRay, out hitInfo, maxDistance, LayerIndex.world.mask, QueryTriggerInteraction.UseGlobal);
             }
 
-            if (flag) {
+            if (hasCollided) {
                 dest.hitPoint = hitInfo.point;
                 dest.hitNormal = hitInfo.normal;
             } else {

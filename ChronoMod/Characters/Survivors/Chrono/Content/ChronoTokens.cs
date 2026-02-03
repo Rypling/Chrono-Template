@@ -1,6 +1,6 @@
-﻿using System;
-using ChronoMod.Modules;
+﻿using ChronoMod.Modules;
 using ChronoMod.Survivors.Chrono.Achievements;
+using System;
 
 namespace ChronoMod.Survivors.Chrono {
     public static class ChronoTokens {
@@ -16,18 +16,18 @@ namespace ChronoMod.Survivors.Chrono {
         public static void AddChronoTokens() {
             string prefix = ChronoSurvivor.CHRONO_PREFIX;
 
-            string desc = "Henry is a skilled fighter who makes use of a wide arsenal of weaponry to take down his foes.<color=#CCD3E0>" + Environment.NewLine + Environment.NewLine
-             + "< ! > Sword is a good all-rounder while Boxing Gloves are better for laying a beatdown on more powerful foes." + Environment.NewLine + Environment.NewLine
-             + "< ! > Pistol is a powerful anti air, with its low cooldown and high damage." + Environment.NewLine + Environment.NewLine
-             + "< ! > Roll has a lingering armor buff that helps to use it aggressively." + Environment.NewLine + Environment.NewLine
-             + "< ! > Bomb can be used to wipe crowds with ease." + Environment.NewLine + Environment.NewLine;
+            string desc = "Chrono is a versatile juggernaut that exploits dense battlefields to ramp in strength, before terminating all conflict with an ultimate blitz.<color=#CCD3E0>" + Environment.NewLine + Environment.NewLine
+             + "< ! > Eon's Edge is Chrono's key to building power. Aim to strike groups of enemies to accelerate combat encounters." + Environment.NewLine + Environment.NewLine
+             + "< ! > Depending on your Temporal Rift level, Time Piercer offers either swift burst damage or total battlefield control." + Environment.NewLine + Environment.NewLine
+             + "< ! > Echo of Tomorrow is practical in all situations. Use it to breach the fray, hold position, or make an emergency withdrawal." + Environment.NewLine + Environment.NewLine
+             + "< ! > Time Collapse is Chrono's trump card, capable of wiping out deities. Calculated use is vital in maintaining absolute dominance." + Environment.NewLine + Environment.NewLine;
 
-            string outro = "..and so he left, searching for a new identity.";
-            string outroFailure = "..and so he vanished, forever a blank slate.";
+            string outro = "..and so he left, cursed with new complexity.";
+            string outroFailure = "..and so he vanished, projected into something lucid.";
 
             Language.Add(prefix + "NAME", "Chrono");
             Language.Add(prefix + "DESCRIPTION", desc);
-            Language.Add(prefix + "SUBTITLE", "The Chosen One");
+            Language.Add(prefix + "SUBTITLE", "Foregone Sailor");
             Language.Add(prefix + "LORE", "sample lore");
             Language.Add(prefix + "OUTRO_FLAVOR", outro);
             Language.Add(prefix + "OUTRO_FAILURE", outroFailure);
@@ -38,36 +38,36 @@ namespace ChronoMod.Survivors.Chrono {
 
             #region Passive
             Language.Add(prefix + "PASSIVE_NAME", "Temporal Rift");
-            Language.Add(prefix + "PASSIVE_DESCRIPTION", "For each stack of <style=cIsDamage>Temporal Rift</style> you have, your <style=cIsUtility>move speed</style>, <style=cIsDamage>critical hit chance</style>, and <style=cIsDamage>critical hit damage</style> increase. <style=cIsDamage>Critical hit chance</style> over 100% is converted to <style=cIsDamage>critical hit damage</style>.");
+            Language.Add(prefix + "PASSIVE_DESCRIPTION", "<style=cIsUtility>Move speed</style>, <style=cIsDamage>critical hit chance</style>, and <style=cIsDamage>critical hit damage</style> increase proportional to your <style=cIsDamage>Temporal Rift</style> level. <style=cIsDamage>Critical hit chance</style> over 100% is converted to <style=cIsDamage>critical hit damage</style>.");
             #endregion
 
             #region Primary
             Language.Add(prefix + "PRIMARY_EDGE_NAME", "Eon's Edge");
-            Language.Add(prefix + "PRIMARY_EDGE_DESCRIPTION", $"{Tokens.agilePrefix} Swing in front for for <style=cIsDamage>{100f * ChronoStaticValues.swordDamageCoefficient}% damage</style>. Gain a stack of <style=cIsDamage>Temporal Rift</style> for each enemy hit.");
+            Language.Add(prefix + "PRIMARY_EDGE_DESCRIPTION", $"Swing in front for for <style=cIsDamage>{100f * ChronoStaticValues.swordDamageCoefficient}% damage</style>. Gain <style=cIsDamage>Temporal Rift</style> for each enemy hit.");
 
             Language.Add(prefix + "PRIMARY_THROW_NAME", "Split-Second Throw");
-            Language.Add(prefix + "PRIMARY_THROW_DESCRIPTION", $"{Tokens.agilePrefix} Throw a spear for <style=cIsDamage>{100f * ChronoStaticValues.throwDamageCoefficient}% damage</style>. Gain a stack of <style=cIsDamage>Temporal Rift</style> for each enemy hit.");
+            Language.Add(prefix + "PRIMARY_THROW_DESCRIPTION", $"{Tokens.agilePrefix} Throw a spear for <style=cIsDamage>{100f * ChronoStaticValues.throwDamageCoefficient}% damage</style>. Gain <style=cIsDamage>Temporal Rift</style> for each enemy hit.");
             #endregion
 
             #region Secondary
             Language.Add(prefix + "SECONDARY_PIERCER_NAME", "Time Piercer");
-            Language.Add(prefix + "SECONDARY_PIERCER_DESCRIPTION", $"{Tokens.agilePrefix} Rapidly fire for <style=cIsDamage>{100f * ChronoStaticValues.piercerDamageCoefficient}% damage</style>, <style=cIsUtility>slowing</style> enemies, additionally <style=cIsDamage>stunning</style> at <style=cIsUtility>{(int)(ChronoStaticValues.temporalMaxBuffs * ChronoStaticValues.piercerStunFrac)}</style> stacks of <style=cIsDamage>Temporal Rift</style>, or <style=cIsDamage>freezing</style> at <style=cIsUtility>{(int)(ChronoStaticValues.temporalMaxBuffs * ChronoStaticValues.piercerFreezeFrac)}</style>.");
+            Language.Add(prefix + "SECONDARY_PIERCER_DESCRIPTION", $"{Tokens.agilePrefix} Rapidly fire for <style=cIsDamage>{100f * ChronoStaticValues.piercerDamageCoefficient}% damage</style>, <style=cIsUtility>slowing</style> enemies, additionally <style=cIsDamage>stunning</style> at <style=cIsUtility>{(int)(ChronoStaticValues.temporalMaxBuffs * ChronoStaticValues.piercerStunFrac)}%</style> <style=cIsDamage>Temporal Rift</style>, or <style=cIsDamage>freezing</style> at <style=cIsUtility>{(int)(ChronoStaticValues.temporalMaxBuffs * ChronoStaticValues.piercerFreezeFrac)}%</style>.");
 
             Language.Add(prefix + "SECONDARY_HORIZON_NAME", "Event Horizon");
-            Language.Add(prefix + "SECONDARY_HORIZON_DESCRIPTION", $"{Tokens.agilePrefix} Throw a piece of time itself for <style=cIsDamage>{100f * ChronoStaticValues.horizonDamageCoefficient}% damage</style>, <style=cIsUtility>slowing</style> enemies for a duration proportional to your <style=cIsDamage>Temporal Rift</style> stacks, and <style=cIsDamage>freezing</style> them on a critical hit.");
+            Language.Add(prefix + "SECONDARY_HORIZON_DESCRIPTION", $"{Tokens.agilePrefix} Throw a piece of time itself for <style=cIsDamage>{100f * ChronoStaticValues.horizonDamageCoefficient}% damage</style>, <style=cIsUtility>slowing</style> enemies for a duration proportional to your <style=cIsDamage>Temporal Rift</style> level, and <style=cIsDamage>freezing</style> them on a critical hit.");
             #endregion
 
             #region Utility
             Language.Add(prefix + "UTILITY_ECHO_NAME", "Echo of Tomorrow");
-            Language.Add(prefix + "UTILITY_ECHO_DESCRIPTION", "Dash forward through time to <style=cIsHealing>heal</style> yourself proportional to your <style=cIsDamage>Temporal Rift</style> stacks, and gain <style=cIsDamage>Time Warp</style>.");
+            Language.Add(prefix + "UTILITY_ECHO_DESCRIPTION", "Dash forward through time to <style=cIsHealing>heal</style> yourself proportional to your <style=cIsDamage>Temporal Rift</style> level, and gain <style=cIsDamage>Time Warp</style>.");
 
             Language.Add(prefix + "UTILITY_CONTINUUM_NAME", "Continuum Freeze");
-            Language.Add(prefix + "UTILITY_CONTINUUM_DESCRIPTION", "Create a temporal scar, <style=cIsDamage>freezing</style> all enemies inside. While inside, allies gain bonus <style=cIsDamage>critical hit chance</style>, <style=cIsDamage>critical hit damage</style>, and have <style=cIsHealing>life steal</style>. Duration scales proportional to your <style=cIsDamage>Temporal Rift</style> stacks.");
+            Language.Add(prefix + "UTILITY_CONTINUUM_DESCRIPTION", "Create a temporal scar, <style=cIsDamage>freezing</style> all enemies inside. While inside, allies gain bonus <style=cIsDamage>critical hit chance</style>, <style=cIsDamage>critical hit damage</style>, and have <style=cIsHealing>life steal</style>. Duration scales proportional to your <style=cIsDamage>Temporal Rift</style> level.");
             #endregion
 
             #region Special
             Language.Add(prefix + "SPECIAL_COLLAPSE_NAME", "Time Collapse");
-            Language.Add(prefix + "SPECIAL_COLLAPSE_DESCRIPTION", $"<style=cIsDamage>Critically strike</style> a target for <style=cIsDamage>all the damage you have dealt in the last 10 seconds</style>. Damage scales with your current <style=cIsDamage>Temporal Rift</style> stacks. Consumes all stacks.");
+            Language.Add(prefix + "SPECIAL_COLLAPSE_DESCRIPTION", $"<style=cIsDamage>Critically strike</style> a target for <style=cIsDamage>all the damage you have dealt in the last 10 seconds</style>. Damage scales with your current <style=cIsDamage>Temporal Rift</style> level. Consumes all <style=cIsDamage>Temporal Rift</style>.");
             #endregion
 
             #region Achievements

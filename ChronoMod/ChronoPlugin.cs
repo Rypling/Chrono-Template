@@ -1,6 +1,4 @@
-﻿using System.Security;
-using System.Security.Permissions;
-using BepInEx;
+﻿using BepInEx;
 using ChronoMod.Modules;
 using ChronoMod.Survivors.Chrono;
 using R2API.Utils;
@@ -17,7 +15,6 @@ namespace ChronoMod {
         public const string MODNAME = "ChronoMod";
         public const string MODVERSION = "1.0.0";
 
-        // a prefix for name tokens to prevent conflicts- please capitalize all name tokens for convention
         public const string DEVELOPER_PREFIX = "RYPLING";
 
         public static ChronoPlugin instance;
@@ -25,18 +22,14 @@ namespace ChronoMod {
         void Awake() {
             instance = this;
 
-            //easy to use logger
             Log.Init(Logger);
 
-            // used when you want to properly set up language folders
             Modules.Language.Init();
 
-            // character initialization
             new ChronoSurvivor().Initialize();
 
             RoR2Application.onLoadFinished += OnLoadFinished;
 
-            // make a content pack and add it. this has to be last
             new Modules.ContentPacks().Initialize();
         }
 

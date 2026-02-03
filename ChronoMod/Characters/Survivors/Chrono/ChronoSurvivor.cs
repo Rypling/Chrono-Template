@@ -355,7 +355,7 @@ namespace ChronoMod.Survivors.Chrono {
                 skillDescriptionToken = CHRONO_PREFIX + "UTILITY_ECHO_DESCRIPTION",
                 skillIcon = assetBundle.LoadAsset<Sprite>("texUtilityIcon"),
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(EchoOfTomorrow)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(EchoOfTomorrowAim)),
                 activationStateMachineName = "Utility",
                 interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
 
