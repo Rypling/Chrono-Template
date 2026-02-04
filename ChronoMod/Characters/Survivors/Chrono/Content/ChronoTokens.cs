@@ -28,7 +28,15 @@ namespace ChronoMod.Survivors.Chrono {
             Language.Add(prefix + "NAME", "Chrono");
             Language.Add(prefix + "DESCRIPTION", desc);
             Language.Add(prefix + "SUBTITLE", "Foregone Sailor");
-            Language.Add(prefix + "LORE", "sample lore");
+            Language.Add(prefix + "LORE",
+                "Infinite brawny waves tower over the horizon, crashing down with brutish roars. With each and every impact, the vessel quakes." + Environment.NewLine + Environment.NewLine +
+                "However, the vessel perseveres. Alone in this vast darkness, a resolve matching that of the storm is an absolute requirement to stay afloat." + Environment.NewLine + Environment.NewLine +
+                "Beneath the surface, the cosmic void beckons. It grows impatient, reaching and slashing upward with crooked limbs. With each and every laceration, the vessel bleeds." + Environment.NewLine + Environment.NewLine +
+                "However, the vessel perseveres. The hull is carefully reinforced, for its vulnerabilities have long been understood." + Environment.NewLine + Environment.NewLine +
+                "Far, far above, omnipotent flashes of forked gloom stare below, condemning all who are caught in its glare. With each and every judgement, the vessel weakens." + Environment.NewLine + Environment.NewLine +
+                "However, the vessel perseveres. It knows that all threats here are empty. After all, the brilliant glow of the end is in sight." + Environment.NewLine + Environment.NewLine +
+                "Through braving the typhoon, the vessel passes into the present. A moment of respite? Perhaps, perhaps not. Unlike the journey, the present is unpredictable."
+                );
             Language.Add(prefix + "OUTRO_FLAVOR", outro);
             Language.Add(prefix + "OUTRO_FAILURE", outroFailure);
 
