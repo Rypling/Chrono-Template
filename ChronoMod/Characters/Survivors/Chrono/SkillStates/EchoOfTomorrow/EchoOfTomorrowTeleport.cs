@@ -22,10 +22,13 @@ namespace ChronoMod.Survivors.Chrono.SkillStates {
             teleportDelayDuration = 0.1f;
             endTeleportDelayDuration = 0.1f;
             base.OnEnter();
+
+            float buffFrac = characterBody.GetBuffCount(ChronoBuffs.temporalRiftBuff) / ChronoStaticValues.temporalMaxBuffs;
+            healthComponent.Heal(healthComponent.fullHealth * Mathf.Lerp(ChronoStaticValues.echoMinHealingFrac, ChronoStaticValues.echoMaxHealingFrac, buffFrac), default);
         }
 
         public override EntityState InstantiateNextState() {
-            return new MeridiansWillFire();
+            return new EchoOfTomorrowFire();
         }
     }
 }

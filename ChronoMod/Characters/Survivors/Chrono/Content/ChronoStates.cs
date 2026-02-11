@@ -12,6 +12,8 @@ namespace ChronoMod.Survivors.Chrono {
             Modules.Content.AddEntityState(typeof(EventHorizon));
 
             Modules.Content.AddEntityState(typeof(EchoOfTomorrowAim));
+            Modules.Content.AddEntityState(typeof(EchoOfTomorrowTeleport));
+            Modules.Content.AddEntityState(typeof(EchoOfTomorrowFire));
 
             Modules.Content.AddEntityState(typeof(ContinuumFreeze));
 

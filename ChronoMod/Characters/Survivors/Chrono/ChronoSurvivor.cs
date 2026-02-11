@@ -153,6 +153,7 @@ namespace ChronoMod.Survivors.Chrono {
             //don't forget to register custom entitystates in your HenryStates.cs
 
             Prefabs.AddEntityStateMachine(bodyPrefab, "Weapon");
+            Prefabs.AddEntityStateMachine(bodyPrefab, "Weapon2");
             Prefabs.AddEntityStateMachine(bodyPrefab, "Utility");
         }
 
@@ -289,7 +290,7 @@ namespace ChronoMod.Survivors.Chrono {
                 skillIcon = assetBundle.LoadAsset<Sprite>("texSecondaryIcon"),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(TimePiercer)),
-                activationStateMachineName = "Weapon",
+                activationStateMachineName = "Weapon2",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
                 baseRechargeInterval = 2f,
@@ -320,7 +321,7 @@ namespace ChronoMod.Survivors.Chrono {
                 skillIcon = assetBundle.LoadAsset<Sprite>("texSecondaryIcon"),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(EventHorizon)),
-                activationStateMachineName = "Weapon",
+                activationStateMachineName = "Weapon2",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
                 baseRechargeInterval = 12f,
@@ -370,12 +371,12 @@ namespace ChronoMod.Survivors.Chrono {
                 fullRestockOnAssign = true,
                 dontAllowPastMaxStocks = false,
                 mustKeyPress = false,
-                beginSkillCooldownOnSkillEnd = false,
+                beginSkillCooldownOnSkillEnd = true,
 
-                isCombatSkill = false,
+                isCombatSkill = true,
                 canceledFromSprinting = false,
                 cancelSprintingOnActivation = false,
-                forceSprintDuringState = true,
+                forceSprintDuringState = false,
             });
 
             SkillDef utilitySkillDef2 = Skills.CreateSkillDef(new SkillDefInfo {
