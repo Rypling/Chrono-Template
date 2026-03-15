@@ -39,5 +39,8 @@ namespace ChronoMod.Survivors.Chrono.SkillStates {
                 safeBackDirection = Vector3.up;
             }
         }
+        public override InterruptPriority GetMinimumInterruptPriority() {
+            return InterruptPriority.Stun;
+        }
     }
 }

@@ -8,6 +8,7 @@ namespace ChronoMod.Survivors.Chrono.SkillStates {
             PlayAnimation("FullBody, Override", "StepBrothersLoopExit");
             FireExplosion();
             characterBody.AddTimedBuff(ChronoBuffs.timeWarpBuff.buffIndex, 4f);
+            Util.PlaySound("Play_seeker_skill2_alt_fire", characterBody.gameObject);
         }
 
         private void FireExplosion() {

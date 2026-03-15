@@ -98,7 +98,7 @@ Shader "StubbedRoR2/Base/Shaders/HGCloudRemap" {
 					UNITY_TRANSFER_INSTANCE_ID(v, o);
 					
 
-					// v.vertex.xyz += _SinTime.xyz;
+					v.vertex.xyz += _SinTime.xyz;
 					o.vertex = UnityObjectToClipPos(v.vertex);
 					#ifdef SOFTPARTICLES_ON
 						o.projPos = ComputeScreenPos (o.vertex);

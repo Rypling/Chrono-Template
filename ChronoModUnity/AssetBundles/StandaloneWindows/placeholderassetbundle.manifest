@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3867962240
+CRC: 44921000
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 7309aa44bfccb097d793f1c243d21e00
+    Hash: 626e8f586c8ca4a12ca692ba33737641
   TypeTreeHash:
     serializedVersion: 2
     Hash: b86c894ea59b0d54bca9c9f8031012f5
@@ -119,6 +119,7 @@ Assets:
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texMasteryAchievement.png
 - Assets/Chrono/Model/FS/texture/Emission_Colour.png
 - Assets/Henry/HenryAssets/HenryBundle/Materials/matRebellion.mat
+- Assets/Chrono/Skills/Utility/PortalParticleSettings.prefab
 - Assets/Chrono/Skills/AltPrimary/matThrowTrail1.mat
 - Assets/Chrono/Model/FS/texture/matOutline.mat
 - Assets/Henry/HenryAssets/HenryBundle/Mesh/meshNeoCoat.mesh
@@ -129,7 +130,6 @@ Assets:
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texSpecialIcon.png
 - Assets/Chrono/Model/FS/texture/matSpear.mat
 - Assets/Henry/HenryAssets/HenryBundle/VFX/HenryFistSwingEffect.prefab
-- Assets/Henry/HenryAssets/HenryBundle/Animation/clips/WalkB.anim
 - Assets/Chrono/Model/FS/texture/matBody.mat
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texUtilityIcon.png
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/Idle.anim
@@ -140,9 +140,10 @@ Assets:
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texStingerIcon.png
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texHenryIcon.png
 - Assets/Henry/HenryAssets/HenryBundle/Mesh/meshHenryAlt.mesh
-- Assets/Henry/HenryAssets/HenryBundle/Mesh/meshRebellion.mesh
+- Assets/Henry/HenryAssets/HenryBundle/Animation/clips/WalkB.anim
 - Assets/Henry/HenryAssets/HenryBundle/Textures/texBazooka.png
 - Assets/Henry/HenryAssets/HenryBundle/Textures/texHenry.png
+- Assets/Henry/HenryAssets/HenryBundle/Mesh/meshRebellion.mesh
 - Assets/Henry/HenryAssets/HenryBundle/VFX/Materials/matDust.mat
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/IdleAdditive.anim
 - Assets/Henry/HenryAssets/HenryBundle/HenryBombGhost.prefab

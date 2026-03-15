@@ -4,20 +4,19 @@ using R2API;
 using RoR2;
 using RoR2.Audio;
 using RoR2.Projectile;
-using RoR2BepInExPack.GameAssetPathsBetter;
+using RoR2BepInExPack.GameAssetPaths.Version_1_39_0;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 namespace ChronoMod.Survivors.Chrono {
     public static class ChronoAssets {
-        // particle effects
+
         public static GameObject swordSwingEffect;
 
         public static GameObject swordHitImpactEffect;
 
         public static GameObject throwProjectileExplosionEffect;
 
-        // networked hit sounds
         public static NetworkSoundEventDef swordHitSoundEvent;
 
         public static GameObject throwProjectilePrefab;
@@ -25,6 +24,10 @@ namespace ChronoMod.Survivors.Chrono {
         public static GameObject horizonProjectilePrefab;
 
         public static GameObject continuumWardPrefab;
+
+        public static GameObject echoPortalPrefab;
+
+        public static GameObject echoVortexPrefab;
 
         private static AssetBundle _assetBundle;
 
@@ -47,18 +50,93 @@ namespace ChronoMod.Survivors.Chrono {
 
         #region effects
         private static void CreateEffects() {
+            CreateSwordSwing();
+
+            swordHitImpactEffect = Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Merc.OmniImpactVFXSlashMerc_prefab).WaitForCompletion();
+
+            continuumWardPrefab = _assetBundle.LoadAsset<GameObject>("ContinuumWard");
+            continuumWardPrefab.GetComponent<BuffWard>().buffDef = ChronoBuffs.continuumFreezeBuff;
+
+            CreateEchoPortal();
+            CreateEchoVortex();
+        }
+
+        private static void CreateSwordSwing() {
             swordSwingEffect = Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Merc.MercSwordSlash_prefab).WaitForCompletion();// _assetBundle.LoadEffect("HenrySwordSwingEffect", true);
             EffectComponent effect = swordSwingEffect.AddComponent<EffectComponent>(); // why does it not have one by default. how queer
             effect.applyScale = false;
             effect.effectIndex = EffectIndex.Invalid;
             effect.parentToReferencedTransform = true;
             effect.positionAtReferencedTransform = true;
+
             Content.CreateAndAddEffectDef(swordSwingEffect);
+        }
 
-            swordHitImpactEffect = Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Merc.OmniImpactVFXSlashMerc_prefab).WaitForCompletion();
+        private static void CreateEchoPortal() {
+            ParticleSystem settings = _assetBundle.LoadAsset<GameObject>("PortalParticleSettings").GetComponent<ParticleSystem>();
 
-            continuumWardPrefab = _assetBundle.LoadAsset<GameObject>("ContinuumWard");
-            continuumWardPrefab.GetComponent<BuffWard>().buffDef = ChronoBuffs.continuumFreezeBuff;
+            echoPortalPrefab = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Nullifier.NullifierSpawnEffect_prefab).WaitForCompletion(), "EchoPortal");
+
+            Transform tVacuumStars = echoPortalPrefab.transform.Find("Vacuum Stars");
+            Object.Destroy(tVacuumStars.gameObject);
+            Transform tVacuumStarsTrails = echoPortalPrefab.transform.Find("Vacuum Stars, Trails");
+            Object.Destroy(tVacuumStarsTrails.gameObject);
+            Transform tVacuumRadial = echoPortalPrefab.transform.Find("Vacuum Radial");
+            Object.Destroy(tVacuumRadial.gameObject);
+            Transform tLight = echoPortalPrefab.transform.Find("Point light");
+            Light pointLight = tLight.GetComponent<Light>();
+            pointLight.range = 15f;
+            pointLight.color = new Color(0f, 0.78f, 0.83f, 1f);
+
+            foreach (Transform child in echoPortalPrefab.transform) {
+                child.transform.localPosition += Vector3.up * 2f;
+                child.transform.localScale *= 1.6f;
+            }
+
+            Transform tRing = echoPortalPrefab.transform.Find("Ring");
+            Material matRing = new Material(tRing.GetComponent<ParticleSystemRenderer>().sharedMaterial);
+            matRing.SetTexture("_RemapTex", Addressables.LoadAssetAsync<Texture>(RoR2_Base_Common_ColorRamps.texRampHuntressSoft2_png).WaitForCompletion());
+            tRing.GetComponent<ParticleSystemRenderer>().sharedMaterial = matRing;
+
+            Transform tRingRing = tRing.transform.Find("Ring");
+            Material matRingRing = new Material(tRingRing.GetComponent<ParticleSystemRenderer>().sharedMaterial);
+            matRingRing.SetInt("_Cull", 1);
+            matRingRing.SetColor("_Color", new Color(0.05f, 0f, 0.63f, 1f));
+            tRingRing.GetComponent<ParticleSystemRenderer>().sharedMaterial = matRingRing;
+
+            Transform[] rings = {
+                tRing,
+                tRingRing
+            };
+
+            foreach (Transform ring in rings) {
+                ParticleSystem particleSystem = ring.GetComponent<ParticleSystem>();
+                ParticleSystem.MainModule main = particleSystem.main;
+                main.duration = settings.main.duration;
+                main.startLifetime = settings.main.startLifetime;
+                ParticleSystem.SizeOverLifetimeModule sizeOverLifetime = particleSystem.sizeOverLifetime;
+                sizeOverLifetime.x = settings.sizeOverLifetime.x;
+                sizeOverLifetime.y = settings.sizeOverLifetime.y;
+                sizeOverLifetime.z = settings.sizeOverLifetime.z;
+                ParticleSystem.RotationOverLifetimeModule rotationOverLifetime = particleSystem.rotationOverLifetime;
+                rotationOverLifetime.x = settings.rotationOverLifetime.x;
+                rotationOverLifetime.y = settings.rotationOverLifetime.y;
+                rotationOverLifetime.z = settings.rotationOverLifetime.z;
+            }
+
+            Content.CreateAndAddEffectDef(echoPortalPrefab);
+        }
+
+        private static void CreateEchoVortex() {
+            echoVortexPrefab = Addressables.LoadAssetAsync<GameObject>(RoR2_DLC2_FalseSon.FalseSonMeridiansWillVortexVFX_prefab).WaitForCompletion();
+            foreach (ShakeEmitter emitter in echoVortexPrefab.GetComponents<ShakeEmitter>()) {
+                Object.Destroy(emitter);
+            }
+            Object.Destroy(echoVortexPrefab.GetComponent<AkEvent>());
+
+            Object.Destroy(echoVortexPrefab.transform.Find("Distortion/Debris").gameObject);
+
+            Content.CreateAndAddEffectDef(echoVortexPrefab);
         }
         #endregion effects
 

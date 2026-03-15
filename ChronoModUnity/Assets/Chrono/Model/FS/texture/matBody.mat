@@ -8,9 +8,10 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matBody
-  m_Shader: {fileID: 4800000, guid: 7c7878048e0029a42853919b4813fae0, type: 3}
+  m_Shader: {fileID: 4800000, guid: 066c32c61c2698b43877bff275b564d9, type: 3}
   m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - DITHER
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -123,6 +124,7 @@ Material:
     - _DecalLayer: 0
     - _Depth: 0.2
     - _DetailNormalMapScale: 1
+    - _DitherOn: 1
     - _DoubleColorsOn: 0
     - _DstBlend: 0
     - _EliteBrightnessMax: 1
@@ -132,6 +134,7 @@ Material:
     - _EnableCutout: 0
     - _FEON: 0
     - _Fade: 1
+    - _FadeBias: 0
     - _FlowEmissionStrength: 1
     - _FlowHeightBias: 0
     - _FlowHeightPower: 1

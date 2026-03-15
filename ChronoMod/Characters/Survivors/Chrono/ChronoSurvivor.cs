@@ -116,6 +116,7 @@ namespace ChronoMod.Survivors.Chrono {
             prefabCharacterModel.GetComponent<Animator>().runtimeAnimatorController = Addressables.LoadAssetAsync<RuntimeAnimatorController>(RoR2_DLC2_FalseSon.animFalseSon_controller).WaitForCompletion();
 
             // Load soundbanks required for sfx reuse
+            // Too many soundbanks!!!!
             SetupAkBanks();
         }
 
@@ -124,9 +125,10 @@ namespace ChronoMod.Survivors.Chrono {
                 Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Merc.MercBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
                 Addressables.LoadAssetAsync<GameObject>(RoR2_DLC2_FalseSon.FalseSonBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
                 Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Brother.BrotherBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
-                Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Vulture.VultureBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
+                Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Huntress.HuntressBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
                 Addressables.LoadAssetAsync<GameObject>(RoR2_DLC3_Drifter.DrifterBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
                 Addressables.LoadAssetAsync<GameObject>(RoR2_DLC1_VoidSurvivor.VoidSurvivorBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
+                Addressables.LoadAssetAsync<GameObject>(RoR2_DLC2_Seeker.SeekerBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
             };
             foreach (AkBank bank in banksToLoad) {
                 if (bank != null) {
