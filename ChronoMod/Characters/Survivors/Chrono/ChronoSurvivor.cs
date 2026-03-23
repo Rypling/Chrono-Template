@@ -60,6 +60,11 @@ namespace ChronoMod.Survivors.Chrono {
                 {
                      childName = "OutlineMesh",
                     material = assetBundle.LoadMaterial("matOutline")
+                },
+                new CustomRendererInfo
+                {
+                    childName = "GunMesh",
+                    material = assetBundle.LoadMaterial("matGun"),
                 }
         };
 
@@ -401,13 +406,13 @@ namespace ChronoMod.Survivors.Chrono {
                 resetCooldownTimerOnUse = false,
                 fullRestockOnAssign = true,
                 dontAllowPastMaxStocks = false,
-                mustKeyPress = false,
+                mustKeyPress = true,
                 beginSkillCooldownOnSkillEnd = false,
 
                 isCombatSkill = true,
                 canceledFromSprinting = false,
                 cancelSprintingOnActivation = false,
-                forceSprintDuringState = true,
+                forceSprintDuringState = false,
             });
 
             Skills.AddUtilitySkills(bodyPrefab, utilitySkillDef1, utilitySkillDef2);

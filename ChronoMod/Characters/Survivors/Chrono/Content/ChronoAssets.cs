@@ -25,6 +25,8 @@ namespace ChronoMod.Survivors.Chrono {
 
         public static GameObject continuumWardPrefab;
 
+        public static GameObject continuumEndEffect;
+
         public static GameObject echoPortalPrefab;
 
         public static GameObject echoVortexPrefab;
@@ -54,16 +56,40 @@ namespace ChronoMod.Survivors.Chrono {
 
             swordHitImpactEffect = Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Merc.OmniImpactVFXSlashMerc_prefab).WaitForCompletion();
 
-            continuumWardPrefab = _assetBundle.LoadAsset<GameObject>("ContinuumWard");
-            continuumWardPrefab.GetComponent<BuffWard>().buffDef = ChronoBuffs.continuumFreezeBuff;
+            CreateContinuumWard();
+            CreateContinuumEnd();
 
             CreateEchoPortal();
             CreateEchoVortex();
         }
 
+        private static void CreateContinuumWard() {
+            continuumWardPrefab = _assetBundle.LoadAsset<GameObject>("ContinuumWard");
+            continuumWardPrefab.GetComponent<BuffWard>().buffDef = ChronoBuffs.continuumFreezeBuff;
+
+            ChildLocator wardChildren = continuumWardPrefab.GetComponent<ChildLocator>();
+            wardChildren.FindChild("Sphere").GetComponent<MeshFilter>().mesh = Addressables.LoadAssetAsync<Mesh>(RoR2_Base_Pearl.mdlPearl_fbx_Sphere__Unwrapped_).WaitForCompletion();
+        }
+
+        private static void CreateContinuumEnd() {
+            continuumEndEffect = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Engi.BubbleShieldEndEffect_prefab).WaitForCompletion(), "ContinuumEndEffect");
+
+            Object.Destroy(continuumEndEffect.transform.Find("OmniExplosionVFXEngiTurretDeath").gameObject);
+
+            Transform tParticleSphere = continuumEndEffect.transform.Find("ParticleSphere");
+            tParticleSphere.GetComponent<ParticleSystemRenderer>().sharedMaterial = _assetBundle.LoadMaterial("matContinuumSphereIndicator");
+
+            Transform tQuads = continuumEndEffect.transform.Find("Quads");
+            Material matQuads = new Material(tQuads.GetComponent<ParticleSystemRenderer>().sharedMaterial);
+            matQuads.SetTexture("_RemapTex", _assetBundle.LoadAsset<Texture>("texRampContinuumWard"));
+            tQuads.GetComponent<ParticleSystemRenderer>().sharedMaterial = matQuads;
+
+            Content.CreateAndAddEffectDef(continuumEndEffect);
+        }
+
         private static void CreateSwordSwing() {
-            swordSwingEffect = Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Merc.MercSwordSlash_prefab).WaitForCompletion();// _assetBundle.LoadEffect("HenrySwordSwingEffect", true);
-            EffectComponent effect = swordSwingEffect.AddComponent<EffectComponent>(); // why does it not have one by default. how queer
+            swordSwingEffect = Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Merc.MercSwordSlash_prefab).WaitForCompletion();
+            EffectComponent effect = swordSwingEffect.AddComponent<EffectComponent>();
             effect.applyScale = false;
             effect.effectIndex = EffectIndex.Invalid;
             effect.parentToReferencedTransform = true;

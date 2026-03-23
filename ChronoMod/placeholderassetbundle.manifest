@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 251004555
+CRC: 4132340861
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 08e7e33577d9b6b660dcb7bf1797104c
+    Hash: 7a4513b5a59ad8e84bb20194e38d483d
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 56f1f62cb724d466fccd5aa11c0b7281
+    Hash: 815ca1ce1d136fdb7d08cf03d3e0f22d
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -44,23 +44,35 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 678291247, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
+  Script: {fileID: 816898038, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+- Class: 114
   Script: {fileID: 1783796254, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+- Class: 114
+  Script: {fileID: 1790887305, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
   Script: {fileID: 372142912, guid: d382a022563c7517aadbc92ca1060016, type: 3}
 - Class: 114
+  Script: {fileID: 1395413934, guid: da77c7bbf69f66ab2145560542327715, type: 3}
+- Class: 114
+  Script: {fileID: 488236779, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+- Class: 114
   Script: {fileID: 1788389205, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+- Class: 114
+  Script: {fileID: 2137989374, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 261c50d8a80898e4ebf2e8e415ea6766, type: 3}
 - Class: 114
-  Script: {fileID: 1395413934, guid: da77c7bbf69f66ab2145560542327715, type: 3}
-- Class: 114
   Script: {fileID: -132178706, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+- Class: 114
+  Script: {fileID: -2108948543, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
   Script: {fileID: -1845404088, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
-  Script: {fileID: -1848696948, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  Script: {fileID: -226763392, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
-  Script: {fileID: 1790887305, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  Script: {fileID: -287833090, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+- Class: 114
+  Script: {fileID: -1848696948, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
   Script: {fileID: -317677761, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
@@ -68,13 +80,9 @@ ClassTypes:
 - Class: 114
   Script: {fileID: -1819008361, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
-  Script: {fileID: 2137989374, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-- Class: 114
   Script: {fileID: -455717551, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
   Script: {fileID: -1895344032, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-- Class: 114
-  Script: {fileID: 816898038, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 68ee60b5bcd2668489cac0473619dffe, type: 3}
 - Class: 114
@@ -100,10 +108,14 @@ ClassTypes:
 - Class: 319
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers:
+- AssemblyName: AK.Wwise.Unity.API.WwiseTypes
+  ClassName: AK.Wwise.Event
 - AssemblyName: RoR2
   ClassName: ChildLocator/NameTransformPair
 - AssemblyName: RoR2
   ClassName: RoR2.DamageTypeCombo
+- AssemblyName: RoR2
+  ClassName: RoR2.PlaySoundOnEvent/PlaySoundEvent
 - AssemblyName: Unity.Addressables
   ClassName: UnityEngine.AddressableAssets.AssetReferenceT`1[UnityEngine.GameObject]
 - AssemblyName: UnityEngine.CoreModule
@@ -119,7 +131,9 @@ Assets:
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texMasteryAchievement.png
 - Assets/Chrono/Model/FS/texture/Emission_Colour.png
 - Assets/Henry/HenryAssets/HenryBundle/Materials/matRebellion.mat
+- Assets/Chrono/Skills/Utility/PortalParticleSettings.prefab
 - Assets/Chrono/Skills/AltPrimary/matThrowTrail1.mat
+- Assets/Chrono/Skills/AltUtility/texRampContinuumWard.png
 - Assets/Chrono/Model/FS/texture/matOutline.mat
 - Assets/Henry/HenryAssets/HenryBundle/Mesh/meshNeoCoat.mesh
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/Slash2.anim
@@ -129,7 +143,6 @@ Assets:
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texSpecialIcon.png
 - Assets/Chrono/Model/FS/texture/matSpear.mat
 - Assets/Henry/HenryAssets/HenryBundle/VFX/HenryFistSwingEffect.prefab
-- Assets/Henry/HenryAssets/HenryBundle/Animation/clips/WalkB.anim
 - Assets/Chrono/Model/FS/texture/matBody.mat
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texUtilityIcon.png
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/Idle.anim
@@ -140,9 +153,10 @@ Assets:
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texStingerIcon.png
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texHenryIcon.png
 - Assets/Henry/HenryAssets/HenryBundle/Mesh/meshHenryAlt.mesh
-- Assets/Henry/HenryAssets/HenryBundle/Mesh/meshRebellion.mesh
+- Assets/Henry/HenryAssets/HenryBundle/Animation/clips/WalkB.anim
 - Assets/Henry/HenryAssets/HenryBundle/Textures/texBazooka.png
 - Assets/Henry/HenryAssets/HenryBundle/Textures/texHenry.png
+- Assets/Henry/HenryAssets/HenryBundle/Mesh/meshRebellion.mesh
 - Assets/Henry/HenryAssets/HenryBundle/VFX/Materials/matDust.mat
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/IdleAdditive.anim
 - Assets/Henry/HenryAssets/HenryBundle/HenryBombGhost.prefab
