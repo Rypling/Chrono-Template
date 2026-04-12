@@ -1,7 +1,7 @@
-﻿using ChronoMod.Characters.Survivors.Chrono.Components;
-using EntityStates;
+﻿using EntityStates;
 using RoR2;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace ChronoMod.Survivors.Chrono.SkillStates {
     public class ContinuumFreeze : BaseSkillState {
@@ -10,12 +10,15 @@ namespace ChronoMod.Survivors.Chrono.SkillStates {
         public override void OnEnter() {
             base.OnEnter();
 
-            FireBlastAttack();
-            CreateWard();
+            if (isAuthority) {
+                FireBlastAttack();
 
-            if (!characterMotor.isGrounded) {
-                SmallHop(characterMotor, 14f);
+                if (!characterMotor.isGrounded) {
+                    SmallHop(characterMotor, 14f);
+                }
             }
+
+            CreateWard();
         }
 
         private void FireBlastAttack() {
@@ -36,15 +39,16 @@ namespace ChronoMod.Survivors.Chrono.SkillStates {
         }
 
         private void CreateWard() {
-            GameObject ward = Object.Instantiate(ChronoAssets.continuumWardPrefab);
-            ward.transform.position = characterBody.transform.position;
-            float buffFrac = characterBody.GetBuffCount(ChronoBuffs.temporalRiftBuff) / ChronoStaticValues.temporalMaxBuffs;
-            float lifetime = Mathf.Lerp(ChronoStaticValues.continuumWardMinDuration, ChronoStaticValues.continuumWardMaxDuration, buffFrac);
-            ward.GetComponent<BuffWard>().expireDuration = lifetime;
-            ward.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
-            ward.GetComponent<ChildLocator>().FindChild("VFXController").GetComponent<BeginRapidlyActivatingAndDeactivating>().delayBeforeBeginningBlinking = lifetime - 1f;
-            ward.AddComponent<ContinuumFreezeController>();
-            Util.PlaySound("Play_seeker_skill2_alt_fire", ward);
+            if (NetworkServer.active) {
+                GameObject ward = Object.Instantiate(ChronoAssets.continuumWardPrefab);
+                ward.transform.position = characterBody.transform.position;
+                float buffFrac = characterBody.GetBuffCount(ChronoBuffs.temporalRiftBuff) / ChronoStaticValues.temporalMaxBuffs;
+                float lifetime = Mathf.Lerp(ChronoStaticValues.continuumWardMinDuration, ChronoStaticValues.continuumWardMaxDuration, buffFrac);
+                ward.GetComponent<BuffWard>().expireDuration = lifetime;
+                ward.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
+                ward.GetComponent<ChildLocator>().FindChild("VFXController").GetComponent<BeginRapidlyActivatingAndDeactivating>().delayBeforeBeginningBlinking = lifetime - 1f;
+                NetworkServer.Spawn(ward);
+            }
         }
 
         public override void FixedUpdate() {

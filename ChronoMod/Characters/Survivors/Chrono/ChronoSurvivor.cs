@@ -428,7 +428,7 @@ namespace ChronoMod.Survivors.Chrono {
                 skillDescriptionToken = CHRONO_PREFIX + "SPECIAL_COLLAPSE_DESCRIPTION",
                 skillIcon = assetBundle.LoadAsset<Sprite>("texSpecialIcon"),
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(TimeCollapse)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(TimeCollapseAim)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
 

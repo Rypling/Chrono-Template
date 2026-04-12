@@ -9,7 +9,9 @@ using UnityEngine.AddressableAssets;
 namespace ChronoMod.Characters.Survivors.Chrono.SkillStates {
 
     /// <summary>
-    /// Copy of decompiled code from EntityStates.AimThrowableBase but without projectile logic and with some initial numbers
+    /// Heavily modified version of decompiled code from EntityStates.AimThrowableBase.
+    /// Removed projectile-specific logic, has an option to be a toggle input (activated with primary) with the toggleActivate field.
+    /// Not for use with primary skills
     /// </summary>
     public class AimBase : BaseSkillState {
 
@@ -28,7 +30,24 @@ namespace ChronoMod.Characters.Survivors.Chrono.SkillStates {
 
         public virtual string originOverrideString => "";
 
+        public virtual bool toggleActivate => false;
+
+        public virtual bool hideCrosshair => true;
+
+        public virtual LayerMask layerMask => LayerIndex.world.mask;
+
         // No touchy
+
+        private bool holdingActivationKey = true;
+
+        private bool holdingCancelKey = false;
+
+        private float heldRechargeStopwatch;
+
+        private bool stateFinished = false;
+
+        private bool IsNewKeyDownAuthority => IsKeyDownAuthority() && !holdingActivationKey;
+
         protected GameObject _endpointVisualizerPrefab; // overcooked
 
         protected LineRenderer arcVisualizerLineRenderer;
@@ -62,75 +81,63 @@ namespace ChronoMod.Characters.Survivors.Chrono.SkillStates {
         public override void OnEnter() {
             base.OnEnter();
 
-            _endpointVisualizerPrefab = endpointVisualizerPrefab;
+            if (isAuthority) {
+                heldRechargeStopwatch = skillLocator.special.rechargeStopwatch;
 
-            if (arcVisualizerPrefab) {
-                arcVisualizerLineRenderer = UnityEngine.Object.Instantiate(arcVisualizerPrefab, transform.position, Quaternion.identity).GetComponent<LineRenderer>();
-                calculateArcPointsJob = default;
-                completeArcPointsVisualizerJobMethod = CompleteArcVisualizerJob;
-                RoR2Application.onLateUpdate += completeArcPointsVisualizerJobMethod;
+                _endpointVisualizerPrefab = endpointVisualizerPrefab;
+
+                if (arcVisualizerPrefab) {
+                    arcVisualizerLineRenderer = UnityEngine.Object.Instantiate(arcVisualizerPrefab, transform.position, Quaternion.identity).GetComponent<LineRenderer>();
+                    calculateArcPointsJob = default;
+                    completeArcPointsVisualizerJobMethod = CompleteArcVisualizerJob;
+                    RoR2Application.onLateUpdate += completeArcPointsVisualizerJobMethod;
+                }
+
+                if (_endpointVisualizerPrefab) {
+                    endpointVisualizerTransform = UnityEngine.Object.Instantiate(_endpointVisualizerPrefab, transform.position, Quaternion.identity).transform;
+                }
+
+                if (characterBody) {
+                    characterBody.hideCrosshair = hideCrosshair;
+                }
+
+                originOverride = FindModelChild(originOverrideString);
+                minimumDuration = baseMinimumDuration / attackSpeedStat;
+                UpdateVisualizers(currentTrajectoryInfo);
+                SceneCamera.onSceneCameraPreRender += OnPreRenderSceneCam;
             }
-
-            if (_endpointVisualizerPrefab) {
-                endpointVisualizerTransform = UnityEngine.Object.Instantiate(_endpointVisualizerPrefab, transform.position, Quaternion.identity).transform;
-            }
-
-            if (characterBody) {
-                characterBody.hideCrosshair = true;
-            }
-
-            originOverride = FindModelChild(originOverrideString);
-            minimumDuration = baseMinimumDuration / attackSpeedStat;
-            UpdateVisualizers(currentTrajectoryInfo);
-            SceneCamera.onSceneCameraPreRender += OnPreRenderSceneCam;
         }
 
         public override void OnExit() {
-            SceneCamera.onSceneCameraPreRender -= OnPreRenderSceneCam;
+            if (isAuthority) {
+                SceneCamera.onSceneCameraPreRender -= OnPreRenderSceneCam;
 
-            if (characterBody) {
-                characterBody.hideCrosshair = false;
-            }
+                if (characterBody) {
+                    characterBody.hideCrosshair = false;
+                }
 
-            calculateArcPointsJobHandle.Complete();
-            if (arcVisualizerLineRenderer) {
-                Destroy(arcVisualizerLineRenderer.gameObject);
-                arcVisualizerLineRenderer = null;
-            }
+                calculateArcPointsJobHandle.Complete();
+                if (arcVisualizerLineRenderer) {
+                    Destroy(arcVisualizerLineRenderer.gameObject);
+                    arcVisualizerLineRenderer = null;
+                }
 
-            if (completeArcPointsVisualizerJobMethod != null) {
-                RoR2Application.onLateUpdate -= completeArcPointsVisualizerJobMethod;
-                completeArcPointsVisualizerJobMethod = null;
-            }
+                if (completeArcPointsVisualizerJobMethod != null) {
+                    RoR2Application.onLateUpdate -= completeArcPointsVisualizerJobMethod;
+                    completeArcPointsVisualizerJobMethod = null;
+                }
 
-            calculateArcPointsJob.Dispose();
+                calculateArcPointsJob.Dispose();
 
-            pointsBuffer = Array.Empty<Vector3>();
+                pointsBuffer = Array.Empty<Vector3>();
 
-            if (endpointVisualizerTransform) {
-                Destroy(endpointVisualizerTransform.gameObject);
-                endpointVisualizerTransform = null;
+                if (endpointVisualizerTransform) {
+                    Destroy(endpointVisualizerTransform.gameObject);
+                    endpointVisualizerTransform = null;
+                }
             }
 
             base.OnExit();
-        }
-
-        protected virtual bool KeyIsDown() {
-            return IsKeyDownAuthority();
-        }
-
-        public override void FixedUpdate() {
-            base.FixedUpdate();
-
-            if (isAuthority && !KeyIsDown() && fixedAge >= minimumDuration) {
-                EntityState entityState = PickNextState();
-
-                if (entityState != null) {
-                    outer.SetNextState(entityState);
-                } else {
-                    outer.SetNextStateToMain();
-                }
-            }
         }
 
         protected virtual EntityState PickNextState() {
@@ -144,10 +151,71 @@ namespace ChronoMod.Characters.Survivors.Chrono.SkillStates {
         public override void Update() {
             base.Update();
 
-            Ray aimRay;
+            if (stateFinished) {
+                return;
+            }
 
-            UpdateTrajectoryInfo(out currentTrajectoryInfo, out aimRay);
-            UpdateVisualizers(currentTrajectoryInfo);
+            if (isAuthority) {
+
+                Ray aimRay;
+
+                UpdateTrajectoryInfo(out currentTrajectoryInfo, out aimRay);
+                UpdateVisualizers(currentTrajectoryInfo);
+
+                if (!IsKeyDownAuthority()) {
+
+                    if (!toggleActivate && age >= minimumDuration) {
+
+                        // hold - activation by releasing
+                        NextState();
+
+                    } else if (toggleActivate) {
+                        if (holdingActivationKey) {
+
+                            // toggle - released from activation press
+                            holdingActivationKey = false;
+
+                        } else if (holdingCancelKey) {
+
+                            // toggle - released from cancel press (confirmed cancel)
+                            activatorSkillSlot.AddOneStock();
+                            activatorSkillSlot.rechargeStopwatch = heldRechargeStopwatch;
+                            outer.SetNextStateToMain();
+                            stateFinished = true;
+                            return;
+
+                        }
+                    }
+
+
+                } else if (toggleActivate) {
+                    if (IsNewKeyDownAuthority && !holdingCancelKey) {
+
+                        // toggle - second press of skill button (step before cancel)
+                        holdingCancelKey = true;
+
+                    }
+                }
+
+                if (toggleActivate && inputBank.skill1.justPressed && age >= minimumDuration) {
+
+                    // toggle - activation with primary
+                    NextState();
+
+                }
+            }
+        }
+
+        protected virtual void NextState() {
+            EntityState entityState = PickNextState();
+
+            if (entityState != null) {
+                outer.SetNextState(entityState);
+            } else {
+                outer.SetNextStateToMain();
+            }
+
+            stateFinished = true;
         }
 
         protected virtual void UpdateTrajectoryInfo(out AimThrowableBase.TrajectoryInfo dest, out Ray aimRay) {
@@ -156,12 +224,12 @@ namespace ChronoMod.Characters.Survivors.Chrono.SkillStates {
             hasCollided = false;
             aimRay = GetAimRay();
 
-            if (rayRadius > 0f && Util.CharacterSpherecast(base.gameObject, aimRay, rayRadius, out hitInfo, maxDistance, LayerIndex.world.mask, QueryTriggerInteraction.UseGlobal) && (bool)hitInfo.collider.GetComponent<HurtBox>()) {
+            if (rayRadius > 0f && Util.CharacterSpherecast(base.gameObject, aimRay, rayRadius, out hitInfo, maxDistance, layerMask, QueryTriggerInteraction.UseGlobal) && (bool)hitInfo.collider.GetComponent<HurtBox>()) {
                 hasCollided = true;
             }
 
             if (!hasCollided) {
-                hasCollided = Util.CharacterRaycast(base.gameObject, aimRay, out hitInfo, maxDistance, LayerIndex.world.mask, QueryTriggerInteraction.UseGlobal);
+                hasCollided = Util.CharacterRaycast(base.gameObject, aimRay, out hitInfo, maxDistance, layerMask, QueryTriggerInteraction.UseGlobal);
             }
 
             if (hasCollided) {

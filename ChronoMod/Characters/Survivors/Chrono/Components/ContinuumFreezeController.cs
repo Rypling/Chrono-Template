@@ -4,6 +4,11 @@ using UnityEngine;
 
 namespace ChronoMod.Characters.Survivors.Chrono.Components {
     public class ContinuumFreezeController : MonoBehaviour {
+
+        public void Start() {
+            Util.PlaySound("Play_seeker_skill2_alt_fire", gameObject);
+        }
+
         public void OnDestroy() {
             EffectManager.SpawnEffect(ChronoAssets.continuumEndEffect, new EffectData {
                 origin = transform.position,

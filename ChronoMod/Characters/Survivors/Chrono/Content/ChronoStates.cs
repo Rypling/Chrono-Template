@@ -17,7 +17,8 @@ namespace ChronoMod.Survivors.Chrono {
 
             Modules.Content.AddEntityState(typeof(ContinuumFreeze));
 
-            Modules.Content.AddEntityState(typeof(TimeCollapse));
+            Modules.Content.AddEntityState(typeof(TimeCollapseAim));
+            Modules.Content.AddEntityState(typeof(TimeCollapseFire));
 
             Modules.Content.AddEntityState(typeof(WaitForRelease));
         }

@@ -1,5 +1,4 @@
-﻿using System;
-using ChronoMod.Modules;
+﻿using ChronoMod.Modules;
 using ChronoMod.Survivors.Chrono.Components;
 using RoR2;
 using UnityEngine;
@@ -14,7 +13,7 @@ namespace ChronoMod.Survivors.Chrono {
         public static BuffDef continuumFreezeBuff;
 
         public static void Init(AssetBundle assetBundle) {
-            temporalRiftBuff = Modules.Content.CreateAndAddBuff(
+            temporalRiftBuff = Content.CreateAndAddBuff(
                 "ChronoTemporalRiftBuff",
                 LegacyResourcesAPI.Load<BuffDef>("BuffDefs/AffixLunar").iconSprite,
                 Color.cyan,
@@ -23,7 +22,7 @@ namespace ChronoMod.Survivors.Chrono {
                 BuffDef.StackingDisplayMethod.Percentage
                 );
 
-            timeWarpBuff = Modules.Content.CreateAndAddBuff(
+            timeWarpBuff = Content.CreateAndAddBuff(
                 "ChronoTimeWarpBuff",
                 LegacyResourcesAPI.Load<BuffDef>("BuffDefs/MercExpose").iconSprite,
                 Color.cyan,
@@ -31,7 +30,7 @@ namespace ChronoMod.Survivors.Chrono {
                 false
                 );
 
-            continuumFreezeBuff = Modules.Content.CreateAndAddBuff(
+            continuumFreezeBuff = Content.CreateAndAddBuff(
                 "ChronoContinuumFreezeBuff",
                 LegacyResourcesAPI.Load<BuffDef>("BuffDefs/Warbanner").iconSprite,
                 Color.cyan,
@@ -74,17 +73,13 @@ namespace ChronoMod.Survivors.Chrono {
         }
 
         private static void ContinuumFreezeLifesteal(HealthComponent self, DamageInfo damageInfo) {
-            try {
-                if (damageInfo.attacker) {
-                    HealthComponent attackerHealth = damageInfo?.attacker?.GetComponent<HealthComponent>();
-                    CharacterBody body = attackerHealth?.body;
-                    float damage = damageInfo?.damage ?? 0f;
-                    if (body != null && body.HasBuff(continuumFreezeBuff) && damage > 0f) {
-                        attackerHealth?.Heal(damage * 0.1f, default(ProcChainMask));
-                    }
+            if (damageInfo.attacker) {
+                HealthComponent attackerHealth = damageInfo?.attacker?.GetComponent<HealthComponent>();
+                CharacterBody body = attackerHealth?.body;
+                float damage = damageInfo?.damage ?? 0f;
+                if (body != null && body.HasBuff(continuumFreezeBuff) && damage > 0f) {
+                    attackerHealth?.Heal(damage * 0.1f, default(ProcChainMask));
                 }
-            } catch (NullReferenceException e) {
-                Log.Warning("ContinuumFreezeLifesteal NRE");
             }
         }
     }

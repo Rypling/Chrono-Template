@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4132340861
+CRC: 2155418375
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 7a4513b5a59ad8e84bb20194e38d483d
+    Hash: 344fe1a1394523c3abe545a4b3241a3b
   TypeTreeHash:
     serializedVersion: 2
     Hash: 815ca1ce1d136fdb7d08cf03d3e0f22d
@@ -128,6 +128,7 @@ SerializeReferenceClassIdentifiers:
   ClassName: UnityEngine.Networking.NetworkSceneId
 Assets:
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/DefaultPose.anim
+- Assets/Chrono/Skills/Special/matCollapseLaser.mat
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texMasteryAchievement.png
 - Assets/Chrono/Model/FS/texture/Emission_Colour.png
 - Assets/Henry/HenryAssets/HenryBundle/Materials/matRebellion.mat
@@ -144,19 +145,19 @@ Assets:
 - Assets/Chrono/Model/FS/texture/matSpear.mat
 - Assets/Henry/HenryAssets/HenryBundle/VFX/HenryFistSwingEffect.prefab
 - Assets/Chrono/Model/FS/texture/matBody.mat
-- Assets/Henry/HenryAssets/HenryBundle/Icons/texUtilityIcon.png
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/Idle.anim
+- Assets/Henry/HenryAssets/HenryBundle/Icons/texUtilityIcon.png
+- Assets/Henry/HenryAssets/HenryBundle/Animation/clips/SprintR.anim
 - Assets/Henry/HenryAssets/HenryBundle/Animation/animHenryMenu.controller
 - Assets/Henry/HenryAssets/HenryBundle/Animation/maskImpact.mask
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/ShootGun.anim
-- Assets/Henry/HenryAssets/HenryBundle/Animation/clips/SprintR.anim
+- Assets/Henry/HenryAssets/HenryBundle/Animation/clips/WalkB.anim
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texStingerIcon.png
 - Assets/Henry/HenryAssets/HenryBundle/Icons/texHenryIcon.png
 - Assets/Henry/HenryAssets/HenryBundle/Mesh/meshHenryAlt.mesh
-- Assets/Henry/HenryAssets/HenryBundle/Animation/clips/WalkB.anim
+- Assets/Henry/HenryAssets/HenryBundle/Mesh/meshRebellion.mesh
 - Assets/Henry/HenryAssets/HenryBundle/Textures/texBazooka.png
 - Assets/Henry/HenryAssets/HenryBundle/Textures/texHenry.png
-- Assets/Henry/HenryAssets/HenryBundle/Mesh/meshRebellion.mesh
 - Assets/Henry/HenryAssets/HenryBundle/VFX/Materials/matDust.mat
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/IdleAdditive.anim
 - Assets/Henry/HenryAssets/HenryBundle/HenryBombGhost.prefab
@@ -243,8 +244,9 @@ Assets:
 - Assets/Henry/HenryAssets/HenryBundle/HenryMonsterMaster.prefab
 - Assets/Henry/HenryAssets/HenryBundle/HenryBazookaRocketGhost.prefab
 - Assets/Henry/HenryAssets/HenryBundle/Animation/animHenry.controller
-- Assets/Henry/HenryAssets/HenryBundle/Mesh/meshUzi.mesh
+- Assets/Chrono/Skills/Special/LaserVFX.prefab
 - Assets/Chrono/Skills/AltPrimary/ThrowProjectile.prefab
+- Assets/Henry/HenryAssets/HenryBundle/Mesh/meshUzi.mesh
 - Assets/Chrono/Skills/AltUtility/ContinuumWard.prefab
 - Assets/Henry/HenryAssets/HenryBundle/Animation/clips/ThrowBomb.anim
 - Assets/Henry/HenryAssets/HenryBundle/VFX/Textures/texEmbers.png

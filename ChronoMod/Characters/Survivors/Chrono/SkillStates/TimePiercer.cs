@@ -85,7 +85,7 @@ namespace ChronoMod.Survivors.Chrono.SkillStates {
                         force = force,
                         hitMask = LayerIndex.CommonMasks.bullet,
                         minSpread = 0f,
-                        maxSpread = 0f,
+                        maxSpread = 0.2f,
                         isCrit = RollCrit(),
                         owner = gameObject,
                         muzzleName = muzzleString,

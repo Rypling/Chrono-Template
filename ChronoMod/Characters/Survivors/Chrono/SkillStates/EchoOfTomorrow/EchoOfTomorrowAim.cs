@@ -16,7 +16,7 @@ namespace ChronoMod.Survivors.Chrono.SkillStates {
 
         public override void FixedUpdate() {
             base.FixedUpdate();
-            if (isAuthority && !KeyIsDown() && fixedAge >= minimumDuration) {
+            if (isAuthority && !IsKeyDownAuthority() && fixedAge >= minimumDuration) {
                 aimRequest?.Dispose();
             }
         }

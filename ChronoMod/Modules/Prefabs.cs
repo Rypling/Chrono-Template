@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ChronoMod.Modules.Characters;
+﻿using ChronoMod.Modules.Characters;
 using R2API;
 using RoR2;
 using RoR2.CharacterAI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace ChronoMod.Modules {
@@ -300,7 +300,7 @@ namespace ChronoMod.Modules {
                 if (characterModel.baseRendererInfos[i].defaultMaterial == null) {
                     Log.Error($"no material for rendererinfo of this renderer: {characterModel.baseRendererInfos[i].renderer}");
                 }
-                characterModel.baseRendererInfos[i].defaultMaterial.ConvertDefaultShaderToHopoo();
+                // characterModel.baseRendererInfos[i].defaultMaterial.ConvertDefaultShaderToHopoo();
             }
         }
 
@@ -327,7 +327,7 @@ namespace ChronoMod.Modules {
                             if (customInfos[i].dontHotpoo) {
                                 mat = rend.sharedMaterial;
                             } else {
-                                mat = rend.sharedMaterial.ConvertDefaultShaderToHopoo();
+                                //mat = rend.sharedMaterial.ConvertDefaultShaderToHopoo();
                             }
                         }
 
