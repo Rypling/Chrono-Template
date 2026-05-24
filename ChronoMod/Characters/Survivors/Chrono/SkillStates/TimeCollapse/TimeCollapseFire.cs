@@ -1,4 +1,5 @@
-﻿using EntityStates;
+﻿using ChronoMod.Survivors.Chrono.Components;
+using EntityStates;
 using RoR2.Projectile;
 using UnityEngine;
 
@@ -38,16 +39,22 @@ namespace ChronoMod.Survivors.Chrono.SkillStates {
         public override void OnEnter() {
             base.OnEnter();
 
-            if (isAuthority) {
+            if (isAuthority && characterBody.GetComponent<ChronoController>() is ChronoController chronoController) {
+                int buffCount = characterBody.GetBuffCount(ChronoBuffs.temporalRiftBuff);
                 FireProjectileInfo fireProjectileInfo = new FireProjectileInfo {
                     projectilePrefab = ChronoAssets.collapseProjectile,
                     position = attackOrigin,
                     rotation = Quaternion.identity,
                     owner = base.gameObject,
-                    damage = damageStat,
-                    crit = base.characterBody.RollCrit()
+                    damage = damageStat * ChronoStaticValues.collapseBase + chronoController.recentDamageTracker * (1 + buffCount / ChronoStaticValues.temporalMaxBuffs),
+                    crit = true
                 };
                 ProjectileManager.instance.FireProjectile(fireProjectileInfo);
+                characterBody.SetBuffCount(ChronoBuffs.temporalRiftBuff.buffIndex, 0);
+                // if used time collapse, stop all coroutines so any new damage doesn't instantly get subtracted by old coroutines
+                chronoController.StopAllCoroutines();
+                chronoController.recentDamageTracker = 0f;
+                skillLocator.special.DeductStock(1);
             }
         }
 

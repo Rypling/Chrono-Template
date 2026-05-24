@@ -42,8 +42,6 @@ namespace ChronoMod.Characters.Survivors.Chrono.SkillStates {
 
         private bool holdingCancelKey = false;
 
-        private float heldRechargeStopwatch;
-
         private bool stateFinished = false;
 
         private bool IsNewKeyDownAuthority => IsKeyDownAuthority() && !holdingActivationKey;
@@ -82,7 +80,6 @@ namespace ChronoMod.Characters.Survivors.Chrono.SkillStates {
             base.OnEnter();
 
             if (isAuthority) {
-                heldRechargeStopwatch = skillLocator.special.rechargeStopwatch;
 
                 _endpointVisualizerPrefab = endpointVisualizerPrefab;
 
@@ -178,8 +175,6 @@ namespace ChronoMod.Characters.Survivors.Chrono.SkillStates {
                         } else if (holdingCancelKey) {
 
                             // toggle - released from cancel press (confirmed cancel)
-                            activatorSkillSlot.AddOneStock();
-                            activatorSkillSlot.rechargeStopwatch = heldRechargeStopwatch;
                             outer.SetNextStateToMain();
                             stateFinished = true;
                             return;

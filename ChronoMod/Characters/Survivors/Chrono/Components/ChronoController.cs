@@ -1,7 +1,9 @@
-﻿using System.Collections;
-using ChronoMod.Modules.DamageTypes;
+﻿using ChronoMod.Modules.DamageTypes;
 using R2API;
 using RoR2;
+using RoR2.UI;
+using System.Collections;
+using TMPro;
 using UnityEngine;
 
 namespace ChronoMod.Survivors.Chrono.Components {
@@ -11,13 +13,25 @@ namespace ChronoMod.Survivors.Chrono.Components {
 
         private CharacterBody body;
 
+        private GameObject root;
+
+        private TextMeshProUGUI text;
+
         public float buffStopwatch;
 
         public float recentDamageTracker;
 
         private void Start() {
             body = GetComponent<CharacterBody>();
-            GlobalEventManager.onServerDamageDealt += CheckIfDealtDamage;
+            if (body?.hasEffectiveAuthority == true) {
+                GlobalEventManager.onClientDamageNotified += CheckIfDealtDamage;
+
+                root = HUD.instancesList[0].transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomRightCluster/Scaler/TimeCollapseDamageRoot")?.gameObject;
+                if (root) {
+                    root.SetActive(true);
+                    text = root.transform.Find("Text").GetComponent<TextMeshProUGUI>();
+                }
+            }
         }
 
         private static float GetTimeForBuffDecay(int buffs) {
@@ -25,7 +39,7 @@ namespace ChronoMod.Survivors.Chrono.Components {
             return Mathf.Lerp(ChronoStaticValues.temporalUpperDecayTime, ChronoStaticValues.temporalLowerDecayTime, step);
         }
 
-        private void Update() {
+        private void FixedUpdate() {
             if (body.HasBuff(ChronoBuffs.temporalRiftBuff)) {
                 buffStopwatch += Time.deltaTime;
                 if (buffStopwatch >= GetTimeForBuffDecay(body.GetBuffCount(ChronoBuffs.temporalRiftBuff))) {
@@ -36,18 +50,35 @@ namespace ChronoMod.Survivors.Chrono.Components {
             }
         }
 
-        private void CheckIfDealtDamage(DamageReport damageReport) {
-            if (damageReport?.attackerBody == body && damageReport?.victimBody != body && body != null) {
-                if (!damageReport.damageInfo.HasModdedDamageType(TimeCollapseType.damageType)) {
-                    float damage = damageReport.damageDealt;
+        private void Update() {
+            if (text) {
+                text.text = FormatDamageLabel(Mathf.Round(recentDamageTracker));
+            }
+        }
+
+        // Method copied from HealthBar component
+        private string FormatDamageLabel(float damage) {
+            if (damage >= 10000f) {
+                return Mathf.Round(damage / 1000f) + "K";
+            }
+            if (damage >= 1000000f) {
+                return Mathf.Round(damage / 1000000f) + "M";
+            }
+            return Mathf.Round(damage).ToString();
+        }
+
+        private void CheckIfDealtDamage(DamageDealtMessage message) {
+            if (message?.attacker == body.gameObject && message?.victim != body.gameObject && body != null) {
+                if (!message.damageType.HasModdedDamageType(TimeCollapseType.damageType)) {
+                    float damage = message.damage;
                     recentDamageTracker += damage;
                     this?.StartCoroutine(RemoveRecentDamage(damage));
-                } else {
-                    body.SetBuffCount(ChronoBuffs.temporalRiftBuff.buffIndex, 0);
-                    // if used time collapse, stop all coroutines so any new damage doesn't instantly get subtracted by old coroutines
-                    StopAllCoroutines();
-                    recentDamageTracker = 0f;
-                }
+                }//  else {
+                //    body.SetBuffCount(ChronoBuffs.temporalRiftBuff.buffIndex, 0);
+                //    // if used time collapse, stop all coroutines so any new damage doesn't instantly get subtracted by old coroutines
+                //    StopAllCoroutines();
+                //    recentDamageTracker = 0f;
+                //}
             }
         }
 
@@ -58,8 +89,13 @@ namespace ChronoMod.Survivors.Chrono.Components {
             }
         }
 
-        private void Destroy() {
-            GlobalEventManager.onServerDamageDealt -= CheckIfDealtDamage;
+        private void OnDestroy() {
+            if (body?.hasEffectiveAuthority == true) {
+                GlobalEventManager.onClientDamageNotified -= CheckIfDealtDamage;
+                if (root) {
+                    root.SetActive(false);
+                }
+            }
         }
     }
 }

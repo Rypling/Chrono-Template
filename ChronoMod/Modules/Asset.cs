@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
-using R2API;
+﻿using R2API;
 using RoR2;
 using RoR2.Projectile;
+using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.Networking;
 using Path = System.IO.Path;
@@ -61,25 +61,25 @@ namespace ChronoMod.Modules {
             return newTracer;
         }
 
-        internal static void ConvertAllRenderersToHopooShader(GameObject objectToConvert) {
-            if (!objectToConvert) return;
+        //internal static void ConvertAllRenderersToHopooShader(GameObject objectToConvert) {
+        //    if (!objectToConvert) return;
 
-            foreach (MeshRenderer i in objectToConvert.GetComponentsInChildren<MeshRenderer>()) {
-                if (i) {
-                    if (i.sharedMaterial) {
-                        i.sharedMaterial.ConvertDefaultShaderToHopoo();
-                    }
-                }
-            }
+        //    foreach (MeshRenderer i in objectToConvert.GetComponentsInChildren<MeshRenderer>()) {
+        //        if (i) {
+        //            if (i.sharedMaterial) {
+        //                i.sharedMaterial.ConvertDefaultShaderToHopoo();
+        //            }
+        //        }
+        //    }
 
-            foreach (SkinnedMeshRenderer i in objectToConvert.GetComponentsInChildren<SkinnedMeshRenderer>()) {
-                if (i) {
-                    if (i.sharedMaterial) {
-                        i.sharedMaterial.ConvertDefaultShaderToHopoo();
-                    }
-                }
-            }
-        }
+        //    foreach (SkinnedMeshRenderer i in objectToConvert.GetComponentsInChildren<SkinnedMeshRenderer>()) {
+        //        if (i) {
+        //            if (i.sharedMaterial) {
+        //                i.sharedMaterial.ConvertDefaultShaderToHopoo();
+        //            }
+        //        }
+        //    }
+        //}
 
         internal static GameObject LoadCrosshair(string crosshairName) {
             GameObject loadedCrosshair = RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/Crosshair/" + crosshairName + "Crosshair");
@@ -124,7 +124,7 @@ namespace ChronoMod.Modules {
             if (!ghostPrefab.GetComponent<NetworkIdentity>()) ghostPrefab.AddComponent<NetworkIdentity>();
             if (!ghostPrefab.GetComponent<ProjectileGhostController>()) ghostPrefab.AddComponent<ProjectileGhostController>();
 
-            Modules.Asset.ConvertAllRenderersToHopooShader(ghostPrefab);
+            // Modules.Asset.ConvertAllRenderersToHopooShader(ghostPrefab);
 
             return ghostPrefab;
         }

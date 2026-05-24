@@ -28,7 +28,7 @@ namespace ChronoMod.Modules {
             }
             characterModel.baseRendererInfos = prefab.GetComponentInChildren<CharacterModel>().baseRendererInfos;
 
-            Modules.Asset.ConvertAllRenderersToHopooShader(display);
+            // Modules.Asset.ConvertAllRenderersToHopooShader(display);
 
             return display;
         }

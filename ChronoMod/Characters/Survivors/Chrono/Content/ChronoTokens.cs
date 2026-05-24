@@ -75,7 +75,7 @@ namespace ChronoMod.Survivors.Chrono {
 
             #region Special
             Language.Add(prefix + "SPECIAL_COLLAPSE_NAME", "Time Collapse");
-            Language.Add(prefix + "SPECIAL_COLLAPSE_DESCRIPTION", $"<style=cIsDamage>Critically strike</style> a target for <style=cIsDamage>all the damage you have dealt in the last 10 seconds</style>. Damage scales with your current <style=cIsDamage>Temporal Rift</style> level. Consumes all <style=cIsDamage>Temporal Rift</style>.");
+            Language.Add(prefix + "SPECIAL_COLLAPSE_DESCRIPTION", $"Summon a grand implosion, <style=cIsDamage>critically striking</style> all targets for <style=cIsDamage>{100f * ChronoStaticValues.collapseBase}% damage</style>, plus <style=cIsDamage>all the damage you have dealt in the last 10 seconds</style>. Damage scales with your current <style=cIsDamage>Temporal Rift</style> level. Consumes all <style=cIsDamage>Temporal Rift</style>.");
             #endregion
 
             #region Achievements

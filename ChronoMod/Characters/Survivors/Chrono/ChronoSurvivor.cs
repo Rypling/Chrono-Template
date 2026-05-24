@@ -128,12 +128,14 @@ namespace ChronoMod.Survivors.Chrono {
         private void SetupAkBanks() {
             AkBank[] banksToLoad = {
                 Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Merc.MercBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
-                Addressables.LoadAssetAsync<GameObject>(RoR2_DLC2_FalseSon.FalseSonBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
                 Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Brother.BrotherBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
+                Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Captain.CaptainBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
                 Addressables.LoadAssetAsync<GameObject>(RoR2_Base_Huntress.HuntressBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
-                Addressables.LoadAssetAsync<GameObject>(RoR2_DLC3_Drifter.DrifterBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
+                Addressables.LoadAssetAsync<GameObject>(RoR2_DLC1_Railgunner.RailgunnerBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
                 Addressables.LoadAssetAsync<GameObject>(RoR2_DLC1_VoidSurvivor.VoidSurvivorBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
+                Addressables.LoadAssetAsync<GameObject>(RoR2_DLC2_FalseSon.FalseSonBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
                 Addressables.LoadAssetAsync<GameObject>(RoR2_DLC2_Seeker.SeekerBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
+                Addressables.LoadAssetAsync<GameObject>(RoR2_DLC3_Drifter.DrifterBody_prefab).WaitForCompletion()?.GetComponent<AkBank>(),
             };
             foreach (AkBank bank in banksToLoad) {
                 if (bank != null) {
@@ -421,7 +423,6 @@ namespace ChronoMod.Survivors.Chrono {
         private void AddSpecialSkills() {
             Skills.CreateGenericSkillWithSkillFamily(bodyPrefab, SkillSlot.Special);
 
-            //a basic skill. some fields are omitted and will just have default values
             SkillDef specialSkillDef1 = Skills.CreateSkillDef(new SkillDefInfo {
                 skillName = "ChronoCollapse",
                 skillNameToken = CHRONO_PREFIX + "SPECIAL_COLLAPSE_NAME",
@@ -434,6 +435,7 @@ namespace ChronoMod.Survivors.Chrono {
 
                 baseMaxStock = 1,
                 baseRechargeInterval = 30f,
+                stockToConsume = 0,
 
                 beginSkillCooldownOnSkillEnd = true,
 

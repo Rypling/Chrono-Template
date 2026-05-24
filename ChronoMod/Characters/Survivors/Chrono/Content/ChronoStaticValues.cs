@@ -47,5 +47,8 @@
         public const float echoMinHealingFrac = 0.1f;
 
         public const float echoMaxHealingFrac = 0.25f;
+
+        // time collapse
+        public const float collapseBase = 1f;
     }
 }

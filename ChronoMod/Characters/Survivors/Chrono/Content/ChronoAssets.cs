@@ -8,6 +8,7 @@ using RoR2.Projectile;
 using RoR2BepInExPack.GameAssetPaths.Version_1_39_0;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Rendering.PostProcessing;
 
 namespace ChronoMod.Survivors.Chrono {
     public static class ChronoAssets {
@@ -51,6 +52,8 @@ namespace ChronoMod.Survivors.Chrono {
             CreateEffects();
 
             CreateProjectiles();
+
+            CreateHUDElements();
         }
 
         private static void CreateSounds() {
@@ -197,6 +200,10 @@ namespace ChronoMod.Survivors.Chrono {
 
             collapseVacuumPrefab.transform.Find("Scale/Point light").GetComponent<LightIntensityCurve>().enableNegativeLights = false;
 
+            Transform pp = collapseVacuumPrefab.transform.Find("Scale/PP");
+            pp.GetComponent<PostProcessDuration>().maxDuration = 2.5f;
+            pp.GetComponent<PostProcessVolume>().blendDistance = 30f;
+
             // Vacuum Stars
             Transform tVacuumStars = collapseVacuumPrefab.transform.Find("Scale/Vacuum Stars");
             particleSystem = tVacuumStars.GetComponent<ParticleSystem>();
@@ -242,6 +249,11 @@ namespace ChronoMod.Survivors.Chrono {
             laserVFX.transform.parent = collapseVacuumPrefab.transform.Find("Scale");
             laserVFX.transform.localScale = Vector3.one;
 
+            ShakeAmplifier shakeAmp = collapseVacuumPrefab.AddComponent<ShakeAmplifier>();
+            shakeAmp.shakeEmitter = collapseVacuumPrefab.GetComponent<ShakeEmitter>();
+            shakeAmp.amplitudeAddition = 0.3f;
+            shakeAmp.radiusAddition = 20f;
+
             Content.CreateAndAddEffectDef(collapseVacuumPrefab);
         }
 
@@ -250,14 +262,17 @@ namespace ChronoMod.Survivors.Chrono {
             collapseExplosionPrefab.AddComponent<DestroyOnTimer>().duration = 3f;
             collapseExplosionPrefab.transform.localScale = new Vector3(6f, 6f, 6f);
 
-            //EffectComponent effect = collapseVacuumPrefab.AddComponent<EffectComponent>();
-            //effect.applyScale = false;
-            //effect.effectIndex = EffectIndex.Invalid;
-            //effect.parentToReferencedTransform = true;
-            //effect.positionAtReferencedTransform = true;
-
             Object.Destroy(collapseExplosionPrefab.GetComponent<DestroyOnParticleEnd>());
             Object.Destroy(collapseExplosionPrefab.transform.Find("FallingProjectile").gameObject);
+
+            ShakeEmitter explosionShake = collapseExplosionPrefab.GetComponent<ShakeEmitter>();
+            explosionShake.startDelay = 0f;
+            explosionShake.wave = new Wave() {
+                frequency = 19f,
+                amplitude = 3f
+            };
+            explosionShake.radius = 120f;
+            explosionShake.duration = 1f;
 
             ParticleSystem particleSystem;
             ParticleSystem.MainModule main;
@@ -275,6 +290,9 @@ namespace ChronoMod.Survivors.Chrono {
             shape = collapseExplosionPrefab.transform.Find("Dust, Directional").GetComponent<ParticleSystem>().shape;
             shape.shapeType = ParticleSystemShapeType.Sphere;
 
+            collapseExplosionPrefab.AddComponent<PlaySoundOnEnable>().soundEvent = "Play_captain_utility_variant_Impact";
+            collapseExplosionPrefab.AddComponent<PlaySoundOnEnable>().soundEvent = "Play_railgunner_R_fire";
+
             GameObject volatileBatteryExplosion = Object.Instantiate(Addressables.LoadAssetAsync<GameObject>(RoR2_Base_QuestVolatileBattery.VolatileBatteryExplosion_prefab).WaitForCompletion());
             Object.Destroy(volatileBatteryExplosion.transform.Find("InitialBurst/Chunks, Sharp").gameObject);
             Object.Destroy(volatileBatteryExplosion.transform.Find("InitialBurst/Chunks, Solid").gameObject);
@@ -284,59 +302,13 @@ namespace ChronoMod.Survivors.Chrono {
             initialBurst.localPosition = Vector3.zero;
             initialBurst.localScale = Vector3.one * 0.5f;
             Object.Destroy(volatileBatteryExplosion);
-            //Object.Destroy(collapseVacuumPrefab.transform.Find("Scale/AreaIndicator, Front").gameObject);
-            //Object.Destroy(collapseVacuumPrefab.transform.Find("Scale/AreaIndicator, Back").gameObject);
 
-            //ParticleSystem particleSystem;
-            //ParticleSystem.MainModule main;
-            //ParticleSystem.EmissionModule emission;
+            initialBurst.Find("Point light").GetComponent<Light>().range = 100f;
+            initialBurst.Find("Flames").localScale *= 2f;
 
-            //collapseVacuumPrefab.transform.Find("Scale/Point light").GetComponent<LightIntensityCurve>().enableNegativeLights = false;
-
-            //// Vacuum Stars
-            //Transform tVacuumStars = collapseVacuumPrefab.transform.Find("Scale/Vacuum Stars");
-            //particleSystem = tVacuumStars.GetComponent<ParticleSystem>();
-            //Material matVacuumStars = new Material(tVacuumStars.GetComponent<ParticleSystemRenderer>().sharedMaterial);
-            //matVacuumStars.SetTexture("_RemapTex", Addressables.LoadAssetAsync<Texture>(RoR2_DLC3.texRampFire02_png).WaitForCompletion());
-            //matVacuumStars.SetTexture("_MainTex", Addressables.LoadAssetAsync<Texture>(RoR2_Base_Common_VFX_ParticleMasks.texShockwaveMask_psd).WaitForCompletion());
-            //tVacuumStars.GetComponent<ParticleSystemRenderer>().sharedMaterial = matVacuumStars;
-            //emission = particleSystem.emission;
-            //emission.rateOverTime = new ParticleSystem.MinMaxCurve(1f, new AnimationCurve(
-            //    new Keyframe(0f, 5f),
-            //    new Keyframe(0.16f, 8f),
-            //    new Keyframe(0.32f, 30f)
-            //));
-
-            //// Vacuum Stars, Trails
-            //Transform tVacuumStarsTrails = collapseVacuumPrefab.transform.Find("Scale/Vacuum Stars, Trails");
-            //particleSystem = tVacuumStarsTrails.GetComponent<ParticleSystem>();
-            //main = particleSystem.main;
-            //main.startColor = new ParticleSystem.MinMaxGradient(new Color(0f, 0.94f, 1f, 1f), new Color(1f, 0f, 0.13f, 1f));
-            //Material matVacuumStarsTrails = new Material(tVacuumStarsTrails.GetComponent<ParticleSystemRenderer>().trailMaterial);
-            //matVacuumStarsTrails.SetTexture("_RemapTex", Addressables.LoadAssetAsync<Texture>(RoR2_Base_Common_ColorRamps.texRampWhiteAlphaOnly_png).WaitForCompletion());
-            //tVacuumStarsTrails.GetComponent<ParticleSystemRenderer>().trailMaterial = matVacuumStarsTrails;
-            //emission = particleSystem.emission;
-            //emission.rateOverTime = new ParticleSystem.MinMaxCurve(1f, new AnimationCurve(
-            //    new Keyframe(0f, 2f),
-            //    new Keyframe(0.16f, 8f),
-            //    new Keyframe(0.32f, 30f)
-            //));
-
-            //// Vacuum Radial
-            //Transform tVacuumRadial = collapseVacuumPrefab.transform.Find("Scale/Vacuum Radial");
-            //main = tVacuumRadial.GetComponent<ParticleSystem>().main;
-            //main.startSize = new ParticleSystem.MinMaxCurve(1f, new AnimationCurve(
-            //    new Keyframe(0f, 1.5f),
-            //    new Keyframe(0.16f, 2f),
-            //    new Keyframe(0.32f, 6f)
-            //));
-            //Material matVacuumRadial = new Material(tVacuumRadial.GetComponent<ParticleSystemRenderer>().sharedMaterial);
-            //matVacuumRadial.SetTexture("_RemapTex", Addressables.LoadAssetAsync<Texture>(RoR2_DLC2_Items_SpeedBoostPickup.texSpeedBoostPickupThornRamp_png).WaitForCompletion());
-            //tVacuumRadial.GetComponent<ParticleSystemRenderer>().sharedMaterial = matVacuumRadial;
-
-            //GameObject laserVFX = Object.Instantiate(_assetBundle.LoadAsset<GameObject>("LaserVFX"));
-            //laserVFX.transform.parent = collapseVacuumPrefab.transform.Find("Scale");
-            //laserVFX.transform.localScale = Vector3.one;
+            PostProcessVolume explosionPP = initialBurst.Find("PP").GetComponent<PostProcessVolume>();
+            explosionPP.blendDistance = 17f;
+            explosionPP.sharedProfile = Addressables.LoadAssetAsync<PostProcessProfile>(RoR2_Base_title_PostProcessing.ppLocalVagrantExplosion_asset).WaitForCompletion();
 
             Content.CreateAndAddEffectDef(collapseExplosionPrefab);
         }
@@ -382,6 +354,10 @@ namespace ChronoMod.Survivors.Chrono {
             ProjectileImpactExplosion projectileImpactExplosion = collapseProjectile.GetComponent<ProjectileImpactExplosion>();
             projectileImpactExplosion.lifetime = 1.6f;
             projectileImpactExplosion.impactEffect = collapseExplosionPrefab;
+            projectileImpactExplosion.blastAttackerFiltering = AttackerFiltering.Default;
+
+            ProjectileDamage projectileDamage = collapseProjectile.GetComponent<ProjectileDamage>();
+            projectileDamage.damageType = DamageType.Generic;
 
             Content.AddProjectilePrefab(collapseProjectile);
         }
@@ -508,12 +484,19 @@ namespace ChronoMod.Survivors.Chrono {
             return horizonProjectileExplosion;
         }
 
+        private static void CreateHUDElements() {
+            GameObject hud = Addressables.LoadAssetAsync<GameObject>(RoR2_Base_UI.HUDSimple_prefab).WaitForCompletion();
+            hud.AddComponent<AddTimeCollapseElement>();
+        }
+
         #endregion projectiles
 
         public static void AssignDamageTypes() {
             throwProjectilePrefab.GetComponent<ProjectileDamage>().damageType.AddModdedDamageType(TemporalRiftType.damageType);
 
             horizonProjectilePrefab.GetComponent<ProjectileDamage>().damageType.AddModdedDamageType(EventHorizonType.damageType);
+
+            collapseProjectile.GetComponent<ProjectileDamage>().damageType.AddModdedDamageType(TimeCollapseType.damageType);
         }
     }
 }
