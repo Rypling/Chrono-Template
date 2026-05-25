@@ -16,12 +16,12 @@
 
   <ItemGroup>
     <None Remove=".gitignore" />
+    <None Remove="mwmwchronomodbundle" />
     <None Remove="nuget.config" />
-    <None Remove="placeholderassetbundle" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="placeholderassetbundle" />
+    <EmbeddedResource Include="mwmwchronomodbundle" />
   </ItemGroup>
 
 	<ItemGroup>

@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 1560142818
+CRC: 3865358439
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: placeholderassetbundle
+      Name: mwmwchronomodbundle
       Dependencies: {}

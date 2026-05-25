@@ -1,7 +1,9 @@
 ﻿using ChronoMod.Modules;
 using ChronoMod.Survivors.Chrono.Components;
 using RoR2;
+using RoR2BepInExPack.GameAssetPaths.Version_1_39_0;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace ChronoMod.Survivors.Chrono {
     public static class ChronoBuffs {
@@ -15,8 +17,8 @@ namespace ChronoMod.Survivors.Chrono {
         public static void Init(AssetBundle assetBundle) {
             temporalRiftBuff = Content.CreateAndAddBuff(
                 "ChronoTemporalRiftBuff",
-                LegacyResourcesAPI.Load<BuffDef>("BuffDefs/AffixLunar").iconSprite,
-                Color.cyan,
+                Addressables.LoadAssetAsync<Sprite>(RoR2_Base_Nullifier.texBuffNullifyStackIcon_tif).WaitForCompletion(),
+                new Color(0f, 0.62f, 0.85f),
                 true,
                 false,
                 BuffDef.StackingDisplayMethod.Percentage
@@ -24,16 +26,16 @@ namespace ChronoMod.Survivors.Chrono {
 
             timeWarpBuff = Content.CreateAndAddBuff(
                 "ChronoTimeWarpBuff",
-                LegacyResourcesAPI.Load<BuffDef>("BuffDefs/MercExpose").iconSprite,
-                Color.cyan,
+                Addressables.LoadAssetAsync<Sprite>(RoR2_Base_Nullifier.texBuffNullifiedIcon_tif).WaitForCompletion(),
+                new Color(0f, 0.73f, 1f),
                 false,
                 false
                 );
 
             continuumFreezeBuff = Content.CreateAndAddBuff(
                 "ChronoContinuumFreezeBuff",
-                LegacyResourcesAPI.Load<BuffDef>("BuffDefs/Warbanner").iconSprite,
-                Color.cyan,
+                Addressables.LoadAssetAsync<Sprite>(RoR2_Base_RoboBallBoss.texBuffEngiShieldIcon_tif).WaitForCompletion(),
+                new Color(0f, 0.73f, 1f),
                 false,
                 false
                 );

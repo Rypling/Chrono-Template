@@ -1,26 +1,26 @@
 ﻿namespace ChronoMod.Survivors.Chrono {
     public static class ChronoStaticValues {
         // damage coefficients
-        public const float swordDamageCoefficient = 2.8f;
+        public const float swordDamageCoefficient = 2.5f;
 
-        public const float throwDamageCoefficient = 2.4f;
+        public const float throwDamageCoefficient = 2f;
 
-        public const float piercerDamageCoefficient = 1.5f;
+        public const float piercerDamageCoefficient = 1.1f;
 
         public const float horizonDamageCoefficient = 13f;
 
-        public const float echoDamageCoefficient = 4f;
+        public const float echoDamageCoefficient = 2f;
 
         public const float continuumDamageCoefficient = 8f;
 
         // temporal rift buff
         public const float temporalMaxBuffs = 100f;
 
-        public const float temporalUpperDecayTime = 8f;
+        public const float temporalUpperDecayTime = 15f;
 
-        public const float temporalLowerDecayTime = 1.5f;
+        public const float temporalLowerDecayTime = 4f;
 
-        public const float temporalMaxSpdMultAdd = 0.8f;
+        public const float temporalMaxSpdMultAdd = 0.4f;
 
         public const float temporalMaxCritAdd = 35f;
 

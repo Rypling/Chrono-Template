@@ -11,7 +11,7 @@ using UnityEngine.AddressableAssets;
 
 namespace ChronoMod.Survivors.Chrono {
     public class ChronoSurvivor : SurvivorBase<ChronoSurvivor> {
-        public override string assetBundleName => "placeholderassetbundle";
+        public override string assetBundleName => "mwmwchronomodbundle";
 
         public override string bodyName => "ChronoBody";
 
@@ -31,7 +31,7 @@ namespace ChronoMod.Survivors.Chrono {
             subtitleNameToken = CHRONO_PREFIX + "SUBTITLE",
 
             characterPortrait = assetBundle.LoadAsset<Texture>("texChronoIcon"),
-            bodyColor = Color.white,
+            bodyColor = new Color(0f, 0.78f, 0.99f),
             sortPosition = 100,
 
             crosshair = Asset.LoadCrosshair("Standard"),
@@ -55,16 +55,18 @@ namespace ChronoMod.Survivors.Chrono {
                 {
                     childName = "SpearMesh",
                     material = assetBundle.LoadMaterial("matSpear"),
+                    ignoreOverlays = true,
                 },
                 new CustomRendererInfo
                 {
-                     childName = "OutlineMesh",
+                    childName = "OutlineMesh",
                     material = assetBundle.LoadMaterial("matOutline")
                 },
                 new CustomRendererInfo
                 {
                     childName = "GunMesh",
                     material = assetBundle.LoadMaterial("matGun"),
+                    ignoreOverlays = true,
                 }
         };
 
@@ -186,8 +188,8 @@ namespace ChronoMod.Survivors.Chrono {
                 enabled = true,
                 skillNameToken = CHRONO_PREFIX + "PASSIVE_NAME",
                 skillDescriptionToken = CHRONO_PREFIX + "PASSIVE_DESCRIPTION",
-                // keywordToken = "KEYWORD_STUNNING",
-                icon = assetBundle.LoadAsset<Sprite>("texPassiveIcon"),
+                keywordToken = CHRONO_PREFIX + "KEYWORD_HYPERCRIT",
+                icon = Addressables.LoadAssetAsync<Sprite>(RoR2_DLC2_FalseSon.texFalseSonSkillIcons_png_texFalseSonSkillIcons_0_).WaitForCompletion(),
             };
 
             /*
@@ -242,7 +244,7 @@ namespace ChronoMod.Survivors.Chrono {
                 skillNameToken = CHRONO_PREFIX + "PRIMARY_EDGE_NAME",
                 skillDescriptionToken = CHRONO_PREFIX + "PRIMARY_EDGE_DESCRIPTION",
                 keywordTokens = new string[] { },
-                skillIcon = assetBundle.LoadAsset<Sprite>("texPrimaryIcon"),
+                skillIcon = Addressables.LoadAssetAsync<Sprite>(RoR2_Base_Merc.texMercSkillIcons_png_texMercSkillIcons_1_).WaitForCompletion(), // assetBundle.LoadAsset<Sprite>("texPrimaryIcon"),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(EonsEdge)),
                 activationStateMachineName = "Weapon",
@@ -267,7 +269,7 @@ namespace ChronoMod.Survivors.Chrono {
                 skillNameToken = CHRONO_PREFIX + "PRIMARY_THROW_NAME",
                 skillDescriptionToken = CHRONO_PREFIX + "PRIMARY_THROW_DESCRIPTION",
                 keywordTokens = new string[] { "KEYWORD_AGILE" },
-                skillIcon = assetBundle.LoadAsset<Sprite>("texPrimaryIcon"),
+                skillIcon = Addressables.LoadAssetAsync<Sprite>(RoR2_DLC2_FalseSon.texFalseSonSkillIcons_png_texFalseSonSkillIcons_2_).WaitForCompletion(),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(SplitSecondThrow)),
                 activationStateMachineName = "Weapon",
@@ -295,8 +297,8 @@ namespace ChronoMod.Survivors.Chrono {
                 skillName = "ChronoPiercer",
                 skillNameToken = CHRONO_PREFIX + "SECONDARY_PIERCER_NAME",
                 skillDescriptionToken = CHRONO_PREFIX + "SECONDARY_PIERCER_DESCRIPTION",
-                keywordTokens = new string[] { "KEYWORD_AGILE" },
-                skillIcon = assetBundle.LoadAsset<Sprite>("texSecondaryIcon"),
+                keywordTokens = new string[] { "KEYWORD_AGILE", "KEYWORD_STUNNING", "KEYWORD_FREEZING" },
+                skillIcon = Addressables.LoadAssetAsync<Sprite>(RoR2_Base_Commando.texCommandoSkillIcons_png_texCommandoSkillIcons_5_).WaitForCompletion(),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(TimePiercer)),
                 activationStateMachineName = "Weapon2",
@@ -326,8 +328,8 @@ namespace ChronoMod.Survivors.Chrono {
                 skillName = "ChronoHorizon",
                 skillNameToken = CHRONO_PREFIX + "SECONDARY_HORIZON_NAME",
                 skillDescriptionToken = CHRONO_PREFIX + "SECONDARY_HORIZON_DESCRIPTION",
-                keywordTokens = new string[] { "KEYWORD_AGILE" },
-                skillIcon = assetBundle.LoadAsset<Sprite>("texSecondaryIcon"),
+                keywordTokens = new string[] { "KEYWORD_AGILE", "KEYWORD_FREEZING" },
+                skillIcon = Addressables.LoadAssetAsync<Sprite>(RoR2_Base_Mage.texMageSkillIcons_png_texMageSkillIcons_1_).WaitForCompletion(),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(EventHorizon)),
                 activationStateMachineName = "Weapon2",
@@ -363,13 +365,14 @@ namespace ChronoMod.Survivors.Chrono {
                 skillName = "ChronoEcho",
                 skillNameToken = CHRONO_PREFIX + "UTILITY_ECHO_NAME",
                 skillDescriptionToken = CHRONO_PREFIX + "UTILITY_ECHO_DESCRIPTION",
-                skillIcon = assetBundle.LoadAsset<Sprite>("texUtilityIcon"),
+                keywordTokens = new string[] { "KEYWORD_FREEZING", CHRONO_PREFIX + "KEYWORD_TIME_WARP" },
+                skillIcon = Addressables.LoadAssetAsync<Sprite>(RoR2_Base_Commando.texCommandoSkillIcons_png_texCommandoSkillIcons_6_).WaitForCompletion(),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(EchoOfTomorrowAim)),
                 activationStateMachineName = "Utility",
                 interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
 
-                baseRechargeInterval = 8f,
+                baseRechargeInterval = 10f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -392,7 +395,8 @@ namespace ChronoMod.Survivors.Chrono {
                 skillName = "ChronoContinuum",
                 skillNameToken = CHRONO_PREFIX + "UTILITY_CONTINUUM_NAME",
                 skillDescriptionToken = CHRONO_PREFIX + "UTILITY_CONTINUUM_DESCRIPTION",
-                skillIcon = assetBundle.LoadAsset<Sprite>("texUtilityIcon"),
+                keywordTokens = new string[] { CHRONO_PREFIX + "KEYWORD_RIFTED_TOUCH", "KEYWORD_FREEZING" },
+                skillIcon = Addressables.LoadAssetAsync<Sprite>(RoR2_Base_Engi.texEngiSkillIcons_png_texEngiSkillIcons_2_).WaitForCompletion(),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(ContinuumFreeze)),
                 activationStateMachineName = "Utility",
@@ -427,14 +431,15 @@ namespace ChronoMod.Survivors.Chrono {
                 skillName = "ChronoCollapse",
                 skillNameToken = CHRONO_PREFIX + "SPECIAL_COLLAPSE_NAME",
                 skillDescriptionToken = CHRONO_PREFIX + "SPECIAL_COLLAPSE_DESCRIPTION",
-                skillIcon = assetBundle.LoadAsset<Sprite>("texSpecialIcon"),
+                keywordTokens = new string[] { CHRONO_PREFIX + "KEYWORD_FINALE" },
+                skillIcon = Addressables.LoadAssetAsync<Sprite>(RoR2_DLC2_FalseSon.texFalseSonSkillIcons_png_texFalseSonSkillIcons_8_).WaitForCompletion(),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(TimeCollapseAim)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
 
                 baseMaxStock = 1,
-                baseRechargeInterval = 30f,
+                baseRechargeInterval = 60f,
                 stockToConsume = 0,
 
                 beginSkillCooldownOnSkillEnd = true,
@@ -462,7 +467,7 @@ namespace ChronoMod.Survivors.Chrono {
             #region DefaultSkin
             //this creates a SkinDef with all default fields
             SkinDef defaultSkin = Skins.CreateSkinDef("DEFAULT_SKIN",
-                assetBundle.LoadAsset<Sprite>("texMainSkin"),
+                assetBundle.LoadAsset<Sprite>("texChronoDefaultIcon"),
                 defaultRendererinfos,
                 prefabCharacterModel.gameObject);
 
@@ -483,11 +488,11 @@ namespace ChronoMod.Survivors.Chrono {
             #region MasterySkin
 
             ////creating a new skindef as we did before
-            //SkinDef masterySkin = Modules.Skins.CreateSkinDef(HENRY_PREFIX + "MASTERY_SKIN_NAME",
-            //    assetBundle.LoadAsset<Sprite>("texMasteryAchievement"),
-            //    defaultRendererinfos,
-            //    prefabCharacterModel.gameObject,
-            //    HenryUnlockables.masterySkinUnlockableDef);
+            SkinDef masterySkin = Modules.Skins.CreateSkinDef(CHRONO_PREFIX + "MASTERY_SKIN_NAME",
+                assetBundle.LoadAsset<Sprite>("texChronoMasteryIcon"),
+                defaultRendererinfos,
+                prefabCharacterModel.gameObject,
+                ChronoUnlockables.masterySkinUnlockableDef);
 
             ////adding the mesh replacements as above. 
             ////if you don't want to replace the mesh (for example, you only want to replace the material), pass in null so the order is preserved
@@ -498,9 +503,11 @@ namespace ChronoMod.Survivors.Chrono {
 
             ////masterySkin has a new set of RendererInfos (based on default rendererinfos)
             ////you can simply access the RendererInfos' materials and set them to the new materials for your skin.
-            //masterySkin.rendererInfos[0].defaultMaterial = assetBundle.LoadMaterial("matHenryAlt");
-            //masterySkin.rendererInfos[1].defaultMaterial = assetBundle.LoadMaterial("matHenryAlt");
-            //masterySkin.rendererInfos[2].defaultMaterial = assetBundle.LoadMaterial("matHenryAlt");
+
+            masterySkin.skinDefParams.rendererInfos[0].defaultMaterial = assetBundle.LoadMaterial("matBodyMastery");
+            masterySkin.skinDefParams.rendererInfos[1].defaultMaterial = assetBundle.LoadMaterial("matSpearMastery");
+            masterySkin.skinDefParams.rendererInfos[2].defaultMaterial = assetBundle.LoadMaterial("matOutlineMastery");
+            masterySkin.skinDefParams.rendererInfos[3].defaultMaterial = assetBundle.LoadMaterial("matGunMastery");
 
             ////here's a barebones example of using gameobjectactivations that could probably be streamlined or rewritten entirely, truthfully, but it works
             //masterySkin.gameObjectActivations = new SkinDef.GameObjectActivation[]
@@ -513,7 +520,7 @@ namespace ChronoMod.Survivors.Chrono {
             //};
             ////simply find an object on your child locator you want to activate/deactivate and set if you want to activate/deacitvate it with this skin
 
-            //skins.Add(masterySkin);
+            skins.Add(masterySkin);
 
             #endregion
 

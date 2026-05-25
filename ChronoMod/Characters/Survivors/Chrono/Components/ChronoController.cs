@@ -5,15 +5,20 @@ using RoR2.UI;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace ChronoMod.Survivors.Chrono.Components {
-    internal class ChronoController : MonoBehaviour {
+    public class ChronoController : MonoBehaviour {
 
         private const float holdDamageTime = 10f;
 
         private CharacterBody body;
 
-        private GameObject root;
+        private Transform tcDamageRoot;
+
+        private Transform specialRoot;
+
+        private Transform crosshairRoot;
 
         private TextMeshProUGUI text;
 
@@ -26,12 +31,23 @@ namespace ChronoMod.Survivors.Chrono.Components {
             if (body?.hasEffectiveAuthority == true) {
                 GlobalEventManager.onClientDamageNotified += CheckIfDealtDamage;
 
-                root = HUD.instancesList[0].transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomRightCluster/Scaler/TimeCollapseDamageRoot")?.gameObject;
-                if (root) {
-                    root.SetActive(true);
-                    text = root.transform.Find("Text").GetComponent<TextMeshProUGUI>();
+                specialRoot = HUD.instancesList[0].transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomRightCluster/Scaler/TimeCollapseDamageRootSpecial");
+                if (specialRoot) {
+                    specialRoot.gameObject.SetActive(true);
+                    tcDamageRoot = specialRoot.transform.Find("TimeCollapseDamage");
+                    text = tcDamageRoot.Find("Text").GetComponent<TextMeshProUGUI>();
                 }
+
+                crosshairRoot = HUD.instancesList[0].transform.Find("MainContainer/MainUIArea/CrosshairCanvas/TimeCollapseDamageRootCrosshair");
             }
+        }
+
+        public void MoveUIToCrosshair() {
+            tcDamageRoot.SetParent(crosshairRoot, false);
+        }
+
+        public void MoveUIToSpecial() {
+            tcDamageRoot.SetParent(specialRoot, false);
         }
 
         private static float GetTimeForBuffDecay(int buffs) {
@@ -40,14 +56,28 @@ namespace ChronoMod.Survivors.Chrono.Components {
         }
 
         private void FixedUpdate() {
-            if (body.HasBuff(ChronoBuffs.temporalRiftBuff)) {
-                buffStopwatch += Time.deltaTime;
-                if (buffStopwatch >= GetTimeForBuffDecay(body.GetBuffCount(ChronoBuffs.temporalRiftBuff))) {
-                    body.RemoveBuff(ChronoBuffs.temporalRiftBuff);
-                    buffStopwatch = 0f;
-                    body.RecalculateStats();
+            if (NetworkServer.active) {
+                if (body.HasBuff(ChronoBuffs.temporalRiftBuff)) {
+                    buffStopwatch += Time.deltaTime;
+                    if (buffStopwatch >= GetTimeForBuffDecay(body.GetBuffCount(ChronoBuffs.temporalRiftBuff))) {
+                        body.RemoveBuff(ChronoBuffs.temporalRiftBuff);
+                        buffStopwatch = 0f;
+                        body.RecalculateStats();
+                    }
                 }
             }
+        }
+
+        // Method copied from HealthBar component
+        private string FormatDamageLabel(float damage) {
+            if (damage >= 1000000000f) {
+                return Mathf.Round(damage / 1000000000f) + "B";
+            } else if (damage >= 1000000f) {
+                return Mathf.Round(damage / 1000000f) + "M";
+            } else if (damage >= 10000f) {
+                return Mathf.Round(damage / 1000f) + "K";
+            }
+            return Mathf.Round(damage).ToString();
         }
 
         private void Update() {
@@ -56,29 +86,13 @@ namespace ChronoMod.Survivors.Chrono.Components {
             }
         }
 
-        // Method copied from HealthBar component
-        private string FormatDamageLabel(float damage) {
-            if (damage >= 10000f) {
-                return Mathf.Round(damage / 1000f) + "K";
-            }
-            if (damage >= 1000000f) {
-                return Mathf.Round(damage / 1000000f) + "M";
-            }
-            return Mathf.Round(damage).ToString();
-        }
-
         private void CheckIfDealtDamage(DamageDealtMessage message) {
-            if (message?.attacker == body.gameObject && message?.victim != body.gameObject && body != null) {
+            if (body.hasEffectiveAuthority && message?.attacker == body.gameObject && message?.victim != body.gameObject && body != null) {
                 if (!message.damageType.HasModdedDamageType(TimeCollapseType.damageType)) {
                     float damage = message.damage;
                     recentDamageTracker += damage;
                     this?.StartCoroutine(RemoveRecentDamage(damage));
-                }//  else {
-                //    body.SetBuffCount(ChronoBuffs.temporalRiftBuff.buffIndex, 0);
-                //    // if used time collapse, stop all coroutines so any new damage doesn't instantly get subtracted by old coroutines
-                //    StopAllCoroutines();
-                //    recentDamageTracker = 0f;
-                //}
+                }
             }
         }
 
@@ -92,9 +106,8 @@ namespace ChronoMod.Survivors.Chrono.Components {
         private void OnDestroy() {
             if (body?.hasEffectiveAuthority == true) {
                 GlobalEventManager.onClientDamageNotified -= CheckIfDealtDamage;
-                if (root) {
-                    root.SetActive(false);
-                }
+                MoveUIToSpecial();
+                specialRoot?.gameObject?.SetActive(false);
             }
         }
     }

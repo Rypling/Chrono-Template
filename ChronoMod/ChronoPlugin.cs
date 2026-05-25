@@ -11,11 +11,11 @@ namespace ChronoMod {
     [BepInDependency("com.groovesalad.TestPlugin", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInPlugin(MODUID, MODNAME, MODVERSION)]
     public class ChronoPlugin : BaseUnityPlugin {
-        public const string MODUID = "com.Rypling.ChronoMod";
+        public const string MODUID = "com.Miyowi.ChronoMod";
         public const string MODNAME = "ChronoMod";
         public const string MODVERSION = "1.0.0";
 
-        public const string DEVELOPER_PREFIX = "RYPLING";
+        public const string DEVELOPER_PREFIX = "MIYOWI";
 
         public static ChronoPlugin instance;
 

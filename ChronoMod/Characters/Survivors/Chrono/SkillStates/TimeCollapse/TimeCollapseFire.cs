@@ -8,6 +8,8 @@ namespace ChronoMod.Survivors.Chrono.SkillStates {
 
         public Vector3 attackOrigin;
 
+        public ChronoController chronoController;
+
         private float duration = 0.4f;
 
         private float stopwatch = 0f;
@@ -39,7 +41,7 @@ namespace ChronoMod.Survivors.Chrono.SkillStates {
         public override void OnEnter() {
             base.OnEnter();
 
-            if (isAuthority && characterBody.GetComponent<ChronoController>() is ChronoController chronoController) {
+            if (isAuthority && chronoController) {
                 int buffCount = characterBody.GetBuffCount(ChronoBuffs.temporalRiftBuff);
                 FireProjectileInfo fireProjectileInfo = new FireProjectileInfo {
                     projectilePrefab = ChronoAssets.collapseProjectile,

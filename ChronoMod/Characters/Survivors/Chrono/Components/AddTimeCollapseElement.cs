@@ -8,17 +8,26 @@ namespace ChronoMod.Characters.Survivors.Chrono.Components {
     public class AddTimeCollapseElement : MonoBehaviour {
 
         private void Awake() {
-            HUD hud = GetComponent<HUD>();
-            GameObject collapseDamageRoot = Object.Instantiate(hud.healthBar.transform.Find("SharedSufferingRoot")?.gameObject, transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomRightCluster/Scaler"));
-            collapseDamageRoot.name = "TimeCollapseDamageRoot";
-            collapseDamageRoot.transform.localPosition = new Vector3(3f, 100f, 0f);
-            Transform text = collapseDamageRoot.transform.Find("Text");
+
+            GameObject collapseDamageRootSpecial = new GameObject("TimeCollapseDamageRootSpecial", typeof(RectTransform));
+            collapseDamageRootSpecial.transform.SetParent(transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomRightCluster/Scaler"));
+            collapseDamageRootSpecial.transform.localPosition = new Vector3(3f, 100f, 0f);
+            collapseDamageRootSpecial.SetActive(false);
+
+            GameObject collapseDamageRootCrosshair = new GameObject("TimeCollapseDamageRootCrosshair", typeof(RectTransform));
+            collapseDamageRootCrosshair.transform.SetParent(transform.Find("MainContainer/MainUIArea/CrosshairCanvas"));
+            collapseDamageRootCrosshair.transform.localPosition = new Vector3(0f, 40f, 0f);
+
+            GameObject collapseDamage = Object.Instantiate(GetComponent<HUD>().healthBar.transform.Find("SharedSufferingRoot")?.gameObject, collapseDamageRootSpecial.transform);
+            collapseDamage.name = "TimeCollapseDamage";
+            collapseDamage.transform.localPosition = Vector3.zero;
+            Transform text = collapseDamage.transform.Find("Text");
             text.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
             text.transform.localPosition = new Vector3(-175f, 140f, 0f);
-            Transform arrow = collapseDamageRoot.transform.Find("Arrow");
+            Transform arrow = collapseDamage.transform.Find("Arrow");
             arrow.localPosition = Vector3.zero;
             arrow.localEulerAngles = Vector3.zero;
-            collapseDamageRoot.SetActive(false);
+
             Destroy(this);
         }
     }
