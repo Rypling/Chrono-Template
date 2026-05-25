@@ -1,0 +1,61 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Configurations>Release;Debug</Configurations>
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove=".gitignore" />
+    <None Remove="mwmwchronomodbundle" />
+    <None Remove="nuget.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="mwmwchronomodbundle" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="BepInEx.Analyzers" Version="1.0.*">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="BepInEx.Core" Version="5.4.21" />
+		<PackageReference Include="R2API.DamageType" Version="1.1.7" />
+		<PackageReference Include="RiskOfRain2.GameLibs" Version="1.4.1-r.0" />
+		<PackageReference Include="UnityEngine.Modules" Version="2021.3.33" />
+		<PackageReference Include="MMHOOK.RoR2" Version="2025.11.19">
+			<NoWarn>NU1701</NoWarn>
+		</PackageReference>
+		<PackageReference Include="R2API.Core" Version="5.*" />
+		<PackageReference Include="R2API.Prefab" Version="1.*" />
+		<PackageReference Include="R2API.RecalculateStats" Version="1.*" />
+		<PackageReference Include="R2API.Language" Version="1.*" />
+		<PackageReference Include="R2API.Sound" Version="1.*" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="ShaderSwapper">
+	    <HintPath>lib\ShaderSwapper.dll</HintPath>
+	    <Private>false</Private>
+	  </Reference>
+	  <Reference Include="Unity.Postprocessing.Runtime">
+	    <HintPath>lib\Unity.Postprocessing.Runtime.dll</HintPath>
+		<Private>false</Private>
+	  </Reference>
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="REM follow the Building Your Mod page on the henrytutorial wiki for more information on this&#xD;&#xA;REM change this to your username (or add yours if you're working in a team or somethin)&#xD;&#xA;if &quot;$(Username)&quot; == &quot;alex&quot; set build=true&#xD;&#xA;&#xD;&#xA;if defined build (&#xD;&#xA;&#xD;&#xA;REM copy the built mod to our Build folder&#xD;&#xA;copy &quot;$(TargetPath)&quot; &quot;C:\Users\alex\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\profiles\Default\BepInEx\plugins\Unknown-ChronoMod.dll&quot;&#xD;&#xA;)&#xD;&#xA;" />
+	</Target>
+
+</Project>
