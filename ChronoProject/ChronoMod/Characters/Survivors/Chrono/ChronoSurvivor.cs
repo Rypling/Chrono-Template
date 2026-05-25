@@ -465,60 +465,26 @@ namespace ChronoMod.Survivors.Chrono {
             List<SkinDef> skins = new List<SkinDef>();
 
             #region DefaultSkin
-            //this creates a SkinDef with all default fields
             SkinDef defaultSkin = Skins.CreateSkinDef("DEFAULT_SKIN",
                 assetBundle.LoadAsset<Sprite>("texChronoDefaultIcon"),
                 defaultRendererinfos,
                 prefabCharacterModel.gameObject);
 
-            //these are your Mesh Replacements. The order here is based on your CustomRendererInfos from earlier
-            //pass in meshes as they are named in your assetbundle
-            //currently not needed as with only 1 skin they will simply take the default meshes
-            //uncomment this when you have another skin
-            //defaultSkin.meshReplacements = Modules.Skins.getMeshReplacements(assetBundle, defaultRendererinfos,
-            //    "meshHenrySword",
-            //    "meshHenryGun",
-            //    "meshHenry");
-
-            //add new skindef to our list of skindefs. this is what we'll be passing to the SkinController
             skins.Add(defaultSkin);
             #endregion
 
-            //uncomment this when you have a mastery skin
             #region MasterySkin
 
-            ////creating a new skindef as we did before
             SkinDef masterySkin = Modules.Skins.CreateSkinDef(CHRONO_PREFIX + "MASTERY_SKIN_NAME",
                 assetBundle.LoadAsset<Sprite>("texChronoMasteryIcon"),
                 defaultRendererinfos,
                 prefabCharacterModel.gameObject,
                 ChronoUnlockables.masterySkinUnlockableDef);
 
-            ////adding the mesh replacements as above. 
-            ////if you don't want to replace the mesh (for example, you only want to replace the material), pass in null so the order is preserved
-            //masterySkin.meshReplacements = Modules.Skins.getMeshReplacements(assetBundle, defaultRendererinfos,
-            //    "meshHenrySwordAlt",
-            //    null,//no gun mesh replacement. use same gun mesh
-            //    "meshHenryAlt");
-
-            ////masterySkin has a new set of RendererInfos (based on default rendererinfos)
-            ////you can simply access the RendererInfos' materials and set them to the new materials for your skin.
-
             masterySkin.skinDefParams.rendererInfos[0].defaultMaterial = assetBundle.LoadMaterial("matBodyMastery");
             masterySkin.skinDefParams.rendererInfos[1].defaultMaterial = assetBundle.LoadMaterial("matSpearMastery");
             masterySkin.skinDefParams.rendererInfos[2].defaultMaterial = assetBundle.LoadMaterial("matOutlineMastery");
             masterySkin.skinDefParams.rendererInfos[3].defaultMaterial = assetBundle.LoadMaterial("matGunMastery");
-
-            ////here's a barebones example of using gameobjectactivations that could probably be streamlined or rewritten entirely, truthfully, but it works
-            //masterySkin.gameObjectActivations = new SkinDef.GameObjectActivation[]
-            //{
-            //    new SkinDef.GameObjectActivation
-            //    {
-            //        gameObject = childLocator.FindChildGameObject("GunModel"),
-            //        shouldActivate = false,
-            //    }
-            //};
-            ////simply find an object on your child locator you want to activate/deactivate and set if you want to activate/deacitvate it with this skin
 
             skins.Add(masterySkin);
 

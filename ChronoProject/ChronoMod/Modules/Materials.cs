@@ -5,7 +5,7 @@ namespace ChronoMod.Modules {
     internal static class Materials {
         private static List<Material> cachedMaterials = new List<Material>();
 
-        internal static Shader hotpoo = RoR2.LegacyResourcesAPI.Load<Shader>("Shaders/Deferred/HGStandard");
+        internal static Shader hopoo = RoR2.LegacyResourcesAPI.Load<Shader>("Shaders/Deferred/HGStandard");
 
         public static Material LoadMaterial(this AssetBundle assetBundle, string materialName) => CreateHopooMaterialFromBundle(assetBundle, materialName);
         public static Material CreateHopooMaterialFromBundle(this AssetBundle assetBundle, string materialName) {
@@ -21,7 +21,7 @@ namespace ChronoMod.Modules {
 
             if (!tempMat) {
                 Log.ErrorAssetBundle(materialName, assetBundle.name);
-                return new Material(hotpoo);
+                return new Material(hopoo);
             }
 
             return tempMat;
@@ -53,7 +53,7 @@ namespace ChronoMod.Modules {
         //    }
 
         //    //set shader
-        //    tempMat.shader = hotpoo;
+        //    tempMat.shader = hopoo;
 
         //    //apply values after shader is set
         //    tempMat.SetTexture("_EmTex", tempMat.GetTexture("_EmissionMap"));

@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3634866183
+CRC: 2244299431
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1fc27d6ed8b4c7255beecd6d8256114f
+    Hash: 6e32050ba5d8d22dcbbc5b07c29b84e9
   TypeTreeHash:
     serializedVersion: 2
-    Hash: eff484cb034e8e72bb57e2b2cce0287e
+    Hash: 5b96852183a6c415680228e9d65b59f1
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -43,8 +43,6 @@ ClassTypes:
   Script: {fileID: 816898038, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
   Script: {fileID: 1395413934, guid: da77c7bbf69f66ab2145560542327715, type: 3}
-- Class: 114
-  Script: {fileID: 1143142494, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 261c50d8a80898e4ebf2e8e415ea6766, type: 3}
 - Class: 114
@@ -94,8 +92,6 @@ ClassTypes:
 SerializeReferenceClassIdentifiers:
 - AssemblyName: AK.Wwise.Unity.API.WwiseTypes
   ClassName: AK.Wwise.Event
-- AssemblyName: Assembly-CSharp
-  ClassName: ChildLocator/NameTransformPair
 - AssemblyName: RoR2
   ClassName: ChildLocator/NameTransformPair
 - AssemblyName: RoR2
